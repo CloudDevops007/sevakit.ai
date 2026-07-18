@@ -177,21 +177,21 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Lightning Fast Engine</div>
+    <div class="badge">⚡ Active Hybrid Mode</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #1e3a8a;">
-            <strong>⚡ Super Fast Performance:</strong><br>
-            Apni free key set karein aur bina kisi loading delay ke instant 1-second me answers payein.
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
+            <strong>✅ Free Access Active:</strong><br>
+            Aap bina kisi key ke direct simplified answers direct search kar sakte hain!
         </div>
 
         <div class="api-box">
-            <label>🔑 Setup Gemini API Key</label>
-            <input type="password" id="globalApiKey" placeholder="Paste your free key here...">
-            <small style="display:block; margin-top:-8px; font-weight: bold; font-size:12px;">
-                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: underline;">👉 Yahan se Free Key generate karein ↗</a>
+            <label>🔑 Personal Gemini Key (Optional)</label>
+            <input type="password" id="globalApiKey" placeholder="Advanced features ke liye...">
+            <small style="display:block; margin-top:-8px; font-size:11px;">
+                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free Advanced Key ↗</a>
             </small>
         </div>
         
@@ -204,7 +204,7 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3>🤖 AI Assistant (Fast Chat Mode)</h3>
+            <h3>🤖 AI Assistant (Direct Clean Chat)</h3>
             <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi search karein. English text ko Hinglish me badalne ke liye likhein: "Translate to Hinglish: [aapka text]"</p>
             <textarea id="assistantInput" placeholder="Apna sawaal ya text yahan likhein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
@@ -263,33 +263,55 @@
         return '';
     }
 
-    // Direct Lightning-Fast Official Gemini Engine Setup with standard structural parameter logic
-    async function callGeminiAPI(promptText) {
-        const apiKey = document.getElementById('globalApiKey').value.trim();
-        if (!apiKey) {
-            alert("⚠️ Speed Optimization Active: Please insert your free Gemini API Key in the sidebar box to unlock zero-delay processing!");
-            return null;
-        }
-
-        const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean.";
-
+    // High Performance Free Open Router Logic Layer
+    async function executeFreeAIRequest(systemInstruction, userPrompt) {
         try {
-            // Using correct structured system instruction payload layout to avoid endpoint crashes
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            const url = 'https://text.pollinations.ai/';
             const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }],
-                    systemInstruction: { parts: [{ text: systemRule }] }
+                    messages: [
+                        { role: 'system', content: systemInstruction },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    model: 'openai',
+                    jsonMode: false
                 })
             });
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        } catch (error) {
-            console.error(error);
-            return "API connection error. Please verify your key string.";
+            return await response.text();
+        } catch (err) {
+            console.error(err);
+            return null;
         }
+    }
+
+    // Unified Routing Manager
+    async function handleEngineRouting(promptText) {
+        const apiKey = document.getElementById('globalApiKey').value.trim();
+        const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean like a clear messaging text screen.";
+
+        // If user input custom keys in sidebar
+        if (apiKey) {
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }],
+                        systemInstruction: { parts: [{ text: systemRule }] }
+                    })
+                });
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Gemini failed, falling back to free route...", error);
+            }
+        }
+
+        // Silent Fallback: Key na hone par auto free pipeline execute ho jayega bin kisi alert box ke
+        return await executeFreeAIRequest(systemRule, promptText);
     }
 
     async function askSmartAssistant() {
@@ -303,15 +325,15 @@
         outBox.innerText = "⏳ SevaKit Processing Response...";
         waBox.innerHTML = "";
 
-        let aiResponse = await callGeminiAPI(input);
+        let aiResponse = await handleEngineRouting(input);
         
         if(aiResponse) {
-            // Ultimate regex strip filter layer for UI safety
+            // Ultimate text sanitation logic
             aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
             outBox.innerText = aiResponse;
             waBox.innerHTML = generateWhatsAppBanner(input);
         } else {
-            outBox.innerText = "Response execution failed. Try resetting key values.";
+            outBox.innerText = "Server response dynamic check needed. Please submit request again.";
         }
     }
 
