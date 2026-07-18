@@ -39,6 +39,17 @@
         .navbar h2 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
         .badge { background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 12px; }
 
+        /* Dynamic Live Time Banner Styling */
+        .live-banner {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid #bae6fd;
+        }
+
         .main-container {
             max-width: 1200px;
             margin: 20px auto;
@@ -196,7 +207,12 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v3.5</div>
+</div>
+
+<!-- LIVE Working Multi-Clock & Calendar Banner -->
+<div class="live-banner" id="systemLiveClockBanner">
+    ⏳ Loading System Workspace Calendars...
 </div>
 
 <div class="main-container">
@@ -220,17 +236,18 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel -->
+        <!-- AI Smart Assistant View Panel with Text-To-Speech Controls -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish to auto-convert responses. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
-            <textarea id="assistantInput" placeholder="Enter query, technical questions or customer support prompts..." style="height: 120px;"></textarea>
+            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Try asking current scenario prompts like weather, dates, or movie releases.</p>
+            <textarea id="assistantInput" placeholder="Enter query (e.g., 'Aj Hyderabad ka mausam kaisa h' or 'August 2026 niyam updates')..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
             <div id="assistantOutputContainer" class="hidden">
                 <div id="assistantOutput" class="response-zone"></div>
-                <div style="margin-top: 10px; display: flex; gap: 10px;">
-                    <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto;">📄 Save Search Result as PDF</button>
+                <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto; margin-bottom:0;">📄 Save Search Result as PDF</button>
+                    <button onclick="triggerTextToSpeech()" style="background: #9333ea; width: auto; margin-bottom:0;">🔊 Speak Response (Voice Reader)</button>
                 </div>
             </div>
             <div id="assistantWhatsAppZone"></div>
@@ -338,12 +355,32 @@
 </div>
 
 <script>
+    // System live ticker setup
     window.onload = function() {
-        const hour = new Date().getHours();
-        if (hour < 12) document.getElementById('greetingHeading').innerText = "🌅 Good Morning! SevaKit Hub";
-        else if (hour < 17) document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! SevaKit Hub";
-        else document.getElementById('greetingHeading').innerText = "🌆 Good Evening! SevaKit Hub";
         initSignatureCanvasLogic();
+        
+        // Setup real-time working multi-clock display text matching calendar constants
+        setInterval(() => {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const now = new Date();
+            
+            // Overriding simulation boundary to perfectly align workspace context with user specifications
+            const dayText = days[now.getDay()];
+            const monthText = months[now.getMonth()];
+            const dateNum = now.getDate();
+            const yearNum = now.getFullYear();
+            
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12; hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            seconds = seconds < 10 ? '0'+seconds : seconds;
+            
+            document.getElementById('systemLiveClockBanner').innerText = `🌐 System Time: ${dayText}, ${dateNum} ${monthText} ${yearNum} 📝 Live Clock: ${hours}:${minutes}:${seconds} ${ampm} (Hyderabad, India Hub Active)`;
+        }, 1000);
     };
 
     function switchTab(tabId) {
@@ -358,6 +395,22 @@
             window.event.currentTarget.classList.add('active');
         }
         closeActiveGame();
+    }
+
+    // Native Browser Web Speech Voice Synthesizer Execution Logic
+    function triggerTextToSpeech() {
+        const textToSpeak = document.getElementById('assistantOutput').innerText;
+        if(!textToSpeak) return alert("Pehle koi text answer generate hone dein!");
+        
+        // Cancel any existing speech queues first
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        
+        // Auto routing detection settings parameters
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
     }
 
     function convertSearchToPDF() {
@@ -469,8 +522,11 @@
 
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
-        const languageDeductionInstruction = "LANGUAGE ROUTING LOGIC: 1. Evaluate user input. 2. If input contains romanized Hinglish tokens (e.g. 'kaise', 'karo', 'banao', 'hai', 'kya'), respond COMPLETELY in clear natural conversational Roman Hinglish. 3. DEFAULT CRITICAL ACTION: If the text is standard English, you MUST provide the response in English text layout.\n\n";
-        const systemRule = languageDeductionInstruction + "You are SevaKit.ai. RULES: 1. Absolutely NO asterisks (**), blockquotes (>), tables, hashes (#), or list symbols. 2. Do not write in Hindi Devanagari font script.\n\n" +
+        
+        // Advanced dynamic contextual anchor guidelines injector ruleset
+        const systemRule = "CONTEXT AND SYSTEM CALIBRATION: Today's current date is Saturday, July 18, 2026. Current year is 2026. The active user location is Hyderabad, India. You must always maintain full temporal alignment with 2026 for all scenario answers.\n\n" + 
+        "LANGUAGE ROUTING LOGIC: 1. Evaluate user input. 2. If input contains romanized Hinglish tokens (e.g. 'kaise', 'karo', 'banao', 'hai', 'kya'), respond COMPLETELY in clear natural conversational Roman Hinglish. 3. DEFAULT CRITICAL ACTION: If the text is standard English, you MUST provide the response in English text layout.\n\n" +
+        "You are SevaKit.ai. RULES: 1. Absolutely NO asterisks (**), blockquotes (>), tables, hashes (#), or list symbols. 2. Do not write in Hindi Devanagari font script.\n\n" +
         "DYNAMIC MULTI-PERSONA ACTIONS:\n" +
         "- IF PRIMARY USER SCHOOL KID: Respond like a cheerful primary school instructor.\n" +
         "- IF DOCTOR CONTEXT MATCHED: Deploy professional medical terminology.\n" +
@@ -504,6 +560,9 @@
         
         if(!input) return alert("Pehle query box me kuch enter karein!");
         outContainer.classList.remove('hidden'); waBox.innerHTML = "";
+
+        // Stop existing speech if running
+        window.speechSynthesis.cancel();
 
         const imageKeywords = ['image', 'photo', 'pic', 'banao', 'generate', 'draw', 'picture', 'logo', 'drawing'];
         const isImageRequest = imageKeywords.some(keyword => input.toLowerCase().includes(keyword));
