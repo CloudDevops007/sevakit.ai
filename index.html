@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
-    <!-- External Libraries for Advanced PDF & File Operations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -220,7 +219,6 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
             <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish to auto-convert responses. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
@@ -236,7 +234,6 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- Digital File Converter & Processing Utilities Dashboard Panel -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe, Online registrations aur file conversions ke saare tools ek jagah.</p>
@@ -295,7 +292,6 @@
             </div>
         </div>
 
-        <!-- Script-to-Video Tab -->
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
             <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
@@ -304,15 +300,16 @@
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
 
-        <!-- Games Arcade Room Tab Zone (CLEANED - 100% WORKING OFFLINE GAMES ONLY) -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Yeh saare games 100% local JavaScript code par chalte hain. Zero errors, zero loading lag!</p>
             
             <div class="games-grid">
                 <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
                 <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
-                <div class="game-card" onclick="startLocalBricksGame()">🧱 Brick Breaker</div>
+                <div class="game-card" onclick="startLocalCricketGame()">🏏 Mini Cricket</div>
+                <div class="game-card" onclick="startLocalBounceGame()">🏀 Basket Bounce</div>
+                <div class="game-card" onclick="startLocalDinoGame()">🦖 Dino Runner</div>
             </div>
             
             <div id="gameScreenBox" class="game-screen-container hidden" style="width:100%;">
@@ -324,7 +321,6 @@
             </div>
         </div>
 
-        <!-- Form Tab Content Layout -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 State & Central Form Scanner</h3>
             <p style="color: #64748b; font-size: 14px;">Upload application forms layouts.</p>
@@ -528,7 +524,7 @@
         }
     }
 
-    // --- 100% OFFLINE MULTI-GAME IMPLEMENTATIONS (ZERO LAG & INTERNET INDEPENDENT) ---
+    // --- 100% OFFLINE STABLE MULTI-GAME PLATFORM ENGINE ---
     let activeGlobalInterval = null;
 
     function resetArcadeCanvasBox(titleText) {
@@ -537,13 +533,14 @@
         const title = document.getElementById('gameTitleDisplay');
         
         clearInterval(activeGlobalInterval);
+        window.onkeydown = null;
         box.classList.remove('hidden');
         localCanvas.classList.remove('hidden');
         title.innerText = titleText;
         box.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Game 1: Tic Tac Toe Core
+    // 1. Tic Tac Toe
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let tttCurrentPlayer = "X";
     function startLocalTicTacToe() {
@@ -568,7 +565,7 @@
         tttCurrentPlayer = tttCurrentPlayer === "X" ? "O" : "X";
     }
 
-    // Game 2: Retro Snake Engine
+    // 2. Retro Snake
     function startLocalSnakeGame() {
         resetArcadeCanvasBox("🐍 Retro Snake Local Grid Arena (Use Arrow Keys)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
@@ -604,91 +601,88 @@
         };
     }
 
-    // GAME 3: SUGGESTED 100% WORKING BRICK BREAKER (NATIVE OFFLINE CODE)
-    function startLocalBricksGame() {
-        resetArcadeCanvasBox("🧱 Atari Brick Breaker Blast (Use Mouse or Touch!)");
+    // 3. Mini Cricket (Timing Hit Game)
+    function startLocalCricketGame() {
+        resetArcadeCanvasBox("🏏 Mini Cricket Timing Net (Click or Press Spacebar to Hit!)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
-        localCanvas.innerHTML = '<canvas id="brickCanvas" width="480" height="320" style="background:#0f172a; border:2px solid var(--primary);"></canvas>';
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="crickScore">Score: 0 | Runs: -</div><canvas id="crickCanvas" width="480" height="300" style="background:#15803d; border:2px solid white; cursor:pointer;"></canvas>';
         
-        const canvas = document.getElementById('brickCanvas'); const ctx = canvas.getContext('2d');
-        let ballRadius = 8; let x = canvas.width/2; let y = canvas.height-30; let dx = 2; let dy = -2;
-        let paddleHeight = 10; let paddleWidth = 75; let paddleX = (canvas.width-paddleWidth)/2;
-        let brickRowCount = 3; let brickColumnCount = 5; let brickWidth = 75; let brickHeight = 20; let brickPadding = 10; let brickOffsetTop = 30; let brickOffsetLeft = 30;
-        let bricks = [];
+        const canvas = document.getElementById('crickCanvas'); const ctx = canvas.getContext('2d');
+        let totalScore = 0; let ball = { x: 440, y: 150, active: true, speed: 4, radius: 8 };
+        let pitchLine = 80; // The perfect hitting zone window
         
-        for(let c=0; c<brickColumnCount; c++) {
-            bricks[c] = [];
-            for(let r=0; r<brickRowCount; r++) { bricks[c][r] = { x: 0, y: 0, status: 1 }; }
+        function deliverBall() { ball.x = 440; ball.y = 130 + Math.random()*40; ball.speed = 4 + Math.random()*3; ball.active = true; }
+        
+        function hitShot() {
+            if(!ball.active) return;
+            ball.active = false;
+            let diff = Math.abs(ball.x - pitchLine);
+            let runText = "Out!";
+            if(diff < 15) { totalScore += 6; runText = "SIXER! (Perfect Timing)"; }
+            else if(diff < 35) { totalScore += 4; runText = "FOUR! (Good Shot)"; }
+            else if(diff < 55) { totalScore += 1; runText = "1 Run (Safe Single)"; }
+            else { runText = "OUT! (Missed Timing)"; }
+            document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: ${runText}`;
+            setTimeout(deliverBall, 1500);
         }
+        
+        canvas.onclick = hitShot;
+        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); hitShot(); } };
 
-        canvas.addEventListener("mousemove", (e) => {
-            let relativeX = e.clientX - canvas.getBoundingClientRect().left;
-            if(relativeX > 0 && relativeX < canvas.width) { paddleX = relativeX - paddleWidth/2; }
-        });
-
-        activeGlobalInterval = setInterval(function draw() {
+        activeGlobalInterval = setInterval(function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Draw Bricks Matrix
-            for(let c=0; c<brickColumnCount; c++) {
-                for(let r=0; r<brickRowCount; r++) {
-                    if(bricks[c][r].status == 1) {
-                        let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-                        let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-                        bricks[c][r].x = brickX; bricks[c][r].y = brickY;
-                        ctx.beginPath(); ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        ctx.fillStyle = "#0284c7"; ctx.fill(); ctx.closePath();
-                    }
-                }
+            // Draw Pitch
+            ctx.fillStyle = "#eab308"; ctx.fillRect(40, 120, 400, 60);
+            // Draw Batsman Zone Line
+            ctx.strokeStyle = "white"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pitchLine, 120); ctx.lineTo(pitchLine, 180); ctx.stroke();
+            // Move Ball
+            if(ball.active) {
+                ball.x -= ball.speed;
+                ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+                ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
+                if(ball.x < 0) { ball.active = false; document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: Dot Ball!`; setTimeout(deliverBall, 1000); }
             }
-            // Draw Paddle
-            ctx.beginPath(); ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-            ctx.fillStyle = "#22c55e"; ctx.fill(); ctx.closePath();
-            // Draw Ball
-            ctx.beginPath(); ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-            ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
-
-            // Collision parameters logic detection
-            for(let c=0; c<brickColumnCount; c++) {
-                for(let r=0; r<brickRowCount; r++) {
-                    let b = bricks[c][r];
-                    if(b.status == 1) {
-                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) { dy = -dy; b.status = 0; }
-                    }
-                }
-            }
-
-            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) { dx = -dx; }
-            if(y + dy < ballRadius) { dy = -dy; }
-            else if(y + dy > canvas.height-ballRadius) {
-                if(x > paddleX && x < paddleX + paddleWidth) { dy = -dy; }
-                else { alert("Game Over!"); startLocalBricksGame(); return; }
-            }
-            x += dx; y += dy;
-        }, 10);
+        }, 20);
     }
 
-    function closeActiveGame() { 
-        document.getElementById('gameScreenBox').classList.add('hidden'); 
-        clearInterval(activeGlobalInterval); 
-        window.onkeydown = null;
+    // 4. Basket Bounce (Flappy style ball bounce)
+    function startLocalBounceGame() {
+        resetArcadeCanvasBox("🏀 Basket Bounce Arena (Click or Spacebar to Jump!)");
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="bounceScore">Score: 0</div><canvas id="bounceCanvas" width="480" height="320" style="background:#1e293b; border:2px solid var(--primary); cursor:pointer;"></canvas>';
+        
+        const canvas = document.getElementById('bounceCanvas'); const ctx = canvas.getContext('2d');
+        let score = 0; let ball = { x: 100, y: 150, gravity: 0.25, velocity: 0, radius: 10, jump: -4.5 };
+        let pipe = { x: 480, width: 40, gap: 90, topHeight: 100, speed: 2.5 };
+
+        function makeJump() { ball.velocity = ball.jump; }
+        canvas.onclick = makeJump;
+        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); makeJump(); } };
+
+        activeGlobalInterval = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Ball physics update
+            ball.velocity += ball.gravity; ball.y += ball.velocity;
+            ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+            ctx.fillStyle = "#f97316"; ctx.fill(); ctx.closePath();
+
+            // Pipe rendering & movement logic
+            pipe.x -= pipe.speed;
+            if(pipe.x < -pipe.width) { pipe.x = 480; pipe.topHeight = 40 + Math.random()*150; score++; document.getElementById('bounceScore').innerText = `Score: ${score}`; }
+            ctx.fillStyle = "#22c55e";
+            ctx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
+            ctx.fillRect(pipe.x, pipe.topHeight + pipe.gap, pipe.width, canvas.height);
+
+            // Bounds & Crash Checks
+            if(ball.y > canvas.height || ball.y < 0) { alert("Game Over!"); startLocalBounceGame(); return; }
+            if(ball.x + ball.radius > pipe.x && ball.x - ball.radius < pipe.x + pipe.width) {
+                if(ball.y - ball.radius < pipe.topHeight || ball.y + ball.radius > pipe.topHeight + pipe.gap) { alert("Game Over!"); startLocalBounceGame(); return; }
+            }
+        }, 20);
     }
-    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
-    function triggerVideoPipeline() { alert("Video compiling setup loaded."); }
-    function generateWhatsAppBanner(textContext) {
-        const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
-        const matched = triggers.some(t => textContext.toLowerCase().includes(t));
-        if (matched) {
-            const myNum = "919398696996";
-            return `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Rejection Warning!</h4><p style="margin:0; font-size:13px; opacity:0.9;">MeeSeva details mapping assistant active.</p></div><a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a></div>`;
-        }
-        return '';
-    }
-    async function executeFreeAIRequest(s, u) {
-        try {
-            const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: s }, { role: 'user', content: u }], model: 'openai', jsonMode: false }) });
-            return await r.text();
-        } catch (e) { return null; }
-    }
-</script>
-</body>
-</html>
+
+    // 5. Dino Runner Game Layout
+    function startLocalDinoGame() {
+        resetArcadeCanvasBox("🦖 Offline Dino Runner Grid (Press Spacebar or Click to Jump!)");
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="dinoScore">Distance: 0m</div><canvas id="dinoCanvas" width="500" height="200" style="background:#f8fafc; border:2px solid #cbd5e1;
