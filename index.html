@@ -173,6 +173,38 @@
             align-items: center;
         }
 
+        .game-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        /* --- Chess Dashboard Overlay Design --- */
+        .chess-menu-panel {
+            background: #334155;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .chess-option-btn {
+            background: #0284c7;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .chess-option-btn:hover { background: #0369a1; }
+
         .ai-image-wrapper img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .image-action-bar { margin-top: 15px; display: flex; gap: 10px; }
 
@@ -196,7 +228,7 @@
         .whatsapp-btn { background: white; color: var(--success-dark); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .ad-space { background: #f8fafc; border: 2px dashed var(--border); padding: 15px; text-align: center; font-size: 12px; color: #64748b; margin-top: 25px; border-radius: 6px; }
         
-        #localGameCanvasContainer { background: #0f172a; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; width: 100%; }
+        #localGameCanvasContainer { background: #0f172a; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 90px); gap: 8px; }
         .tictactoe-cell { background: #334155; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: bold; color: white; cursor: pointer; height: 90px; }
     </style>
@@ -219,7 +251,6 @@
             <input type="password" id="globalApiKey" placeholder="Advanced capabilities box...">
         </div>
         
-        <!-- Tab Sidebar List Fixed (All tabs mapped perfectly) -->
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
         <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
@@ -305,7 +336,7 @@
             </div>
         </div>
 
-        <!-- Script-to-Video Tab (Fully Visible Now) -->
+        <!-- Script-to-Video Tab -->
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
             <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
@@ -318,18 +349,32 @@
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit Arcade Studio</h3>
             <div class="games-grid">
-                <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
-                <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
-                <div class="game-card" onclick="loadExternalGame('chess')">♟️ Chess Online</div>
+                <div class="game-card" onclick="setupChessLauncherOptions()">♟️ Chess Hub</div>
                 <div class="game-card" onclick="loadExternalGame('puzzle')">🧩 2048 Puzzle</div>
                 <div class="game-card" onclick="loadExternalGame('ludo')">🎲 Classic Ludo</div>
                 <div class="game-card" onclick="loadExternalGame('cards')">🃏 Solitaire Cards</div>
+                <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
+                <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
             </div>
+            
             <div id="gameScreenBox" class="game-screen-container hidden" style="width:100%;">
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; width:100%; color:white; font-weight:bold;">
                     <span id="gameTitleDisplay">Active Arena</span>
                     <button onclick="closeActiveGame()" style="width:auto; padding:5px 15px; background:#ef4444; margin:0;">❌ Stop Game</button>
                 </div>
+
+                <!-- Chess Custom Interface Layer Selector -->
+                <div id="chessMenuOverlay" class="chess-menu-panel hidden">
+                    <h4>Select Chess Mode Setup:</h4>
+                    <button class="chess-option-btn" onclick="launchChessEngine('friend')">👥 Play with Friend (2 Players)</button>
+                    <br><br>
+                    <strong>🤖 Play vs Computer (Select Level):</strong><br>
+                    <button class="chess-option-btn" onclick="launchChessEngine('easy')">Easy</button>
+                    <button class="chess-option-btn" onclick="launchChessEngine('medium')">Medium</button>
+                    <button class="chess-option-btn" onclick="launchChessEngine('hard')">Hard</button>
+                    <button class="chess-option-btn" onclick="launchChessEngine('pro')">Pro</button>
+                </div>
+
                 <iframe id="arcadeFrame" class="game-frame hidden" src=""></iframe>
                 <div id="localGameCanvasContainer" class="hidden"></div>
             </div>
@@ -367,8 +412,7 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const textToSave = document.getElementById('assistantOutput').innerText;
-        doc.setFont("Helvetica", "normal");
-        doc.setFontSize(12);
+        doc.setFont("Helvetica", "normal"); doc.setFontSize(12);
         const splitText = doc.splitTextToSize(textToSave, 180);
         doc.text(splitText, 15, 20);
         doc.save("sevakit-search-document.pdf");
@@ -440,7 +484,6 @@
         setTimeout(() => {
             const originalMockText = "Simulated English Content structure application form data row fields map.";
             const instruction = `Translate this phrase clearly into ${targetLang}. Give only short output sentence.`;
-            
             executeFreeAIRequest(instruction, originalMockText).then(translatedResult => {
                 const { jsPDF } = window.jspdf;
                 const outDoc = new jsPDF();
@@ -459,10 +502,8 @@
 
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
-        sigCanvas = document.getElementById('sigCanvas');
-        if(!sigCanvas) return;
-        sigCtx = sigCanvas.getContext('2d');
-        sigCtx.strokeStyle = "#1e293b"; sigCtx.lineWidth = 3;
+        sigCanvas = document.getElementById('sigCanvas'); if(!sigCanvas) return;
+        sigCtx = sigCanvas.getContext('2d'); sigCtx.strokeStyle = "#1e293b"; sigCtx.lineWidth = 3;
         sigCanvas.addEventListener('mousedown', (e) => { isDrawingSig = true; sigCtx.beginPath(); sigCtx.moveTo(e.offsetX, e.offsetY); });
         sigCanvas.addEventListener('mousemove', (e) => { if(isDrawingSig) { sigCtx.lineTo(e.offsetX, e.offsetY); sigCtx.stroke(); } });
         window.addEventListener('mouseup', () => isDrawingSig = false);
@@ -471,8 +512,7 @@
     function downloadSignatureImage() {
         if(!sigCanvas) return;
         const dataUrl = sigCanvas.toDataURL("image/png");
-        const a = document.createElement('a');
-        a.href = dataUrl; a.download = "sevakit-signature.png"; a.click();
+        const a = document.createElement('a'); a.href = dataUrl; a.download = "sevakit-signature.png"; a.click();
     }
 
     async function handleEngineRouting(promptText) {
@@ -482,9 +522,9 @@
         "DYNAMIC MULTI-PERSONA ACTIONS:\n" +
         "- IF PRIMARY USER SCHOOL KID: Respond like a cheerful primary school instructor.\n" +
         "- IF DOCTOR CONTEXT MATCHED: Deploy professional medical terminology.\n" +
-        "- IF LEGAL/LAWYER SYSTEM QUERY: State structural kanoon references.\n" +
-        "- IF TECH/IT PROGRAMMER CONTEXT: Deliver absolute pure terminal commands directly.\n" +
-        "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent workflow assistant. Display severe empathy and acknowledge customer pain politely, then give a ready-to-copy text reply.";
+        "- IF LEGAL/LAWYER SYSTEM QUERY: State kanoon references.\n" +
+        "- IF TECH/IT PROGRAMMER CONTEXT: Deliver terminal commands parameters directly.\n" +
+        "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent workflow assistant. Display severe empathy, then give a ready-to-copy text reply.";
 
         if (apiKey) {
             try {
@@ -511,15 +551,14 @@
         const waBox = document.getElementById('assistantWhatsAppZone');
         
         if(!input) return alert("Pehle query box me kuch enter karein!");
-        outContainer.classList.remove('hidden');
-        waBox.innerHTML = "";
+        outContainer.classList.remove('hidden'); waBox.innerHTML = "";
 
         const imageKeywords = ['image', 'photo', 'pic', 'banao', 'generate', 'draw', 'picture', 'logo', 'drawing'];
         const isImageRequest = imageKeywords.some(keyword => input.toLowerCase().includes(keyword));
 
         if (isImageRequest) {
             outBox.innerHTML = `🎨 SevaKit Hyper-Real Flux Engine photo process kar raha hai...`;
-            const translationInstruction = "Convert user request parameters completely into a high fidelity detailed photographic prompt for rendering matrices. Respond only with the final text prompt.";
+            const translationInstruction = "Convert user request parameters completely into a high fidelity detailed photographic prompt. Respond only with the final text prompt.";
             let optimizedPrompt = await executeFreeAIRequest(translationInstruction, input);
             if(!optimizedPrompt) optimizedPrompt = input;
 
@@ -545,35 +584,79 @@
         }
     }
 
-    const globalArcadeSecureRoutes = {
-        'chess': 'https://lichess.org/training/frame',
-        'puzzle': 'https://play2048.co/',
-        'ludo': 'https://ludo.play-games.com/',
-        'cards': 'https://www.solitaire-play.com/klondike/turn3/'
+    // --- NEW FIXED AND ADVANCED arcade grid router servers ---
+    const secureGameUrls = {
+        'puzzle': 'https://games.play2048.co/', 
+        'ludo': 'https://html5.gamedistribution.com/7dad9f7762634e2f9d6a3648ebc43916/?gd_sdk_referrer_url=https%3A%2F%2Fwww.gamedistribution.com%2Fgames%2Fludo-hero', 
+        'cards': 'https://html5.gamedistribution.com/712ad643a6d946c18090ebbc1721522c/?gd_sdk_referrer_url=https%3A%2F%2Fwww.gamedistribution.com%2Fgames%2Fsolitaire-classic-1'
     };
     
+    function setupChessLauncherOptions() {
+        const box = document.getElementById('gameScreenBox');
+        const overlay = document.getElementById('chessMenuOverlay');
+        const frame = document.getElementById('arcadeFrame');
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        const title = document.getElementById('gameTitleDisplay');
+
+        // Close everything else
+        localCanvas.classList.add('hidden');
+        frame.classList.add('hidden');
+        clearInterval(snakeGameInterval);
+
+        box.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+        title.innerText = "♟️ Chess Studio Menu Configuration Options";
+        box.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function launchChessEngine(mode) {
+        const overlay = document.getElementById('chessMenuOverlay');
+        const frame = document.getElementById('arcadeFrame');
+        const title = document.getElementById('gameTitleDisplay');
+
+        overlay.classList.add('hidden');
+        frame.classList.remove('hidden');
+
+        if(mode === 'friend') {
+            title.innerText = "👥 Playing Chess vs Friend (Starting Board Local Node)";
+            frame.src = "https://lichess.org/analysis/standard";
+        } else {
+            // Mapping levels dynamically onto high speed white-listed play sandbox links
+            title.innerText = `🤖 Playing Chess vs Computer (Level: ${mode.toUpperCase()})`;
+            let botLevel = mode === 'easy' ? 1 : mode === 'medium' ? 3 : mode === 'hard' ? 5 : 8;
+            frame.src = `https://lichess.org/embed/export/fen/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%20w%20KQkq%20-%200%201?theme=maple&bg=dark#ai=${botLevel}`;
+        }
+    }
+
     function loadExternalGame(gameKey) {
         const box = document.getElementById('gameScreenBox');
         const frame = document.getElementById('arcadeFrame');
         const localCanvas = document.getElementById('localGameCanvasContainer');
+        const overlay = document.getElementById('chessMenuOverlay');
         const title = document.getElementById('gameTitleDisplay');
-        localCanvas.classList.add('hidden'); clearInterval(snakeGameInterval);
-        box.classList.remove('hidden'); frame.classList.remove('hidden');
-        frame.src = globalArcadeSecureRoutes[gameKey];
-        title.innerText = "🎮 Streaming Unblocked System Game Arena Master";
+        
+        localCanvas.classList.add('hidden');
+        overlay.classList.add('hidden');
+        clearInterval(snakeGameInterval);
+        
+        box.classList.remove('hidden');
+        frame.classList.remove('hidden');
+        frame.src = secureGameUrls[gameKey];
+        
+        const friendlyTitles = { 'puzzle': '🧩 2048 Classic Fusion Grid', 'ludo': '🎲 Ludo Hero Multiplayer Sandbox', 'cards': '🃏 Solitaire Classic Deck Arena' };
+        title.innerText = friendlyTitles[gameKey];
         box.scrollIntoView({ behavior: 'smooth' });
     }
 
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let tttCurrentPlayer = "X";
     function startLocalTicTacToe() {
-        const box = document.getElementById('gameScreenBox');
-        const frame = document.getElementById('arcadeFrame');
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        const title = document.getElementById('gameTitleDisplay');
+        const box = document.getElementById('gameScreenBox'); const frame = document.getElementById('arcadeFrame');
+        const localCanvas = document.getElementById('localGameCanvasContainer'); const title = document.getElementById('gameTitleDisplay');
+        document.getElementById('chessMenuOverlay').classList.add('hidden');
         clearInterval(snakeGameInterval); frame.src = ""; frame.classList.add('hidden');
         box.classList.remove('hidden'); localCanvas.classList.remove('hidden');
-        title.innerText = "⭕ Tic-Tac-Toe Smart Board Arena"; tttBoard = ["", "", "", "", "", "", "", "", ""]; tttCurrentPlayer = "X";
+        title.innerText = "⭕ Tic-Tac-Toe Board Arena"; tttBoard = ["", "", "", "", "", "", "", "", ""]; tttCurrentPlayer = "X";
         renderTTTBoard();
     }
     function renderTTTBoard() {
@@ -595,10 +678,9 @@
 
     let snakeGameInterval = null;
     function startLocalSnakeGame() {
-        const box = document.getElementById('gameScreenBox');
-        const frame = document.getElementById('arcadeFrame');
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        const title = document.getElementById('gameTitleDisplay');
+        const box = document.getElementById('gameScreenBox'); const frame = document.getElementById('arcadeFrame');
+        const localCanvas = document.getElementById('localGameCanvasContainer'); const title = document.getElementById('gameTitleDisplay');
+        document.getElementById('chessMenuOverlay').classList.add('hidden');
         frame.classList.add('hidden'); box.classList.remove('hidden'); localCanvas.classList.remove('hidden');
         title.innerText = "🐍 Retro Snake Local Grid Arena (Use Arrow Keys)";
         localCanvas.innerHTML = '<canvas id="snakeCanvas" width="400" height="400" style="background:#020617; border:2px solid var(--primary);"></canvas>';
@@ -631,31 +713,28 @@
         });
     }
 
-    function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(snakeGameInterval); }
-    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
-    
-    function triggerVideoPipeline() { 
-        const vOut = document.getElementById('videoOutput');
-        vOut.classList.remove('hidden');
-        vOut.innerText = "🎬 Script received! Video Pipeline simulation initiated. Custom API Key required to render actual MP4 streams on cloud nodes."; 
+    function closeActiveGame() { 
+        document.getElementById('gameScreenBox').classList.add('hidden'); 
+        document.getElementById('chessMenuOverlay').classList.add('hidden');
+        document.getElementById('arcadeFrame').src = ""; 
+        clearInterval(snakeGameInterval); 
     }
-    
+    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
+    function triggerVideoPipeline() { alert("Video compiling setup loaded."); }
     function generateWhatsAppBanner(textContext) {
         const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
         const matched = triggers.some(t => textContext.toLowerCase().includes(t));
         if (matched) {
             const myNum = "919398696996";
-            return `
-                <div class="whatsapp-premium-banner">
-                    <div>
-                        <h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Document Form Rejection Warning!</h4>
-                        <p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva support ke liye WhatsApp karein.</p>
-                    </div>
-                    <a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
-                </div>
-            `;
+            return `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Document Form Rejection Warning!</h4><p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva support ke liye WhatsApp karein.</p></div><a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a></div>`;
         }
         return '';
+    }
+    async function executeFreeAIRequest(s, u) {
+        try {
+            const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: s }, { role: 'user', content: u }], model: 'openai', jsonMode: false }) });
+            return await r.text();
+        } catch (e) { return null; }
     }
 </script>
 </body>
