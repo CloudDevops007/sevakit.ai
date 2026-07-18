@@ -133,6 +133,45 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
+        /* Generated Image Container styling */
+        .ai-image-wrapper {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .ai-image-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-action-bar {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-download { background: #e0f2fe; color: #0369a1; }
+        .btn-download:hover { background: #bae6fd; }
+        .btn-wa-share { background: #dcfce7; color: #166534; }
+        .btn-wa-share:hover { background: #bbf7d0; }
+
         .whatsapp-premium-banner {
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
@@ -177,14 +216,14 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">⚡ Active Hybrid Mode</div>
+    <div class="badge">✨ Ultimate AI Workspace</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
             <strong>✅ Free Access Active:</strong><br>
-            Aap bina kisi key ke direct simplified answers direct search kar sakte hain!
+            Aap bina kisi key ke direct simplified answers aur images generate kar sakte hain!
         </div>
 
         <div class="api-box">
@@ -204,9 +243,9 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3>🤖 AI Assistant (Direct Clean Chat)</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi search karein. English text ko Hinglish me badalne ke liye likhein: "Translate to Hinglish: [aapka text]"</p>
-            <textarea id="assistantInput" placeholder="Apna sawaal ya text yahan likhein..." style="height: 120px;"></textarea>
+            <h3 id="greetingHeading">🤖 AI Assistant & Image Creator</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi normal search karein. <br><strong>🎨 Image banane ke liye likhein:</strong> "Create image of a smart cat" ya "ek logo banao".</p>
+            <textarea id="assistantInput" placeholder="Apna sawaal likhein ya photo banane ki command dein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
             <div id="assistantOutput" class="response-zone hidden"></div>
@@ -235,6 +274,19 @@
 </div>
 
 <script>
+    // 4. Smart Dynamic Greeting Feature Logic
+    window.onload = function() {
+        const hour = new Date().getHours();
+        let greeting = "Main SevaKit AI hu. Aaj main aapke liye kya seva karu? Aap mujhse chat kar sakte hain ya koi image bhi banwa sakte hain!";
+        if (hour < 12) {
+            document.getElementById('greetingHeading').innerText = "🌅 Good Morning! AI Assistant";
+        } else if (hour < 17) {
+            document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! AI Assistant";
+        } else {
+            document.getElementById('greetingHeading').innerText = "🌆 Good Evening! AI Assistant";
+        }
+    };
+
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
@@ -263,7 +315,7 @@
         return '';
     }
 
-    // High Performance Free Open Router Logic Layer
+    // Open Router Text AI Engine Proxy
     async function executeFreeAIRequest(systemInstruction, userPrompt) {
         try {
             const url = 'https://text.pollinations.ai/';
@@ -286,12 +338,11 @@
         }
     }
 
-    // Unified Routing Manager
+    // Direct Gemini Core Connection Wrapper
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
         const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean like a clear messaging text screen.";
 
-        // If user input custom keys in sidebar
         if (apiKey) {
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
@@ -306,34 +357,68 @@
                 const data = await response.json();
                 return data.candidates[0].content.parts[0].text;
             } catch (error) {
-                console.error("Gemini failed, falling back to free route...", error);
+                console.error("Gemini route fail, fallback trigger...", error);
             }
         }
 
-        // Silent Fallback: Key na hone par auto free pipeline execute ho jayega bin kisi alert box ke
         return await executeFreeAIRequest(systemRule, promptText);
     }
 
+    // Primary Execution Core Engine Switcher
     async function askSmartAssistant() {
-        const input = document.getElementById('assistantInput').value;
+        const input = document.getElementById('assistantInput').value.trim();
         const outBox = document.getElementById('assistantOutput');
         const waBox = document.getElementById('assistantWhatsAppZone');
         
         if(!input) return alert("Pehle kuch type karein!");
         
         outBox.classList.remove('hidden');
-        outBox.innerText = "⏳ SevaKit Processing Response...";
         waBox.innerHTML = "";
 
-        let aiResponse = await handleEngineRouting(input);
-        
-        if(aiResponse) {
-            // Ultimate text sanitation logic
-            aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
-            outBox.innerText = aiResponse;
-            waBox.innerHTML = generateWhatsAppBanner(input);
+        // Tracker Keywords detect karne ke liye
+        const imageKeywords = ['image', 'photo', 'pic', 'banao', 'generate', 'draw', 'picture', 'logo', 'drawing'];
+        const isImageRequest = imageKeywords.some(keyword => input.toLowerCase().includes(keyword));
+
+        if (isImageRequest) {
+            // 2. Live Loading Spinner for Image Generation
+            outBox.innerHTML = `🎨 SevaKit AI aapki kalpana ko image me badal raha hai... Kripya 3-4 seconds wait karein.`;
+            
+            // 1. Auto-Hinglish Prompt Optimizer Layer
+            const translationInstruction = "Translate this description completely into a detailed clear descriptive English prompt for drawing tools. Just give the single sentence output, no extras.";
+            let optimizedPrompt = await executeFreeAIRequest(translationInstruction, input);
+            
+            if(!optimizedPrompt) { optimizedPrompt = input; }
+
+            // Encoding prompt safely for dynamic image seed delivery
+            const seed = Math.floor(Math.random() * 100000);
+            const imageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(optimizedPrompt)}?width=512&height=512&seed=${seed}&nologo=true`;
+
+            // Display Image inside the workspace along with 3. Utility buttons
+            setTimeout(() => {
+                outBox.innerHTML = `
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ SevaKit AI ne aapki photo successfully create kar di hai:</p>
+                    <div class="ai-image-wrapper">
+                        <img src="${imageUrl}" alt="Generated Media Concept Layer" />
+                        <div class="image-action-bar">
+                            <a href="${imageUrl}" target="_blank" download="sevekit-ai-art.jpg" class="action-btn btn-download">💾 Download Image</a>
+                            <a href="https://wa.me/919398696996?text=${encodeURIComponent('Hi, Maine SevaKit.ai par ye awesome image generate ki hai: ' + imageUrl)}" target="_blank" class="action-btn btn-wa-share">💬 WhatsApp Share</a>
+                        </div>
+                    </div>
+                `;
+            }, 2000);
+
         } else {
-            outBox.innerText = "Server response dynamic check needed. Please submit request again.";
+            // Standard Text Assistant route pipeline
+            outBox.innerText = "⏳ SevaKit Processing Response...";
+            let aiResponse = await handleEngineRouting(input);
+            
+            if(aiResponse) {
+                aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
+                outBox.innerText = aiResponse;
+                waBox.innerHTML = generateWhatsAppBanner(input);
+            } else {
+                outBox.innerText = "Server connection status check required. Please try again.";
+            }
         }
     }
 
