@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SevaKit.ai - Smart Digital Assistant & Utilities</title>
+    <title>SevaKit.ai - Smart Utilities & Arcade Hub</title>
     <style>
         :root {
             --primary: #0284c7;
@@ -171,6 +171,48 @@
         .btn-wa-share { background: #dcfce7; color: #166534; }
         .btn-wa-share:hover { background: #bbf7d0; }
 
+        /* --- Arcade Gaming Studio Grid Styling --- */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .game-card {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .game-card:hover {
+            background: #e0f2fe;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .game-screen-container {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+            margin-top: 20px;
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
         .whatsapp-premium-banner {
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
@@ -215,25 +257,23 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🧠 Dynamic Multiverse AI</div>
+    <div class="badge">🎮 Arcade & Multi-AI Active</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
-            <strong>✅ Adaptive Persona Active:</strong><br>
-            AI automatically user ka level samajhkar usi language aur understanding me jawab dega!
+            <strong>✅ Suite Live Status:</strong><br>
+            Smart AI Tools ke sath fully operational browser games live hain!
         </div>
 
         <div class="api-box">
             <label>🔑 Personal Gemini Key (Optional)</label>
             <input type="password" id="globalApiKey" placeholder="Advanced features ke liye...">
-            <small style="display:block; margin-top:-8px; font-size:11px;">
-                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free Advanced Key ↗</a>
-            </small>
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 AI Smart Assistant</div>
+        <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Games Arcade</div>
         <div class="menu-item" onclick="switchTab('form-tab')">📝 Smart Form Filler</div>
         <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
         
@@ -243,36 +283,100 @@
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Intelligent Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Homework, Law, Tech, Medical ya Support Client queries enter karein. System user ka role auto-detect kar lega.</p>
-            <textarea id="assistantInput" placeholder="Apna sawaal ya customer ka message yahan paste karein..." style="height: 120px;"></textarea>
+            <p style="color: #64748b; font-size: 14px;">Homework, Law, Tech, Medical ya Support Client queries dalein. <br><strong>🎨 Real Photo ke liye likhein:</strong> "cat elephant ke upar baithkar aa rhi h image banao".</p>
+            <textarea id="assistantInput" placeholder="Apna sawaal likhein ya customer query paste karein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
             <div id="assistantOutput" class="response-zone hidden"></div>
             <div id="assistantWhatsAppZone"></div>
         </div>
 
+        <div id="games-tab" class="tab-content hidden">
+            <h3>🎮 SevaKit Gaming Arcade Studio</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Apna pasandida game select karein aur tool ke andar hi bina kisi install ke direct kheliye!</p>
+            
+            <div class="games-grid">
+                <div class="game-card" onclick="loadGame('chess')">♟️ Chess Pro</div>
+                <div class="game-card" onclick="loadGame('ludo')">🎲 Classic Ludo</div>
+                <div class="game-card" onclick="loadGame('snake')">🐍 Retro Snake</div>
+                <div class="game-card" onclick="loadGame('tic')">⭕ Tic-Tac-Toe</div>
+                <div class="game-card" onclick="loadGame('puzzle')">🧩 2048 Puzzle</div>
+                <div class="game-card" onclick="loadGame('cards')">🃏 Solitaire Cards</div>
+                <div class="game-card" onclick="loadGame('flappy')">🐦 Flappy Bird</div>
+                <div class="game-card" onclick="loadGame('bricks')">🧱 Brick Breaker</div>
+            </div>
+
+            <div id="gameScreenBox" class="game-screen-container hidden">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:10px; color:white; font-weight:bold;">
+                    <span id="gameTitleDisplay">Active Game Canvas</span>
+                    <button onclick="closeGame()" style="width:auto; padding:5px 15px; background:#ef4444;">❌ Stop Playing</button>
+                </div>
+                <iframe id="arcadeFrame" class="game-frame" src=""></iframe>
+            </div>
+        </div>
+
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 State & Central Form Scanner</h3>
-            <p style="color: #64748b; font-size: 14px;">Upload any application layout form.</p>
+            <p style="color: #64748b; font-size: 14px;">Upload any application layout form form verification mapping.</p>
             <input type="file" id="formFile" accept="image/*">
             <button onclick="scanFormLayout()">Scan & Map Form Fields</button>
-            
             <div id="formOutput" class="response-zone hidden"></div>
-            <div id="formWhatsAppZone"></div>
         </div>
 
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
-            <p style="color: #64748b; font-size: 14px;">Advanced video feature requires dedicated API processing power.</p>
-            <textarea id="scriptInput" placeholder="Apni script yahan paste karein..."></textarea>
+            <p style="color: #64748b; font-size: 14px;">Advanced video server mapping.</p>
+            <textarea id="scriptInput" placeholder="Apni script paste karein..."></textarea>
             <button onclick="triggerVideoPipeline()">Compile & Render Concept</button>
-            
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
     </div>
 </div>
 
 <script>
+    // <iframe> Router Database using trusted secure unblocked public repository structures
+    const gameDatabase = {
+        'chess': 'https://html5games.com/embed/chess-classic',
+        'ludo': 'https://html5games.com/embed/ludo-classic',
+        'snake': 'https://html5games.com/embed/classic-snake',
+        'tic': 'https://playtictactoe.org/',
+        'puzzle': 'https://gabrielecirulli.github.io/2048/',
+        'cards': 'https://html5games.com/embed/solitaire-classic',
+        'flappy': 'https://floppybird.io/',
+        'bricks': 'https://html5games.com/embed/atari-breakout'
+    };
+
+    function loadGame(gameKey) {
+        const screenBox = document.getElementById('gameScreenBox');
+        const frame = document.getElementById('arcadeFrame');
+        const titleText = document.getElementById('gameTitleDisplay');
+        
+        const titles = {
+            'chess': '♟️ Playing Chess Classic Professional',
+            'ludo': '🎲 Playing Ludo Master Multi-Canvas',
+            'snake': '🐍 Playing Retro Snake Speed Run',
+            'tic': '⭕ Playing Tic-Tac-Toe Smart Board',
+            'puzzle': '🧩 Playing 2048 Fusion Grid Puzzle',
+            'cards': '🃏 Playing Solitaire Premium Classic Cards',
+            'flappy': '🐦 Playing Flappy Bird Velocity Challenge',
+            'bricks': '🧱 Playing Retro Brick Breaker Blast'
+        };
+
+        titleText.innerText = titles[gameKey];
+        frame.src = gameDatabase[gameKey];
+        screenBox.classList.remove('hidden');
+        
+        // Dynamic scroll viewport window delivery setup
+        screenBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeGame() {
+        const screenBox = document.getElementById('gameScreenBox');
+        const frame = document.getElementById('arcadeFrame');
+        frame.src = "";
+        screenBox.classList.add('hidden');
+    }
+
     window.onload = function() {
         const hour = new Date().getHours();
         if (hour < 12) {
@@ -289,6 +393,7 @@
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.remove('hidden');
         event.currentTarget.classList.add('active');
+        closeGame(); // Auto stop if switching panes
     }
 
     function generateWhatsAppBanner(textContext) {
@@ -335,8 +440,6 @@
 
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
-        
-        // MASTER SYSTEM PROMPT - Handles Persona Adaptation, Empathy Level Routing, Clean Text Outputs, and forced conversational Roman Hinglish
         const systemRule = "You are SevaKit.ai, a multi-intelligence adaptive assistant. STRICT GENERAL RULES: 1. Absolutely NO asterisks (**), blockquotes (>), hashes (#), tables, or bullet formatting symbols. Use only plain paragraphs or numbers. 2. Always reply in clean conversational Roman Hinglish (Hindi written in English alphabet) unless requested otherwise. No Devanagari characters allowed.\n\n" +
         "ADAPTIVE PERSONA ROUTER ACTIONS:\n" +
         "- IF USER IS A SCHOOL CHILD (Basic topics, simple science/maths homework): Reply like a gentle primary teacher using super simple words, tiny paragraphs, and playful examples.\n" +
@@ -344,7 +447,7 @@
         "- IF USER IS A LAWYER: Frame the response around precise rules, legal frameworks, act sections, and formal arguments.\n" +
         "- IF USER IS AN IT/TECH PERSON (Code, server, linux, networking): Provide zero fluff, clean system logic, direct terminal settings parameters or variables directly.\n" +
         "- IF USER ENTERS A ISLAMIC/RELIGIOUS QUERY: Reply with supreme respect and adab, providing authentic guidance based on verified references.\n" +
-        "- CRITICAL CUSTOMER SUPPORT AGENT DETECTOR: If the prompt looks like a text post/complaint from a customer (e.g. refund delayed, broken product, angry message), IMMEDIATELY realize that a support agent is using you to help a live customer. First, show extreme empathy, sympathy, and acknowledge the customer's pain politely (e.g., 'Aapko hui pareshani ke liye hum khed hai'). Then, generate a polished, ready-to-copy customer response that the agent can send directly.";
+        "- CRITICAL CUSTOMER SUPPORT AGENT DETECTOR: If the prompt looks like a text post/complaint from a customer, IMMEDIATELY realize that a support agent is using you to help a live customer. First, show extreme empathy, sympathy, and acknowledge the customer's pain politely (e.g., 'Aapko hui pareshani ke liye hum khed hai'). Then, generate a polished, ready-to-copy customer response that the agent can send directly.";
 
         if (apiKey) {
             try {
@@ -406,12 +509,9 @@
             let aiResponse = await handleEngineRouting(input);
             
             if(aiResponse) {
-                // Formatting Sanitation Filter Layer
                 aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
                 outBox.innerText = aiResponse;
                 waBox.innerHTML = generateWhatsAppBanner(input);
-            } else {
-                outBox.innerText = "Server response error. Please try again.";
             }
         }
     }
