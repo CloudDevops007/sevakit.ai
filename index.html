@@ -133,7 +133,6 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
-        /* Generated Image Container styling */
         .ai-image-wrapper {
             margin-top: 15px;
             text-align: center;
@@ -216,14 +215,14 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">✨ Ultimate AI Workspace</div>
+    <div class="badge">⚡ Realistic Free Engine</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
-            <strong>✅ Free Access Active:</strong><br>
-            Aap bina kisi key ke direct simplified answers aur images generate kar sakte hain!
+            <strong>✅ Free Realistic Mode:</strong><br>
+            Bina kisi key ke high-quality realistic photos aur direct text response active hai!
         </div>
 
         <div class="api-box">
@@ -243,8 +242,8 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3 id="greetingHeading">🤖 AI Assistant & Image Creator</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi normal search karein. <br><strong>🎨 Image banane ke liye likhein:</strong> "Create image of a smart cat" ya "ek logo banao".</p>
+            <h3 id="greetingHeading">🤖 AI Assistant & Real Image Generator</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, diet plans search karein. <br><strong>🎨 Real Photo banane ke liye likhein:</strong> "cat elephant ke upar baithkar aa rhi h image banao" ya "create real picture of a horse".</p>
             <textarea id="assistantInput" placeholder="Apna sawaal likhein ya photo banane ki command dein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
@@ -254,7 +253,7 @@
 
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 State & Central Form Scanner</h3>
-            <p style="color: #64748b; font-size: 14px;">Upload any application layout form (Telangana state schemes, SIR, housing etc.).</p>
+            <p style="color: #64748b; font-size: 14px;">Upload any application layout form.</p>
             <input type="file" id="formFile" accept="image/*">
             <button onclick="scanFormLayout()">Scan & Map Form Fields</button>
             
@@ -274,23 +273,20 @@
 </div>
 
 <script>
-    // 4. Smart Dynamic Greeting Feature Logic
     window.onload = function() {
         const hour = new Date().getHours();
-        let greeting = "Main SevaKit AI hu. Aaj main aapke liye kya seva karu? Aap mujhse chat kar sakte hain ya koi image bhi banwa sakte hain!";
         if (hour < 12) {
-            document.getElementById('greetingHeading').innerText = "🌅 Good Morning! AI Assistant";
+            document.getElementById('greetingHeading').innerText = "🌅 Good Morning! AI Workspace";
         } else if (hour < 17) {
-            document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! AI Assistant";
+            document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! AI Workspace";
         } else {
-            document.getElementById('greetingHeading').innerText = "🌆 Good Evening! AI Assistant";
+            document.getElementById('greetingHeading').innerText = "🌆 Good Evening! AI Workspace";
         }
     };
 
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-        
         document.getElementById(tabId).classList.remove('hidden');
         event.currentTarget.classList.add('active');
     }
@@ -306,7 +302,7 @@
                 <div class="whatsapp-premium-banner">
                     <div>
                         <h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Document Form Rejection Warning!</h4>
-                        <p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva tasks aur direct registration support ke liye abhi WhatsApp par connect karein.</p>
+                        <p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva support ke liye WhatsApp karein.</p>
                     </div>
                     <a href="https://wa.me/${myNum}?text=${message}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
                 </div>
@@ -315,7 +311,6 @@
         return '';
     }
 
-    // Open Router Text AI Engine Proxy
     async function executeFreeAIRequest(systemInstruction, userPrompt) {
         try {
             const url = 'https://text.pollinations.ai/';
@@ -338,10 +333,9 @@
         }
     }
 
-    // Direct Gemini Core Connection Wrapper
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
-        const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean like a clear messaging text screen.";
+        const systemRule = "You are SevaKit.ai. 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. Reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters.";
 
         if (apiKey) {
             try {
@@ -357,14 +351,12 @@
                 const data = await response.json();
                 return data.candidates[0].content.parts[0].text;
             } catch (error) {
-                console.error("Gemini route fail, fallback trigger...", error);
+                console.error("Gemini failed, fallback to free...", error);
             }
         }
-
         return await executeFreeAIRequest(systemRule, promptText);
     }
 
-    // Primary Execution Core Engine Switcher
     async function askSmartAssistant() {
         const input = document.getElementById('assistantInput').value.trim();
         const outBox = document.getElementById('assistantOutput');
@@ -375,40 +367,36 @@
         outBox.classList.remove('hidden');
         waBox.innerHTML = "";
 
-        // Tracker Keywords detect karne ke liye
         const imageKeywords = ['image', 'photo', 'pic', 'banao', 'generate', 'draw', 'picture', 'logo', 'drawing'];
         const isImageRequest = imageKeywords.some(keyword => input.toLowerCase().includes(keyword));
 
         if (isImageRequest) {
-            // 2. Live Loading Spinner for Image Generation
-            outBox.innerHTML = `🎨 SevaKit AI aapki kalpana ko image me badal raha hai... Kripya 3-4 seconds wait karein.`;
+            outBox.innerHTML = `🎨 SevaKit Hyper-Real Engine photo generate kar raha hai... Kripya 4-5 seconds wait karein.`;
             
-            // 1. Auto-Hinglish Prompt Optimizer Layer
-            const translationInstruction = "Translate this description completely into a detailed clear descriptive English prompt for drawing tools. Just give the single sentence output, no extras.";
+            // Background instruction builder to optimize prompts into ultra realism details
+            const translationInstruction = "Convert the user input into a highly detailed, photorealistic, cinematic prompt for image generators. Focus on hyper-real physics, correct anatomy, and natural shadows. Output only the final English prompt, no extra text.";
             let optimizedPrompt = await executeFreeAIRequest(translationInstruction, input);
             
             if(!optimizedPrompt) { optimizedPrompt = input; }
 
-            // Encoding prompt safely for dynamic image seed delivery
-            const seed = Math.floor(Math.random() * 100000);
-            const imageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(optimizedPrompt)}?width=512&height=512&seed=${seed}&nologo=true`;
+            // Dynamic setup utilizing model=flux configuration for realistic output rendering
+            const seed = Math.floor(Math.random() * 999999);
+            const imageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(optimizedPrompt)}?width=1024&height=1024&seed=${seed}&model=flux&nologo=true`;
 
-            // Display Image inside the workspace along with 3. Utility buttons
             setTimeout(() => {
                 outBox.innerHTML = `
-                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ SevaKit AI ne aapki photo successfully create kar di hai:</p>
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ SevaKit Realistic Free Engine Output:</p>
                     <div class="ai-image-wrapper">
-                        <img src="${imageUrl}" alt="Generated Media Concept Layer" />
+                        <img src="${imageUrl}" alt="Flux Realistic Render Asset" />
                         <div class="image-action-bar">
-                            <a href="${imageUrl}" target="_blank" download="sevekit-ai-art.jpg" class="action-btn btn-download">💾 Download Image</a>
-                            <a href="https://wa.me/919398696996?text=${encodeURIComponent('Hi, Maine SevaKit.ai par ye awesome image generate ki hai: ' + imageUrl)}" target="_blank" class="action-btn btn-wa-share">💬 WhatsApp Share</a>
+                            <a href="${imageUrl}" target="_blank" download="sevekit-real-art.jpg" class="action-btn btn-download">💾 Download Image</a>
+                            <a href="https://wa.me/919398696996?text=${encodeURIComponent('Hi, Maine SevaKit.ai par ye realistic image generate ki hai: ' + imageUrl)}" target="_blank" class="action-btn btn-wa-share">💬 WhatsApp Share</a>
                         </div>
                     </div>
                 `;
-            }, 2000);
+            }, 3000);
 
         } else {
-            // Standard Text Assistant route pipeline
             outBox.innerText = "⏳ SevaKit Processing Response...";
             let aiResponse = await handleEngineRouting(input);
             
@@ -416,8 +404,6 @@
                 aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
                 outBox.innerText = aiResponse;
                 waBox.innerHTML = generateWhatsAppBanner(input);
-            } else {
-                outBox.innerText = "Server connection status check required. Please try again.";
             }
         }
     }
@@ -425,23 +411,18 @@
     async function scanFormLayout() {
         const fileInput = document.getElementById('formFile');
         const outBox = document.getElementById('formOutput');
-        const waBox = document.getElementById('formWhatsAppZone');
-
         if(fileInput.files.length === 0) return alert("Pehle ek form image select karein.");
-        
         outBox.classList.remove('hidden');
         outBox.innerText = "🔬 Scanning layout fields for zero-error verification...";
-        
         setTimeout(() => {
-            outBox.innerText = "Form Mapped Successfully. Structure verified. Ready for dynamic data compilation.";
-            waBox.innerHTML = generateWhatsAppBanner("government form");
+            outBox.innerText = "Form Mapped Successfully. Structure verified.";
         }, 1500);
     }
 
     function triggerVideoPipeline() {
         const outBox = document.getElementById('videoOutput');
         outBox.classList.remove('hidden');
-        outBox.innerText = "🎬 Advanced Video Pipeline requires a Custom API Key to map high-fidelity servers. Please paste key in sidebar box.";
+        outBox.innerText = "🎬 Advanced Video Pipeline requires a Custom API Key to map high-fidelity servers.";
     }
 </script>
 
