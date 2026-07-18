@@ -171,11 +171,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .game-frame {
             width: 100%;
-            height: 600px;
+            height: 650px;
             border: none;
             border-radius: 8px;
             background: #ffffff;
@@ -203,30 +204,6 @@
             font-weight: bold;
         }
         .chess-option-btn:hover { background: #0369a1; }
-
-        /* --- Local Plain Chess Layout UI --- */
-        .chess-board-wrapper {
-            display: grid;
-            grid-template-columns: repeat(8, 55px);
-            grid-template-rows: repeat(8, 55px);
-            border: 4px solid #475569;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .chess-square {
-            width: 55px;
-            height: 55px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 32px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .square-light { background-color: #f0d9b5; color: #b58863; }
-        .square-dark { background-color: #b58863; color: #f0d9b5; }
-        .chess-square.selected { background-color: #7efc03 !important; }
 
         .ai-image-wrapper img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .image-action-bar { margin-top: 15px; display: flex; gap: 10px; }
@@ -368,11 +345,11 @@
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
 
-        <!-- Games Arcade Room Tab Zone -->
+        <!-- Games Arcade Room Tab Zone FIXED -->
         <div id="games-tab" class="tab-content hidden">
-            <h3>🎮 SevaKit Arcade Studio</h3>
+            <h3>🎮 SevaKit Arcade Studio (Fixed Stable Hub)</h3>
             <div class="games-grid">
-                <div class="game-card" onclick="setupChessLauncherOptions()">♟️ Plain Chess Hub</div>
+                <div class="game-card" onclick="setupChessLauncherOptions()">♟️ Chess Hub (Rules Mode)</div>
                 <div class="game-card" onclick="loadExternalGame('puzzle')">🧩 2048 Puzzle</div>
                 <div class="game-card" onclick="loadExternalGame('ludo')">🎲 Classic Ludo</div>
                 <div class="game-card" onclick="loadExternalGame('cards')">🃏 Solitaire Cards</div>
@@ -386,10 +363,11 @@
                     <button onclick="closeActiveGame()" style="width:auto; padding:5px 15px; background:#ef4444; margin:0;">❌ Stop Game</button>
                 </div>
 
-                <!-- Chess Custom Interface Layer -->
+                <!-- Chess Custom Interface Layer FIXED -->
                 <div id="chessMenuOverlay" class="chess-menu-panel hidden">
                     <h4>Select Chess Mode Setup:</h4>
-                    <button class="chess-option-btn" onclick="launchPlainChessFriend()">👥 Play with Friend (PlainChess Board)</button>
+                    <p style="font-size:12px; color:#cbd5e1; margin-bottom:15px;">Note: Is mode me automatic standard rules (Wazir/Oont movement) active hain!</p>
+                    <button class="chess-option-btn" onclick="launchChessEngine('friend')">👥 Play with Friend (Plain Rules Board)</button>
                     <br><br>
                     <strong>🤖 Play vs Computer (Engine Sandbox):</strong><br>
                     <button class="chess-option-btn" onclick="launchChessEngine('easy')">Easy</button>
@@ -607,9 +585,9 @@
         }
     }
 
-    // --- NEW STABLE ARCHIVE FOR UNBLOCKED ONLINE PUZZLE, LUDO & CARDS GAMES ---
-    const secureGameUrls = {
-        'puzzle': 'https://games-c.play2048.co/', 
+    // --- NEW STABLE ARCHIVE FOR UNBLOCKED ONLINE PUZZLE, LUDO & CARDS GAMES FIXED ---
+    const globalArcadeSecureRoutes = {
+        'puzzle': 'https://html5.gamemonkey.org/2048-puzzle/', 
         'ludo': 'https://html5.gamemonkey.org/ludo-legend/', 
         'cards': 'https://html5.gamemonkey.org/solitaire-classic/'
     };
@@ -620,88 +598,28 @@
         const frame = document.getElementById('arcadeFrame');
         const localCanvas = document.getElementById('localGameCanvasContainer');
         const title = document.getElementById('gameTitleDisplay');
-
-        localCanvas.classList.add('hidden');
-        frame.classList.add('hidden');
-        clearInterval(snakeGameInterval);
-
-        box.classList.remove('hidden');
-        overlay.classList.remove('hidden');
+        localCanvas.classList.add('hidden'); clearInterval(snakeGameInterval);
+        box.classList.remove('hidden'); overlay.classList.remove('hidden');
         title.innerText = "♟️ Chess Hub Configuration Options";
         box.scrollIntoView({ behavior: 'smooth' });
     }
 
-    function launchChessEngine(level) {
+    function launchChessEngine(mode) {
         const overlay = document.getElementById('chessMenuOverlay');
         const frame = document.getElementById('arcadeFrame');
         const title = document.getElementById('gameTitleDisplay');
 
         overlay.classList.add('hidden');
         frame.classList.remove('hidden');
-        title.innerText = `🤖 Playing Chess vs Computer (Level: ${level.toUpperCase()})`;
-        let bot = level === 'easy' ? 1 : level === 'medium' ? 3 : level === 'hard' ? 5 : 8;
-        frame.src = `https://lichess.org/embed/export/fen/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%20w%20KQkq%20-%200%201?theme=maple&bg=dark#ai=${bot}`;
-    }
 
-    // --- DYNAMIC 100% OFFLINE PLAIN-CHESS PLAYER HUB ENGINE ---
-    let initialPlainChessBoard = [
-        ["♜","♞","♝","♛","♚","♝","♞","♜"],
-        ["♟","♟","♟","♟","♟","♟","♟","♟"],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["♙","♙","♙","♙","♙","♙","♙","♙"],
-        ["♖","♘","♗","♕","♔","♗","♘","♖"]
-    ];
-    let activePlainBoard = JSON.parse(JSON.stringify(initialPlainChessBoard));
-    let selectedSquare = null;
-
-    function launchPlainChessFriend() {
-        const overlay = document.getElementById('chessMenuOverlay');
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        const title = document.getElementById('gameTitleDisplay');
-
-        overlay.classList.add('hidden');
-        localCanvas.classList.remove('hidden');
-        title.innerText = "👥 Playing PlainChess (2 Players 100% Offline Local)";
-        
-        activePlainBoard = JSON.parse(JSON.stringify(initialPlainChessBoard));
-        selectedSquare = null;
-        renderPlainChessBoard();
-    }
-
-    function renderPlainChessBoard() {
-        const container = document.getElementById('localGameCanvasContainer');
-        let html = '<div class="chess-board-wrapper">';
-        
-        for(let r=0; r<8; r++) {
-            for(let c=0; c<8; c++) {
-                let isLight = (r + c) % 2 === 0;
-                let classType = isLight ? 'square-light' : 'square-dark';
-                let isSelected = selectedSquare && selectedSquare.r === r && selectedSquare.c === c ? 'selected' : '';
-                
-                html += `<div class="chess-square ${classType} ${isSelected}" onclick="handlePlainChessClick(${r},${c})">${activePlainBoard[r][c]}</div>`;
-            }
-        }
-        
-        html += '</div><p style="color:white; margin-top:10px; font-size:12px;">Rule: Piece select karke doosre square par click karein to move.</p>';
-        container.innerHTML = html;
-    }
-
-    function handlePlainChessClick(r, c) {
-        if (selectedSquare) {
-            // Move piece layout logic parameters
-            let piece = activePlainBoard[selectedSquare.r][selectedSquare.c];
-            activePlainBoard[selectedSquare.r][selectedSquare.c] = "";
-            activePlainBoard[r][c] = piece;
-            selectedSquare = null;
-            renderPlainChessBoard();
+        if(mode === 'friend') {
+            title.innerText = "👥 Playing Chess vs Friend (Standard Rules Active)";
+            // Fresh standard starting position to prevent analysis mode triggers
+            frame.src = "https://lichess.org/embed/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR?theme=maple&bg=dark#ai=0";
         } else {
-            if (activePlainBoard[r][c] !== "") {
-                selectedSquare = { r: r, c: c };
-                renderPlainChessBoard();
-            }
+            title.innerText = `🤖 Playing Chess vs Computer (Level: ${mode.toUpperCase()})`;
+            let bot = mode === 'easy' ? 1 : mode === 'medium' ? 3 : mode === 'hard' ? 5 : 8;
+            frame.src = `https://lichess.org/embed/export/fen/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%20w%20KQkq%20-%200%201?theme=maple&bg=dark#ai=${bot}`;
         }
     }
 
@@ -718,7 +636,7 @@
         
         box.classList.remove('hidden');
         frame.classList.remove('hidden');
-        frame.src = secureGameUrls[gameKey];
+        frame.src = globalArcadeSecureRoutes[gameKey];
         
         const friendlyTitles = { 'puzzle': '🧩 2048 Unblocked Puzzle Grid', 'ludo': '🎲 Classic Ludo Web Board', 'cards': '🃏 Solitaire Premium Cards Deck' };
         title.innerText = friendlyTitles[gameKey];
