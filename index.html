@@ -313,7 +313,6 @@
                 <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
                 <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
                 <div class="game-card" onclick="startLocalBricksGame()">🧱 Brick Breaker</div>
-                <div class="game-card" onclick="startLocalCricketGame()">🏏 Mini Cricket</div>
                 <div class="game-card" onclick="startLocalBounceGame()">🏀 Basket Bounce</div>
                 <div class="game-card" onclick="startLocalDinoGame()">Rex 🦖 Dino Runner</div>
             </div>
@@ -347,25 +346,17 @@
         initSignatureCanvasLogic();
     };
 
-    // FIXED: Safe & Isolated Tab Switching Logic
     function switchTab(tabId) {
-        // Hide all panels cleanly
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        
-        // Remove active markers from sidebar buttons safely
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
         
-        // Unveil target tab section
         const targetElement = document.getElementById(tabId);
         if(targetElement) {
             targetElement.classList.remove('hidden');
         }
-        
-        // Highlight active clicked menu selector
         if(window.event && window.event.currentTarget) {
             window.event.currentTarget.classList.add('active');
         }
-        
         closeActiveGame();
     }
 
@@ -665,7 +656,7 @@
                 for(let r=0; r<brickRowCount; r++) {
                     let b = bricks[c][r];
                     if(b.status == 1) {
-                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) { dy = -dy; b.status = 0; b.status = 0; }
+                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) { dy = -dy; b.status = 0; }
                     }
                 }
             }
@@ -680,48 +671,7 @@
         }, 10);
     }
 
-    // 4. Mini Cricket
-    function startLocalCricketGame() {
-        resetArcadeCanvasBox("🏏 Mini Cricket Timing Net (Click or Press Spacebar!)");
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="crickScore">Score: 0 | Runs: -</div><canvas id="crickCanvas" width="480" height="300" style="background:#15803d; border:2px solid white; cursor:pointer;"></canvas>';
-        
-        const canvas = document.getElementById('crickCanvas'); const ctx = canvas.getContext('2d');
-        let totalScore = 0; let ball = { x: 440, y: 150, active: true, speed: 4, radius: 8 };
-        let pitchLine = 80;
-        
-        function deliverBall() { ball.x = 440; ball.y = 130 + Math.random()*40; ball.speed = 4 + Math.random()*3; ball.active = true; }
-        
-        function hitShot() {
-            if(!ball.active) return;
-            ball.active = false;
-            let diff = Math.abs(ball.x - pitchLine);
-            let runText = "Out!";
-            if(diff < 15) { totalScore += 6; runText = "SIXER! (Perfect)"; }
-            else if(diff < 35) { totalScore += 4; runText = "FOUR! (Good)"; }
-            else if(diff < 55) { totalScore += 1; runText = "1 Run"; }
-            else { runText = "OUT!"; }
-            document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: ${runText}`;
-            setTimeout(deliverBall, 1500);
-        }
-        
-        canvas.onclick = hitShot;
-        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); hitShot(); } };
-
-        activeGlobalInterval = setInterval(function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#eab308"; ctx.fillRect(40, 120, 400, 60);
-            ctx.strokeStyle = "white"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pitchLine, 120); ctx.lineTo(pitchLine, 180); ctx.stroke();
-            if(ball.active) {
-                ball.x -= ball.speed;
-                ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-                ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
-                if(ball.x < 0) { ball.active = false; document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: Dot Ball!`; setTimeout(deliverBall, 1000); }
-            }
-        }, 20);
-    }
-
-    // 5. Basket Bounce
+    // 4. Basket Bounce
     function startLocalBounceGame() {
         resetArcadeCanvasBox("🏀 Basket Bounce Arena (Click or Spacebar!)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
@@ -754,7 +704,7 @@
         }, 20);
     }
 
-    // 6. Dino Runner
+    // 5. Dino Runner
     function startLocalDinoGame() {
         resetArcadeCanvasBox("🦖 Offline Dino Runner Grid (Spacebar or Click!)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
