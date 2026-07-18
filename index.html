@@ -182,7 +182,6 @@
 
 <div class="main-container">
     <div class="sidebar">
-        <!-- Setup Guide Box -->
         <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #1e3a8a;">
             <strong>⚡ Super Fast Performance:</strong><br>
             Apni free key set karein aur bina kisi loading delay ke instant 1-second me answers payein.
@@ -264,7 +263,7 @@
         return '';
     }
 
-    // Direct Lightning-Fast Official Gemini Engine 
+    // Direct Lightning-Fast Official Gemini Engine Setup with standard structural parameter logic
     async function callGeminiAPI(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
         if (!apiKey) {
@@ -272,17 +271,18 @@
             return null;
         }
 
-        // Enforcing formatting rules into the system engine directly
         const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean.";
-        
-        const combinedPrompt = `${systemRule}\n\nUser Query: ${promptText}`;
 
         try {
+            // Using correct structured system instruction payload layout to avoid endpoint crashes
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents: [{ parts: [{ text: combinedPrompt }] }] })
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }],
+                    systemInstruction: { parts: [{ text: systemRule }] }
+                })
             });
             const data = await response.json();
             return data.candidates[0].content.parts[0].text;
@@ -306,10 +306,12 @@
         let aiResponse = await callGeminiAPI(input);
         
         if(aiResponse) {
-            // Secondary clean layer for smooth visual layout
+            // Ultimate regex strip filter layer for UI safety
             aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
             outBox.innerText = aiResponse;
             waBox.innerHTML = generateWhatsAppBanner(input);
+        } else {
+            outBox.innerText = "Response execution failed. Try resetting key values.";
         }
     }
 
