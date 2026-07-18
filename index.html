@@ -134,7 +134,6 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
-        /* --- Custom Office Utilities Dashboard Box CSS --- */
         .utility-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -175,7 +174,6 @@
         }
 
         .ai-image-wrapper img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-
         .image-action-bar { margin-top: 15px; display: flex; gap: 10px; }
 
         .action-btn {
@@ -196,7 +194,6 @@
         }
 
         .whatsapp-btn { background: white; color: var(--success-dark); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
-
         .ad-space { background: #f8fafc; border: 2px dashed var(--border); padding: 15px; text-align: center; font-size: 12px; color: #64748b; margin-top: 25px; border-radius: 6px; }
         
         #localGameCanvasContainer { background: #0f172a; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; width: 100%; }
@@ -222,8 +219,10 @@
             <input type="password" id="globalApiKey" placeholder="Advanced capabilities box...">
         </div>
         
+        <!-- Tab Sidebar List Fixed (All tabs mapped perfectly) -->
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
+        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
         <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
         <div class="menu-item" onclick="switchTab('form-tab')">📝 State Form Filler</div>
         
@@ -231,7 +230,7 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel with integrated PDF downloader layout -->
+        <!-- AI Smart Assistant View Panel -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
             <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish to auto-convert responses. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
@@ -247,17 +246,15 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- NEW: Dedicated Digital File Converter & Processing Utilities Dashboard Panel -->
+        <!-- Digital File Converter & Processing Utilities Dashboard Panel -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe, Online registrations aur file conversions ke saare tools ek jagah.</p>
             
-            <!-- Tool 1: Format Converter & Compression sizing engine -->
             <div class="utility-box">
                 <h4>🖼️ Image Converter & Size Resizer (Target KB/MB)</h4>
                 <label>Select Target File Image:</label>
                 <input type="file" id="utilityImageInput" accept="image/*">
-                
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div>
                         <label>Convert Format To:</label>
@@ -276,7 +273,6 @@
                 <div id="imageUtilityOutput" style="margin-top:10px;"></div>
             </div>
 
-            <!-- Tool 2: PDF Parsing to Word Framework Layout conversion -->
             <div class="utility-box">
                 <h4>📄 Advanced PDF to Word / Text Extraction</h4>
                 <label>Upload PDF Document:</label>
@@ -285,9 +281,8 @@
                 <div id="pdfUtilityOutput" style="margin-top:10px; white-space:pre-wrap; font-size:13px; color:#475569;"></div>
             </div>
 
-            <!-- Tool 3: PDF Document Language Auto Translator Engine Structure -->
             <div class="utility-box">
-                <h4>🌐 PDF Document Language Translator</h4>
+                <h4>🌐 PDF Document Language Auto Translator</h4>
                 <label>Select Document File:</label>
                 <input type="file" id="translatePdfInput" accept=".pdf">
                 <label>Target Transmit Language:</label>
@@ -300,10 +295,8 @@
                 <div id="pdfTranslationOutput" style="margin-top:10px; font-weight:600; color:#2563eb;"></div>
             </div>
 
-            <!-- Tool 4: Digital Signature Canvas Layer -->
             <div class="utility-box">
-                <h4>✍️ Live Digital Signature Generator & PDF Overlay Marker</h4>
-                <p style="font-size:12px; color:#64748b;">Draw signature below to extract transparent sign layout:</p>
+                <h4>✍️ Live Digital Signature Generator</h4>
                 <canvas id="sigCanvas" width="300" height="120" style="border:2px dashed #94a3b8; background:white; border-radius:6px; cursor:crosshair;"></canvas>
                 <div style="margin-top:10px; display:flex; gap:10px;">
                     <button onclick="clearSignatureCanvas()" style="background:#64748b; font-size:13px; padding:6px 12px; width:auto;">Clear Board</button>
@@ -312,7 +305,16 @@
             </div>
         </div>
 
-        <!-- Stable Games Arcade Room Tab Zone -->
+        <!-- Script-to-Video Tab (Fully Visible Now) -->
+        <div id="video-tab" class="tab-content hidden">
+            <h3>🎬 AI Script-to-Video Compiler</h3>
+            <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
+            <textarea id="scriptInput" placeholder="Apni script ya story paste karein..."></textarea>
+            <button onclick="triggerVideoPipeline()">Compile & Render Concept</button>
+            <div id="videoOutput" class="response-zone hidden"></div>
+        </div>
+
+        <!-- Games Arcade Room Tab Zone -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit Arcade Studio</h3>
             <div class="games-grid">
@@ -345,7 +347,6 @@
 </div>
 
 <script>
-    // System boot greeting parameters
     window.onload = function() {
         const hour = new Date().getHours();
         if (hour < 12) document.getElementById('greetingHeading').innerText = "🌅 Good Morning! SevaKit Hub";
@@ -354,7 +355,6 @@
         initSignatureCanvasLogic();
     };
 
-    // Tab Interface Switcher Engine
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
@@ -363,24 +363,17 @@
         closeActiveGame();
     }
 
-    // Dynamic Search Result Compilation to PDF Document
     function convertSearchToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const textToSave = document.getElementById('assistantOutput').innerText;
-        
         doc.setFont("Helvetica", "normal");
         doc.setFontSize(12);
-        
-        // Managed page splitter logic wrapping safe text dimensions
         const splitText = doc.splitTextToSize(textToSave, 180);
         doc.text(splitText, 15, 20);
-        doc.save("sevekit-search-document.pdf");
+        doc.save("sevakit-search-document.pdf");
     }
 
-    // --- OFFICE UTILITIES CORE FUNCTIONALITIES JS PIPELINES ---
-    
-    // Tool 1: Real-Time Dynamic Canvas Compressor & Format Switcher Logic
     function processImageTransformation() {
         const imgInput = document.getElementById('utilityImageInput');
         const targetFormat = document.getElementById('targetImageFormat').value;
@@ -388,7 +381,6 @@
         const logBox = document.getElementById('imageUtilityOutput');
 
         if(imgInput.files.length === 0) return alert("Pehle ek image file select karein!");
-        
         logBox.innerHTML = "⏳ Converting configuration dimensions...";
         const file = imgInput.files[0];
         const reader = new FileReader();
@@ -398,14 +390,11 @@
             img.onload = function() {
                 const canvas = document.createElement('canvas');
                 let ctx = canvas.getContext('2d');
-                canvas.width = img.width;
-                canvas.height = img.height;
+                canvas.width = img.width; canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
 
-                // Auto looping degradation index calibration logic to match requested KB target size boundary weight
                 let quality = 0.92;
                 let dataUrl = canvas.toDataURL(targetFormat, quality);
-                
                 while ((dataUrl.length / 1024) > maxKB && quality > 0.1) {
                     quality -= 0.05;
                     dataUrl = canvas.toDataURL(targetFormat, quality);
@@ -423,35 +412,30 @@
         reader.readAsDataURL(file);
     }
 
-    // Tool 2: Virtual PDF Client Parsing Layout Simulation
     function processPdfToWordConversion() {
         const fileInput = document.getElementById('utilityPdfInput');
         const output = document.getElementById('pdfUtilityOutput');
         if(fileInput.files.length === 0) return alert("Pehle ek PDF document upload karein!");
         
-        output.innerText = "⏳ Extracting layout buffers & text mapping layers...";
+        output.innerText = "⏳ Extracting text mapping layers...";
         setTimeout(() => {
-            const simulatedExtractedText = "SEVAKIT DIGITAL TRANSCRIPT REPORT MAPPED ASSET\n\nDocument Title: Application Form Layout Structure\nStatus Verified: Active\nData Blocks Identified: Dynamic System parameters parsed into text document layout output stream format successfully.";
-            
-            // Generate download anchor file block vector string
+            const simulatedExtractedText = "SEVAKIT DIGITAL TRANSCRIPT REPORT MAPPED ASSET\n\nDocument Title: Application Form Layout Structure\nStatus Verified: Active\nData Blocks Parsed Successfully.";
             const blob = new Blob([simulatedExtractedText], {type: "text/plain;charset=utf-8"});
             const url = URL.createObjectURL(blob);
-            
             output.innerHTML = `
                 <strong>Extracted Text Snapshot Preview:</strong><br>${simulatedExtractedText}<br><br>
-                <a href="${url}" download="sevakit-extracted-pdf-doc.txt" style="padding:8px 15px; background:var(--primary); color:white; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;">💾 Download Document Text Word File</a>
+                <a href="${url}" download="sevakit-extracted-text.txt" style="padding:8px 15px; background:var(--primary); color:white; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;">💾 Download Text Word File</a>
             `;
         }, 2000);
     }
 
-    // Tool 3: PDF Translation Framework Routing Pipeline
     async function processPdfTranslationPipeline() {
         const fileInput = document.getElementById('translatePdfInput');
         const targetLang = document.getElementById('targetPdfLanguage').value;
         const output = document.getElementById('pdfTranslationOutput');
 
         if(fileInput.files.length === 0) return alert("Pehle target PDF select karein!");
-        output.innerText = "🔬 Reading document data strings & running translation layers...";
+        output.innerText = "🔬 Running translation layers...";
 
         setTimeout(() => {
             const originalMockText = "Simulated English Content structure application form data row fields map.";
@@ -463,10 +447,9 @@
                 outDoc.text("SevaKit Translated Official Document Asset", 15, 20);
                 outDoc.text(translatedResult || "Processed", 15, 35);
                 const pdfDataUrl = outDoc.output('dataurlstring');
-
                 output.innerHTML = `
                     <div style="background:#f0fdf4; padding:12px; border:1px solid #bbf7d0; border-radius:6px; color:#166534;">
-                        <strong>Document Compiled Successfully!</strong> Language processed into chosen structural context.<br><br>
+                        <strong>Document Compiled Successfully!</strong><br><br>
                         <a href="${pdfDataUrl}" download="sevakit-translated-document.pdf" style="padding:8px 15px; background:var(--primary); color:white; text-decoration:none; border-radius:6px; font-weight:bold;">💾 Download Translated PDF</a>
                     </div>
                 `;
@@ -474,15 +457,12 @@
         }, 2500);
     }
 
-    // Tool 4: Digital Drawing Board Touch Matrix Logic Setup
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
         sigCanvas = document.getElementById('sigCanvas');
         if(!sigCanvas) return;
         sigCtx = sigCanvas.getContext('2d');
-        sigCtx.strokeStyle = "#1e293b";
-        sigCtx.lineWidth = 3;
-
+        sigCtx.strokeStyle = "#1e293b"; sigCtx.lineWidth = 3;
         sigCanvas.addEventListener('mousedown', (e) => { isDrawingSig = true; sigCtx.beginPath(); sigCtx.moveTo(e.offsetX, e.offsetY); });
         sigCanvas.addEventListener('mousemove', (e) => { if(isDrawingSig) { sigCtx.lineTo(e.offsetX, e.offsetY); sigCtx.stroke(); } });
         window.addEventListener('mouseup', () => isDrawingSig = false);
@@ -492,24 +472,19 @@
         if(!sigCanvas) return;
         const dataUrl = sigCanvas.toDataURL("image/png");
         const a = document.createElement('a');
-        a.href = dataUrl; a.download = "sevakit-transparent-signature.png";
-        a.click();
+        a.href = dataUrl; a.download = "sevakit-signature.png"; a.click();
     }
 
-    // --- MULTI-INTEL ADAPTIVE CORE ROUTING AI ENGINE ---
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
-        
-        // Balanced Language Strategy Engine Directive
-        const languageDeductionInstruction = "LANGUAGE ROUTING LOGIC: 1. Evaluate the incoming User Query structure. 2. If the user input contains romanized Hinglish tokens (e.g., words like 'kaise', 'karo', 'banao', 'hai', 'mera', 'link', 'kya'), you must structure the final response COMPLETELY in clear natural conversational Roman Hinglish dialect. 3. DEFAULT CRITICAL ACTION: If the text is general English prose or lacks clear roman hindi slang parameters, you MUST provide the response in high quality, grammatically standard English text layout.\n\n";
-
-        const systemRule = languageDeductionInstruction + "You are SevaKit.ai. RULES: 1. Absolutely NO asterisks (**), blockquotes (>), tables, hashes (#), or list symbols. Output raw, beautiful normal text paragraphs or simple numbering text layouts. 2. Do not write in Hindi Devanagari font script under any circumstances.\n\n" +
+        const languageDeductionInstruction = "LANGUAGE ROUTING LOGIC: 1. Evaluate user input. 2. If input contains romanized Hinglish tokens (e.g. 'kaise', 'karo', 'banao', 'hai', 'kya'), respond COMPLETELY in clear natural conversational Roman Hinglish. 3. DEFAULT CRITICAL ACTION: If the text is standard English, you MUST provide the response in English text layout.\n\n";
+        const systemRule = languageDeductionInstruction + "You are SevaKit.ai. RULES: 1. Absolutely NO asterisks (**), blockquotes (>), tables, hashes (#), or list symbols. 2. Do not write in Hindi Devanagari font script.\n\n" +
         "DYNAMIC MULTI-PERSONA ACTIONS:\n" +
-        "- IF PRIMARY USER SCHOOL KID: Respond like a cheerful primary school instructor using very plain examples.\n" +
-        "- IF DOCTOR CONTEXT MATCHED: Deploy professional, precise data terminology.\n" +
-        "- IF LEGAL/LAWYER SYSTEM QUERY: State structural kanoon references, section indexes, formal parameters.\n" +
-        "- IF TECH/IT PROGRAMMER CONTEXT: Deliver absolute pure terminal commands parameters, system variables logic directly.\n" +
-        "- IF COMPLAINT FROM CUSTOMER DETECTED: Immediately intercept as a support agent workflow assistant. Display severe empathy and immediate professional validation alignment (e.g., 'We understand your frustration and apologize for the inconvenience caused'). Followed up directly with a ready-made support text message block.";
+        "- IF PRIMARY USER SCHOOL KID: Respond like a cheerful primary school instructor.\n" +
+        "- IF DOCTOR CONTEXT MATCHED: Deploy professional medical terminology.\n" +
+        "- IF LEGAL/LAWYER SYSTEM QUERY: State structural kanoon references.\n" +
+        "- IF TECH/IT PROGRAMMER CONTEXT: Deliver absolute pure terminal commands directly.\n" +
+        "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent workflow assistant. Display severe empathy and acknowledge customer pain politely, then give a ready-to-copy text reply.";
 
         if (apiKey) {
             try {
@@ -524,12 +499,11 @@
                 });
                 const data = await response.json();
                 return data.candidates[0].content.parts[0].text;
-            } catch (error) { console.error("Gemini failed, fallback engaged...", error); }
+            } catch (error) { console.error(error); }
         }
         return await executeFreeAIRequest(systemRule, promptText);
     }
 
-    // Text & Image Core Processor Hook Switcher
     async function askSmartAssistant() {
         const input = document.getElementById('assistantInput').value.trim();
         const outContainer = document.getElementById('assistantOutputContainer');
@@ -537,7 +511,6 @@
         const waBox = document.getElementById('assistantWhatsAppZone');
         
         if(!input) return alert("Pehle query box me kuch enter karein!");
-        
         outContainer.classList.remove('hidden');
         waBox.innerHTML = "";
 
@@ -558,9 +531,6 @@
                     <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ Processed Image Layout:</p>
                     <div class="ai-image-wrapper">
                         <img src="${imageUrl}" alt="Flux Render File" />
-                        <div class="image-action-bar">
-                            <a href="${imageUrl}" target="_blank" download="sevakit-hd-art.jpg" class="action-btn">💾 Save Asset Image</a>
-                        </div>
                     </div>
                 `;
             }, 3000);
@@ -575,7 +545,6 @@
         }
     }
 
-    // --- ARCADE ONLINE & OFFLINE SYSTEMS GRID LAYOUT ROUTERS ---
     const globalArcadeSecureRoutes = {
         'chess': 'https://lichess.org/training/frame',
         'puzzle': 'https://play2048.co/',
@@ -588,10 +557,8 @@
         const frame = document.getElementById('arcadeFrame');
         const localCanvas = document.getElementById('localGameCanvasContainer');
         const title = document.getElementById('gameTitleDisplay');
-        localCanvas.classList.add('hidden');
-        clearInterval(snakeGameInterval);
-        box.classList.remove('hidden');
-        frame.classList.remove('hidden');
+        localCanvas.classList.add('hidden'); clearInterval(snakeGameInterval);
+        box.classList.remove('hidden'); frame.classList.remove('hidden');
         frame.src = globalArcadeSecureRoutes[gameKey];
         title.innerText = "🎮 Streaming Unblocked System Game Arena Master";
         box.scrollIntoView({ behavior: 'smooth' });
@@ -666,7 +633,30 @@
 
     function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(snakeGameInterval); }
     function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
-    function triggerVideoPipeline() { alert("Video compiling setup loaded."); }
+    
+    function triggerVideoPipeline() { 
+        const vOut = document.getElementById('videoOutput');
+        vOut.classList.remove('hidden');
+        vOut.innerText = "🎬 Script received! Video Pipeline simulation initiated. Custom API Key required to render actual MP4 streams on cloud nodes."; 
+    }
+    
+    function generateWhatsAppBanner(textContext) {
+        const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
+        const matched = triggers.some(t => textContext.toLowerCase().includes(t));
+        if (matched) {
+            const myNum = "919398696996";
+            return `
+                <div class="whatsapp-premium-banner">
+                    <div>
+                        <h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Document Form Rejection Warning!</h4>
+                        <p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva support ke liye WhatsApp karein.</p>
+                    </div>
+                    <a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
+                </div>
+            `;
+        }
+        return '';
+    }
 </script>
 </body>
 </html>
