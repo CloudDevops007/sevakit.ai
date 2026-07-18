@@ -179,21 +179,35 @@
 
 <div class="main-container">
     <!-- Sidebar Controls -->
-    <div class="sidebar">
-        <div class="api-box">
-            <label>🔑 Setup Gemini API Key</label>
-            <input type="password" id="globalApiKey" placeholder="Paste your free key here...">
-            <small style="display:block; margin-top:-8px; font-size:11px;">
-                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free API Key instantly ↗</a>
-            </small>
-        </div>
-        
-        <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 AI Smart Assistant</div>
-        <div class="menu-item" onclick="switchTab('form-tab')">存放 Smart Form Filler</div>
-        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
-        
-        <div class="ad-space">Google AdSense / Banner Promotion Space</div>
+    <!-- Left Layout Control Structure -->
+<div class="sidebar">
+    <!-- Naya User Guide Box -->
+    <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #1e3a8a;">
+        <strong>💡 API Key Kya Hai?</strong><br>
+        Yeh ek free secret code (chaabi) hai jo is AI tool ko chalane ke liye zaroori hai. Iske bina tool kaam nahi karega.
+        <br><br>
+        <strong>🚀 Free Key Kaise Lein?</strong>
+        <ol style="margin: 5px 0; padding-left: 15px;">
+            <li>Neeche diye gaye blue link par click karein.</li>
+            <li>Apne Google account se login karein.</li>
+            <li><b>"Create API Key"</b> par click karke code copy karein aur yahan paste kar dein!</li>
+        </ol>
     </div>
+
+    <div class="api-box">
+        <label>🔑 Setup Gemini API Key</label>
+        <input type="password" id="globalApiKey" placeholder="Paste your free key here...">
+        <small style="display:block; margin-top:-8px; font-weight: bold; font-size:12px;">
+            <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: underline;">👉 Yahan se Free API Key generate karein ↗</a>
+        </small>
+    </div>
+    
+    <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 AI Smart Assistant</div>
+    <div class="menu-item" onclick="switchTab('form-tab')">📝 Smart Form Filler</div>
+    <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
+    
+    <div class="ad-space">Google AdSense / Banner Promotion Space</div>
+</div>
 
     <!-- Workspace Tabs -->
     <div class="workspace">
