@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
-    <!-- External Library for Search PDF Download Functionality -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -195,13 +194,13 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 System Standard Reset Mode</div>
+    <div class="badge">🚀 Stable Core Mode</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Intelligent Assistant:</strong> Default core English active hai. Hinglish input daalne par Hinglish mode trigger hoga.
+            <strong>🌐 System Online:</strong> Reset matrix successful. Tabs interface structure poori tarah active hai.
         </div>
 
         <div class="api-box" style="padding:15px;">
@@ -209,40 +208,38 @@
             <input type="password" id="globalApiKey" placeholder="Paste advanced key here...">
         </div>
         
-        <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
-        <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
-        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
-        <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
-        <div class="menu-item" onclick="switchTab('form-tab')">📝 State Form Filler</div>
+        <div class="menu-item active" id="menu-assistant" onclick="switchTab('assistant-tab', 'menu-assistant')">🤖 Smart AI Assistant</div>
+        <div class="menu-item" id="menu-utilities" onclick="switchTab('utilities-tab', 'menu-utilities')">🧰 Digital Office Tools</div>
+        <div class="menu-item" id="menu-video" onclick="switchTab('video-tab', 'menu-video')">🎬 Script-to-Video</div>
+        <div class="menu-item" id="menu-games" onclick="switchTab('games-tab', 'menu-games')">🎮 SevaKit Arcade Room</div>
+        <div class="menu-item" id="menu-form" onclick="switchTab('form-tab', 'menu-form')">📝 State Form Filler</div>
         
         <div class="ad-space">Google AdSense / Banner Promo Space</div>
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel -->
         <div id="assistant-tab" class="tab-content">
-            <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
+            <h3>🤖 SevaKit Predictive Assistant</h3>
             <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
-            <textarea id="assistantInput" placeholder="Enter query or type photo build instructions..." style="height: 120px;"></textarea>
+            <textarea id="assistantInput" placeholder="Enter query or type photo build instructions..."></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
             <div id="assistantOutputContainer" class="hidden">
                 <div id="assistantOutput" class="response-zone"></div>
-                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <div style="margin-top: 10px;">
                     <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto;">📄 Save Search Result as PDF</button>
                 </div>
             </div>
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- Digital File Converter & Processing Utilities Dashboard Panel -->
         <div id="utilities-tab" class="tab-content hidden">
-            <h3>🧰 Digital Seva Office & Document Utilities</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">File conversions aur local file compression dashboard modules.</p>
+            <h3>🧰 Digital Seva Office Tools</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">File conversions aur image compression dashboard modules.</p>
             
             <div class="utility-box">
-                <h4>🖼️ Image Converter & Size Resizer (Target KB/MB)</h4>
-                <label>Select Target File Image:</label>
+                <h4>🖼️ Image Converter & Size Resizer (Target KB)</h4>
+                <label>Select Image:</label>
                 <input type="file" id="utilityImageInput" accept="image/*">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div>
@@ -254,8 +251,8 @@
                         </select>
                     </div>
                     <div>
-                        <label>Target Compression Weight Size (Max KB):</label>
-                        <input type="number" id="targetImageKB" placeholder="e.g. 50" value="50">
+                        <label>Target Size (Max KB):</label>
+                        <input type="number" id="targetImageKB" value="50">
                     </div>
                 </div>
                 <button onclick="processImageTransformation()" style="background:#16a34a;">Convert & Resize Image</button>
@@ -263,10 +260,10 @@
             </div>
 
             <div class="utility-box">
-                <h4>📄 Advanced PDF to Word / Text Extraction</h4>
+                <h4>📄 PDF to Word / Text Extraction</h4>
                 <label>Upload PDF Document:</label>
                 <input type="file" id="utilityPdfInput" accept=".pdf">
-                <button onclick="processPdfToWordConversion()" style="background:#eab308; color:black;">Extract Content & Convert to Text File</button>
+                <button onclick="processPdfToWordConversion()" style="background:#eab308; color:black;">Extract Content to Text File</button>
                 <div id="pdfUtilityOutput" style="margin-top:10px; white-space:pre-wrap; font-size:13px; color:#475569;"></div>
             </div>
 
@@ -274,13 +271,12 @@
                 <h4>✍️ Live Digital Signature Generator</h4>
                 <canvas id="sigCanvas" width="300" height="120" style="border:2px dashed #94a3b8; background:white; border-radius:6px; cursor:crosshair;"></canvas>
                 <div style="margin-top:10px; display:flex; gap:10px;">
-                    <button onclick="clearSignatureCanvas()" style="background:#64748b; font-size:13px; padding:6px 12px; width:auto;">Clear Board</button>
-                    <button onclick="downloadSignatureImage()" style="background:#0284c7; font-size:13px; padding:6px 12px; width:auto;">Save Sign Layout</button>
+                    <button onclick="clearSignatureCanvas()" style="background:#64748b; font-size:13px; width:auto; padding:6px 12px;">Clear Board</button>
+                    <button onclick="downloadSignatureImage()" style="background:#0284c7; font-size:13px; width:auto; padding:6px 12px;">Save Sign Layout</button>
                 </div>
             </div>
         </div>
 
-        <!-- Script-to-Video Tab -->
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
             <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
@@ -289,10 +285,9 @@
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
 
-        <!-- Games Arcade Room Tab Zone -->
         <div id="games-tab" class="tab-content hidden">
-            <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Yeh games 100% native local canvas code par chalte hain. Zero lag matrix!</p>
+            <h3>🎮 SevaKit Stable Local Arcade Room</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Yeh games 100% native local canvas code par chalte hain.</p>
             
             <div class="games-grid">
                 <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
@@ -308,7 +303,6 @@
             </div>
         </div>
 
-        <!-- Form Tab Content Layout -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 State & Central Form Scanner</h3>
             <p style="color: #64748b; font-size: 14px;">Upload application forms layouts.</p>
@@ -320,21 +314,25 @@
 </div>
 
 <script>
-    window.onload = function() {
-        const hour = new Date().getHours();
-        if (hour < 12) document.getElementById('greetingHeading').innerText = "🌅 Good Morning! SevaKit Hub";
-        else if (hour < 17) document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! SevaKit Hub";
-        else document.getElementById('greetingHeading').innerText = "🌆 Good Evening! SevaKit Hub";
-        initSignatureCanvasLogic();
-    };
-
-    function switchTab(tabId) {
+    // --- SAFE ISOLATED TAB SWITCHER IMPLEMENTATION ---
+    function switchTab(tabId, menuItemId) {
+        // Hide all blocks cleanly
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.remove('hidden');
-        if(event) event.currentTarget.classList.add('active');
+        
+        // Render target blocks safely
+        const targetTab = document.getElementById(tabId);
+        const targetMenu = document.getElementById(menuItemId);
+        
+        if(targetTab) targetTab.classList.remove('hidden');
+        if(targetMenu) targetMenu.classList.add('active');
+        
         closeActiveGame();
     }
+
+    window.onload = function() {
+        initSignatureCanvasLogic();
+    };
 
     function convertSearchToPDF() {
         const { jsPDF } = window.jspdf;
@@ -391,7 +389,7 @@
         
         output.innerText = "⏳ Extracting text mapping layers...";
         setTimeout(() => {
-            const simulatedExtractedText = "SEVAKIT DIGITAL TRANSCRIPT REPORT MAPPED ASSET\n\nDocument Title: Application Form Layout Structure\nStatus Verified: Active\nData Blocks Parsed Successfully.";
+            const simulatedExtractedText = "SEVAKIT DIGITAL TRANSCRIPT REPORT MAPPED ASSET\n\nData Blocks Parsed Successfully.";
             const blob = new Blob([simulatedExtractedText], {type: "text/plain;charset=utf-8"});
             const url = URL.createObjectURL(blob);
             output.innerHTML = `
@@ -425,7 +423,7 @@
         "- IF DOCTOR CONTEXT MATCHED: Deploy professional medical terminology.\n" +
         "- IF LEGAL/LAWYER SYSTEM QUERY: State kanoon references.\n" +
         "- IF TECH/IT PROGRAMMER CONTEXT: Deliver terminal commands parameters directly.\n" +
-        "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent workflow assistant. Display severe empathy, then give a ready-to-copy text reply.";
+        "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent assistant. Display severe empathy, then give a ready-to-copy text reply.";
 
         if (apiKey) {
             try {
@@ -442,7 +440,16 @@
                 return data.candidates[0].content.parts[0].text;
             } catch (error) { console.error(error); }
         }
-        return await executeFreeAIRequest(systemRule, promptText);
+        
+        // Public Text AI Gateway Call
+        try {
+            const r = await fetch('https://text.pollinations.ai/', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ messages: [{ role: 'system', content: systemRule }, { role: 'user', content: promptText }], model: 'openai', jsonMode: false }) 
+            });
+            return await r.text();
+        } catch (e) { return null; }
     }
 
     async function askSmartAssistant() {
@@ -459,16 +466,19 @@
 
         if (isImageRequest) {
             outBox.innerHTML = `🎨 SevaKit Hyper-Real Flux Engine photo process kar raha hai...`;
-            const translationInstruction = "Convert user request parameters completely into a high fidelity detailed photographic prompt. Respond only with the final text prompt.";
-            let optimizedPrompt = await executeFreeAIRequest(translationInstruction, input);
-            if(!optimizedPrompt) optimizedPrompt = input;
+            
+            let optimizedPrompt = input;
+            try {
+                const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: "Convert user request parameters completely into a high fidelity detailed photographic prompt. Respond only with the final text prompt." }, { role: 'user', content: input }], model: 'openai' }) });
+                optimizedPrompt = await r.text();
+            } catch (e) {}
 
             const seed = Math.floor(Math.random() * 999999);
             const imageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(optimizedPrompt)}?width=1024&height=1024&seed=${seed}&model=flux&nologo=true`;
 
             setTimeout(() => {
                 outBox.innerHTML = `
-                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ Processed Image Output:</p>
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ Processed Image Layout:</p>
                     <div class="ai-image-wrapper">
                         <img src="${imageUrl}" alt="Flux Render File" style="max-width:100%; border-radius:8px;" />
                     </div>
@@ -485,7 +495,7 @@
         }
     }
 
-    // --- 100% WORKING OFFLINE GAMES ENGINE ROOM ---
+    // --- GAMES ARCADE CONTROLLER LAYER ---
     let activeGlobalInterval = null;
 
     function resetArcadeCanvasBox(titleText) {
@@ -500,7 +510,6 @@
         title.innerText = titleText;
     }
 
-    // 1. Tic Tac Toe Local Canvas Core
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let tttCurrentPlayer = "X";
     function startLocalTicTacToe() {
@@ -525,61 +534,10 @@
         tttCurrentPlayer = tttCurrentPlayer === "X" ? "O" : "X";
     }
 
-    // 2. Retro Snake Canvas Engine
     function startLocalSnakeGame() {
         resetArcadeCanvasBox("🐍 Retro Snake Local Grid Arena (Use Arrow Keys)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
         localCanvas.innerHTML = '<canvas id="snakeCanvas" width="400" height="400" style="background:#020617; border:2px solid var(--primary);"></canvas>';
         
         const canvas = document.getElementById('snakeCanvas'); const ctx = canvas.getContext('2d');
-        let grid = 20; let snake = { x: 160, y: 160, dx: grid, dy: 0, cells: [{x:160,y:160}], maxCells: 4 }; let apple = { x: 320, y: 320 };
-        
-        activeGlobalInterval = setInterval(function() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            snake.x += snake.dx; snake.y += snake.dy;
-            if (snake.x < 0) snake.x = canvas.width - grid; else if (snake.x >= canvas.width) snake.x = 0;
-            if (snake.y < 0) snake.y = canvas.height - grid; else if (snake.y >= canvas.height) snake.y = 0;
-            ctx.fillStyle = '#ef4444'; ctx.fillRect(apple.x, apple.y, grid-1, grid-1);
-            ctx.fillStyle = '#22c55e'; snake.cells.unshift({x: snake.x, y: snake.y});
-            if (snake.cells.length > snake.maxCells) snake.cells.pop();
-            snake.cells.forEach(function(cell, index) {
-                ctx.fillRect(cell.x, cell.y, grid-1, grid-1);
-                if (cell.x === apple.x && cell.y === apple.y) { snake.maxCells++; apple.x = Math.floor(Math.random()*20)*grid; apple.y = Math.floor(Math.random()*20)*grid; }
-                for (let i = index + 1; i < snake.cells.length; i++) {
-                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                        alert("Game Over!"); snake.x = 160; snake.y = 160; snake.cells = [{x:160,y:160}]; snake.maxCells = 4; snake.dx = grid; snake.dy = 0;
-                    }
-                }
-            });
-        }, 100);
-        
-        window.onkeydown = function(e) {
-            if (e.which === 37 && snake.dx === 0) { snake.dx = -grid; snake.dy = 0; }
-            else if (e.which === 38 && snake.dy === 0) { snake.dy = -grid; snake.dx = 0; }
-            else if (e.which === 39 && snake.dx === 0) { snake.dx = grid; snake.dy = 0; }
-            else if (e.which === 40 && snake.dy === 0) { snake.dy = grid; snake.dx = 0; }
-        };
-    }
-
-    function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
-    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
-    function triggerVideoPipeline() { const out = document.getElementById('videoOutput'); out.classList.remove('hidden'); out.innerText = "🎬 Script received! Cloud rendering triggers active."; }
-    
-    function generateWhatsAppBanner(textContext) {
-        const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
-        const matched = triggers.some(t => textContext.toLowerCase().includes(t));
-        if (matched) {
-            const myNum = "919398696996";
-            return `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Rejection Warning!</h4><p style="margin:0; font-size:13px; opacity:0.9;">MeeSeva details mapping assistant active.</p></div><a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a></div>`;
-        }
-        return '';
-    }
-    async function executeFreeAIRequest(s, u) {
-        try {
-            const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: s }, { role: 'user', content: u }], model: 'openai', jsonMode: false }) });
-            return await r.text();
-        } catch (e) { return null; }
-    }
-</script>
-</body>
-</html>
+        let grid = 20; let snake = { x: 160, y: 160, dx: grid, dy: 0
