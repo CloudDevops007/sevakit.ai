@@ -118,7 +118,7 @@
         }
 
         button:hover { background: var(--primary-hover); }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
 
         .response-zone {
             margin-top: 25px;
@@ -304,7 +304,7 @@
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
 
-        <!-- Games Arcade Room Tab Zone (CLEANED - 100% WORKING OFFLINE GAMES ONLY) -->
+        <!-- Games Arcade Room Tab Zone (100% WORKING LOCAL OFFLINE GAMES ONLY) -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
@@ -313,6 +313,9 @@
                 <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
                 <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
                 <div class="game-card" onclick="startLocalBricksGame()">🧱 Brick Breaker</div>
+                <div class="game-card" onclick="startLocalCricketGame()">🏏 Mini Cricket</div>
+                <div class="game-card" onclick="startLocalBounceGame()">🏀 Basket Bounce</div>
+                <div class="game-card" onclick="startLocalDinoGame()">Rex 🦖 Dino Runner</div>
             </div>
             
             <div id="gameScreenBox" class="game-screen-container hidden" style="width:100%;">
@@ -344,11 +347,25 @@
         initSignatureCanvasLogic();
     };
 
+    // FIXED: Safe & Isolated Tab Switching Logic
     function switchTab(tabId) {
+        // Hide all panels cleanly
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        
+        // Remove active markers from sidebar buttons safely
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.remove('hidden');
-        if(event) event.currentTarget.classList.add('active');
+        
+        // Unveil target tab section
+        const targetElement = document.getElementById(tabId);
+        if(targetElement) {
+            targetElement.classList.remove('hidden');
+        }
+        
+        // Highlight active clicked menu selector
+        if(window.event && window.event.currentTarget) {
+            window.event.currentTarget.classList.add('active');
+        }
+        
         closeActiveGame();
     }
 
@@ -528,7 +545,7 @@
         }
     }
 
-    // --- 100% OFFLINE MULTI-GAME IMPLEMENTATIONS (ZERO LAG & INTERNET INDEPENDENT) ---
+    // --- 100% OFFLINE STABLE MULTI-GAME PLATFORM ENGINE ---
     let activeGlobalInterval = null;
 
     function resetArcadeCanvasBox(titleText) {
@@ -537,13 +554,13 @@
         const title = document.getElementById('gameTitleDisplay');
         
         clearInterval(activeGlobalInterval);
+        window.onkeydown = null;
         box.classList.remove('hidden');
         localCanvas.classList.remove('hidden');
         title.innerText = titleText;
-        box.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Game 1: Tic Tac Toe Core
+    // 1. Tic Tac Toe
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let tttCurrentPlayer = "X";
     function startLocalTicTacToe() {
@@ -568,7 +585,7 @@
         tttCurrentPlayer = tttCurrentPlayer === "X" ? "O" : "X";
     }
 
-    // Game 2: Retro Snake Engine
+    // 2. Retro Snake
     function startLocalSnakeGame() {
         resetArcadeCanvasBox("🐍 Retro Snake Local Grid Arena (Use Arrow Keys)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
@@ -604,9 +621,9 @@
         };
     }
 
-    // GAME 3: SUGGESTED 100% WORKING BRICK BREAKER (NATIVE OFFLINE CODE)
+    // 3. Brick Breaker
     function startLocalBricksGame() {
-        resetArcadeCanvasBox("🧱 Atari Brick Breaker Blast (Use Mouse or Touch!)");
+        resetArcadeCanvasBox("🧱 Atari Brick Breaker Blast (Use Mouse!)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
         localCanvas.innerHTML = '<canvas id="brickCanvas" width="480" height="320" style="background:#0f172a; border:2px solid var(--primary);"></canvas>';
         
@@ -628,7 +645,6 @@
 
         activeGlobalInterval = setInterval(function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Draw Bricks Matrix
             for(let c=0; c<brickColumnCount; c++) {
                 for(let r=0; r<brickRowCount; r++) {
                     if(bricks[c][r].status == 1) {
@@ -640,19 +656,16 @@
                     }
                 }
             }
-            // Draw Paddle
             ctx.beginPath(); ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
             ctx.fillStyle = "#22c55e"; ctx.fill(); ctx.closePath();
-            // Draw Ball
             ctx.beginPath(); ctx.arc(x, y, ballRadius, 0, Math.PI*2);
             ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
 
-            // Collision parameters logic detection
             for(let c=0; c<brickColumnCount; c++) {
                 for(let r=0; r<brickRowCount; r++) {
                     let b = bricks[c][r];
                     if(b.status == 1) {
-                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) { dy = -dy; b.status = 0; }
+                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) { dy = -dy; b.status = 0; b.status = 0; }
                     }
                 }
             }
@@ -667,11 +680,117 @@
         }, 10);
     }
 
+    // 4. Mini Cricket
+    function startLocalCricketGame() {
+        resetArcadeCanvasBox("🏏 Mini Cricket Timing Net (Click or Press Spacebar!)");
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="crickScore">Score: 0 | Runs: -</div><canvas id="crickCanvas" width="480" height="300" style="background:#15803d; border:2px solid white; cursor:pointer;"></canvas>';
+        
+        const canvas = document.getElementById('crickCanvas'); const ctx = canvas.getContext('2d');
+        let totalScore = 0; let ball = { x: 440, y: 150, active: true, speed: 4, radius: 8 };
+        let pitchLine = 80;
+        
+        function deliverBall() { ball.x = 440; ball.y = 130 + Math.random()*40; ball.speed = 4 + Math.random()*3; ball.active = true; }
+        
+        function hitShot() {
+            if(!ball.active) return;
+            ball.active = false;
+            let diff = Math.abs(ball.x - pitchLine);
+            let runText = "Out!";
+            if(diff < 15) { totalScore += 6; runText = "SIXER! (Perfect)"; }
+            else if(diff < 35) { totalScore += 4; runText = "FOUR! (Good)"; }
+            else if(diff < 55) { totalScore += 1; runText = "1 Run"; }
+            else { runText = "OUT!"; }
+            document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: ${runText}`;
+            setTimeout(deliverBall, 1500);
+        }
+        
+        canvas.onclick = hitShot;
+        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); hitShot(); } };
+
+        activeGlobalInterval = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#eab308"; ctx.fillRect(40, 120, 400, 60);
+            ctx.strokeStyle = "white"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pitchLine, 120); ctx.lineTo(pitchLine, 180); ctx.stroke();
+            if(ball.active) {
+                ball.x -= ball.speed;
+                ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+                ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
+                if(ball.x < 0) { ball.active = false; document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: Dot Ball!`; setTimeout(deliverBall, 1000); }
+            }
+        }, 20);
+    }
+
+    // 5. Basket Bounce
+    function startLocalBounceGame() {
+        resetArcadeCanvasBox("🏀 Basket Bounce Arena (Click or Spacebar!)");
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="bounceScore">Score: 0</div><canvas id="bounceCanvas" width="480" height="320" style="background:#1e293b; border:2px solid var(--primary); cursor:pointer;"></canvas>';
+        
+        const canvas = document.getElementById('bounceCanvas'); const ctx = canvas.getContext('2d');
+        let score = 0; let ball = { x: 100, y: 150, gravity: 0.25, velocity: 0, radius: 10, jump: -4.5 };
+        let pipe = { x: 480, width: 40, gap: 90, topHeight: 100, speed: 2.5 };
+
+        function makeJump() { ball.velocity = ball.jump; }
+        canvas.onclick = makeJump;
+        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); makeJump(); } };
+
+        activeGlobalInterval = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ball.velocity += ball.gravity; ball.y += ball.velocity;
+            ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+            ctx.fillStyle = "#f97316"; ctx.fill(); ctx.closePath();
+
+            pipe.x -= pipe.speed;
+            if(pipe.x < -pipe.width) { pipe.x = 480; pipe.topHeight = 40 + Math.random()*150; score++; document.getElementById('bounceScore').innerText = `Score: ${score}`; }
+            ctx.fillStyle = "#22c55e";
+            ctx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
+            ctx.fillRect(pipe.x, pipe.topHeight + pipe.gap, pipe.width, canvas.height);
+
+            if(ball.y > canvas.height || ball.y < 0) { alert("Game Over!"); startLocalBounceGame(); return; }
+            if(ball.x + ball.radius > pipe.x && ball.x - ball.radius < pipe.x + pipe.width) {
+                if(ball.y - ball.radius < pipe.topHeight || ball.y + ball.radius > pipe.topHeight + pipe.gap) { alert("Game Over!"); startLocalBounceGame(); return; }
+            }
+        }, 20);
+    }
+
+    // 6. Dino Runner
+    function startLocalDinoGame() {
+        resetArcadeCanvasBox("🦖 Offline Dino Runner Grid (Spacebar or Click!)");
+        const localCanvas = document.getElementById('localGameCanvasContainer');
+        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="dinoScore">Distance: 0m</div><canvas id="dinoCanvas" width="500" height="200" style="background:#f8fafc; border:2px solid #cbd5e1; cursor:pointer;"></canvas>';
+        
+        const canvas = document.getElementById('dinoCanvas'); const ctx = canvas.getContext('2d');
+        let score = 0; let dino = { x: 50, y: 140, width: 20, height: 30, jumping: false, vY: 0, gravity: 0.6 };
+        let cactus = { x: 520, width: 15, height: 25, speed: 4 };
+
+        function triggerJump() { if(!dino.jumping) { dino.vY = -10; dino.jumping = true; } }
+        canvas.onclick = triggerJump;
+        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); triggerJump(); } };
+
+        activeGlobalInterval = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "#475569"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, 170); ctx.lineTo(500, 170); ctx.stroke();
+
+            if(dino.jumping) { dino.vY += dino.gravity; dino.y += dino.vY; if(dino.y >= 140) { dino.y = 140; dino.jumping = false; } }
+            ctx.fillStyle = "#334155"; ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+
+            cactus.x -= cactus.speed;
+            if(cactus.x < -cactus.width) { cactus.x = 520 + Math.random()*100; score += 10; document.getElementById('dinoScore').innerText = `Distance: ${score}m`; }
+            ctx.fillStyle = "#ef4444"; ctx.fillRect(cactus.x, 175 - cactus.height, cactus.width, cactus.height);
+
+            if (dino.x < cactus.x + cactus.width && dino.x + dino.width > cactus.x && dino.y + dino.height > 175 - cactus.height) {
+                alert("Game Over! Score: " + score); startLocalDinoGame(); return;
+            }
+        }, 20);
+    }
+
     function closeActiveGame() { 
         document.getElementById('gameScreenBox').classList.add('hidden'); 
         clearInterval(activeGlobalInterval); 
         window.onkeydown = null;
     }
+    
     function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
     function triggerVideoPipeline() { alert("Video compiling setup loaded."); }
     function generateWhatsAppBanner(textContext) {
