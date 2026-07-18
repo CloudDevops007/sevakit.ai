@@ -121,12 +121,16 @@
 
         .response-zone {
             margin-top: 25px;
-            padding: 20px;
-            background: #f8fafc;
-            border-left: 5px solid var(--primary);
-            border-radius: 6px;
+            padding: 25px;
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--primary);
+            border-radius: 8px;
             white-space: pre-wrap;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 15px;
+            color: #334155;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .whatsapp-premium-banner {
@@ -179,13 +183,13 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
-            <strong>✅ Unlimited Free Mode On:</strong><br>
-            Aap bina kisi API key ke direct unlimited chat kar sakte hain!
+            <strong>✅ Unlimited Free Access:</strong><br>
+            Bina kisi key ke direct simplified response open hai!
         </div>
 
         <div class="api-box">
             <label>🔑 Personal Gemini Key (Optional)</label>
-            <input type="password" id="globalApiKey" placeholder="Advanced video/forms features ke liye...">
+            <input type="password" id="globalApiKey" placeholder="Advanced features ke liye...">
             <small style="display:block; margin-top:-8px; font-size:11px;">
                 <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free Advanced Key ↗</a>
             </small>
@@ -200,9 +204,9 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3>🤖 AI Assistant (Free Direct Mode Open)</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, ya kisi bhi general ya technical topic par sawal poochein.</p>
-            <textarea id="assistantInput" placeholder="Apna sawaal yahan likhein (e.g., How to apply for caste certificate, Linux basic parameters, etc.)..." style="height: 120px;"></textarea>
+            <h3>🤖 AI Assistant (Simple Text Mode)</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, ya kisi bhi query ka jawab payein. English text ko Hinglish me convert karne ke liye likhein: "Translate this to Hinglish: [aapka text]"</p>
+            <textarea id="assistantInput" placeholder="Apna sawaal ya text yahan likhein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
             <div id="assistantOutput" class="response-zone hidden"></div>
@@ -222,11 +226,6 @@
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
             <p style="color: #64748b; font-size: 14px;">Advanced video feature requires dedicated API processing power.</p>
-            <label>Choose Genre Style:</label>
-            <select id="videoGenre">
-                <option value="adventure">Thrill & Adventure Mode</option>
-                <option value="cartoon">Cartoon / Animated Explainer</option>
-            </select>
             <textarea id="scriptInput" placeholder="Apni script yahan paste karein..."></textarea>
             <button onclick="triggerVideoPipeline()">Compile & Render Concept</button>
             
@@ -264,53 +263,27 @@
         return '';
     }
 
-    // Comprehensive Keyless AI Engine Route (100% Client-Side Free)
-    async function callKeylessAI(textPrompt) {
+    // Fully Managed Text Optimizer Proxy Engine
+    async function executeKeylessAI(systemInstruction, userPrompt) {
         try {
-            // Free standard edge routing through an open utility parser endpoint
             const url = 'https://text.pollinations.ai/';
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     messages: [
-                        { role: 'system', content: 'You are SevaKit.ai, a helpful AI assistant specialized in documentation, tech tutorials like Linux, and online services. Guide the user accurately in simple words.' },
-                        { role: 'user', content: textPrompt }
+                        { role: 'system', content: systemInstruction },
+                        { role: 'user', content: userPrompt }
                     ],
                     model: 'openai',
                     jsonMode: false
                 })
             });
-            const data = await response.text();
-            return data;
+            return await response.text();
         } catch (err) {
             console.error(err);
             return null;
         }
-    }
-
-    // Dynamic API Router Switcher
-    async function callGeminiAPI(promptText) {
-        const userKey = document.getElementById('globalApiKey').value.trim();
-        
-        // Custom Mode: User keys processing
-        if (userKey) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${userKey}`;
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-                });
-                const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
-            } catch (e) { 
-                console.error(e); 
-            }
-        }
-
-        // Direct Mode: Keyless routing backup
-        return await callKeylessAI(promptText);
     }
 
     async function askSmartAssistant() {
@@ -321,15 +294,19 @@
         if(!input) return alert("Pehle kuch type karein!");
         
         outBox.classList.remove('hidden');
-        outBox.innerText = "⏳ SevaKit Processing Response...";
+        outBox.innerText = "⏳ SevaKit Engine Processing Response...";
         waBox.innerHTML = "";
 
-        const aiResponse = await callGeminiAPI(input);
+        // Strict system rule to enforce beautiful formatting and accurate Hinglish translation conversion
+        const systemRule = "You are SevaKit.ai. Strictly avoid generating markdown tables, grid lines, or complex code bars. Give your final answers ONLY in clean paragraphs or simple bullet points that are extremely easy to read. Critical: If the user asks to translate English text to Hinglish, convert it completely into clean, natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka form verify ho gaya hai'). Do not output internal raw markdown blocks.";
+
+        const aiResponse = await executeKeylessAI(systemRule, input);
+        
         if(aiResponse) {
             outBox.innerText = aiResponse;
             waBox.innerHTML = generateWhatsAppBanner(input);
         } else {
-            outBox.innerText = "Server sync logic update requested. Kripya ek baar fir se input enter karein.";
+            outBox.innerText = "Processing error. Kripya ek baar fir se input type karke check karein.";
         }
     }
 
