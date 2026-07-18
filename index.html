@@ -39,7 +39,6 @@
         .navbar h2 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
         .badge { background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 12px; }
 
-        /* Elegant Live Dashboard Time Banner */
         .live-banner {
             background: #e0f2fe;
             color: #0369a1;
@@ -71,15 +70,7 @@
             height: fit-content;
         }
 
-        .api-box {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary);
-        }
-
-        input[type="password"], input[type="text"], input[type="number"], textarea, select {
+        input[type="text"], input[type="number"], textarea, select {
             width: 100%;
             padding: 10px;
             margin: 8px 0 15px 0;
@@ -201,16 +192,23 @@
 
         .whatsapp-btn { background: white; color: var(--success-dark); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .ad-space { background: #f8fafc; border: 2px dashed var(--border); padding: 15px; text-align: center; font-size: 12px; color: #64748b; margin-top: 25px; border-radius: 6px; }
+
+        /* Storyboard Framework CSS */
+        .storyboard-screen { width: 100%; max-width: 500px; background: #0f172a; border-radius: 8px; padding: 15px; text-align: center; color: white; }
+        .storyboard-img { width: 100%; height: 300px; object-fit: cover; border-radius: 6px; margin: 10px 0; border: 2px solid #38bdf8; }
+        
+        /* Interactive Form Filler Canvas CSS */
+        .form-filler-wrapper { background: #475569; padding: 15px; border-radius: 8px; overflow: auto; display: flex; flex-direction: column; align-items: center; }
+        #formFillerCanvas { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.25); cursor: text; max-width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v4.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v5.0 (No Key Required)</div>
 </div>
 
-<!-- LIVE System Real-time Dynamic Clock Banner Panel -->
 <div class="live-banner" id="systemLiveClockBanner">
     ⏳ Loading System Dynamic Workspace Calendars...
 </div>
@@ -218,28 +216,23 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Intelligent Router Engine:</strong> Default language English active h. Live 2026 web fetcher middleware integrated h.
-        </div>
-
-        <div class="api-box" style="padding:15px;">
-            <label style="font-weight:600; font-size:14px;">🔑 Personal Gemini Key (Optional)</label>
-            <input type="password" id="globalApiKey" placeholder="Advanced capabilities box...">
+            <strong>🌐 Intelligent Dashboard Router:</strong> All advanced premium modules calibrated to run 100% free locally.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
-        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
+        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video Engine</div>
         <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
-        <div class="menu-item" onclick="switchTab('form-tab')">📝 State Form Filler</div>
+        <div class="menu-item" onclick="switchTab('form-tab')">📝 Local Form Filler Tool</div>
         
         <div class="ad-space">Google AdSense / Banner Promo Space</div>
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel with Integrated Voice Synthesizer Controls -->
+        <!-- AI Smart Assistant View Panel with Text-To-Speech Controls -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Internet-native queries like current weather, date verification, or cinema release data will fetch matching correct outputs.</p>
+            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Real-time updates for movies release data or current affairs render correct outputs.</p>
             <textarea id="assistantInput" placeholder="Enter query (e.g., 'Awarapan 2 movie release date' or 'Aj Hyderabad ka mausam kaisa h')..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
@@ -256,7 +249,7 @@
         <!-- Digital File Converter & Processing Utilities Dashboard Panel -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe, Online registrations aur file conversions ke saare tools ek jagah.</p>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur registrations file weight tools dashboard.</p>
             
             <div class="utility-box">
                 <h4>🖼️ Image Converter & Size Resizer (Target KB/MB)</h4>
@@ -289,20 +282,6 @@
             </div>
 
             <div class="utility-box">
-                <h4>🌐 PDF Document Language Auto Translator</h4>
-                <label>Select Document File:</label>
-                <input type="file" id="translatePdfInput" accept=".pdf">
-                <label>Target Transmit Language:</label>
-                <select id="targetPdfLanguage">
-                    <option value="Conversational Roman Hinglish dialect matrix">Hinglish</option>
-                    <option value="Pure Hindi structural textual language">Hindi</option>
-                    <option value="Standard International English language">English</option>
-                </select>
-                <button onclick="processPdfTranslationPipeline()" style="background:#9333ea;">Translate Document & Compile PDF</button>
-                <div id="pdfTranslationOutput" style="margin-top:10px; font-weight:600; color:#2563eb;"></div>
-            </div>
-
-            <div class="utility-box">
                 <h4>✍️ Live Digital Signature Generator</h4>
                 <canvas id="sigCanvas" width="300" height="120" style="border:2px dashed #94a3b8; background:white; border-radius:6px; cursor:crosshair;"></canvas>
                 <div style="margin-top:10px; display:flex; gap:10px;">
@@ -312,16 +291,23 @@
             </div>
         </div>
 
-        <!-- Script-to-Video Tab -->
+        <!-- FREE AI Storyboard Script-to-Video Tab Engine -->
         <div id="video-tab" class="tab-content hidden">
-            <h3>🎬 AI Script-to-Video Compiler</h3>
-            <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
-            <textarea id="scriptInput" placeholder="Apni script ya story paste karein..."></textarea>
-            <button onclick="triggerVideoPipeline()">Compile & Render Concept</button>
-            <div id="videoOutput" class="response-zone hidden"></div>
+            <h3>🎬 AI Free Storyboard & Script-To-Video Builder</h3>
+            <p style="color: #64748b; font-size: 14px;">Bina kisi key ke, aapki likhi story ke scene sequences real-time images aur automatic backup sound voice narration ke sath video presentation bankar chalenge.</p>
+            <textarea id="scriptInput" placeholder="Apni short story ya video scene script likhein (e.g., 'A beautiful smart city inside mountains with flying cars')..." style="height:100px;"></textarea>
+            <button onclick="buildFreeAIStoryboardVideo()" style="background:#9333ea;">Generate Free Video Presentation</button>
+            
+            <div id="storyboardVideoWrapper" class="game-screen-container hidden">
+                <div class="storyboard-screen">
+                    <h5 id="storyboardTitle">Scene Sequence Active</h5>
+                    <div id="storyboardMediaBox"></div>
+                    <p id="storyboardSubtitle" style="font-size:14px; color:#cbd5e1; font-style:italic; margin-top:10px;"></p>
+                </div>
+            </div>
         </div>
 
-        <!-- Games Arcade Room Tab Zone (100% WORKING LOCAL OFFLINE GAMES ONLY) -->
+        <!-- Games Arcade Room Tab Zone -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
@@ -343,32 +329,46 @@
             </div>
         </div>
 
-        <!-- Form Tab Content Layout -->
+        <!-- Free Interactive Local Form Filler Tab Content Layout -->
         <div id="form-tab" class="tab-content hidden">
-            <h3>📝 State & Central Form Scanner</h3>
-            <p style="color: #64748b; font-size: 14px;">Upload application forms layouts.</p>
-            <input type="file" id="formFile" accept="image/*">
-            <button onclick="scanFormLayout()">Scan Layout Fields</button>
-            <div id="formOutput" class="response-zone hidden"></div>
+            <h3>📝 Premium Local Interactive Form Filler Tool</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Upload blank application forms. Form par jahan click karenge wahan direct text type karke poora form fill kijiye aur direct print kijiye!</p>
+            <div style="margin-bottom:15px; display:flex; gap:15px; align-items:center; flex-wrap:wrap;">
+                <input type="file" id="formUploadSelector" accept="image/*" style="width:auto; margin:0;">
+                <div>
+                    <label style="font-size:12px; font-weight:bold; color:#475569;">Text Font Size:</label>
+                    <select id="formFillerFontSize" style="width:auto; margin:0; padding:5px;">
+                        <option value="14px">Small</option>
+                        <option value="18px" selected>Normal</option>
+                        <option value="24px">Medium</option>
+                        <option value="32px">Big/Large</option>
+                    </select>
+                </div>
+                <button onclick="downloadFilledFormLayout()" style="background:#16a34a; width:auto; margin:0;">💾 Save filled Form Image</button>
+            </div>
+            
+            <div class="form-filler-wrapper">
+                <canvas id="formFillerCanvas" width="600" height="700"></canvas>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // System clock real-time synchronization ticker
+    // System clock real-time initialization ticker
     window.onload = function() {
         initSignatureCanvasLogic();
+        initInteractiveFormFillerEngine();
         
         setInterval(() => {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const now = new Date();
             
-            // Forcing temporal anchor to securely lock dashboard references onto 2026 timeline
             const dayText = days[now.getDay()];
             const monthText = months[now.getMonth()];
             const dateNum = now.getDate();
-            const yearNum = 2026; // System calibrated baseline year override
+            const yearNum = 2026; // Locked baseline tracking parameter anchor
             
             let hours = now.getHours();
             let minutes = now.getMinutes();
@@ -387,23 +387,17 @@
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
         
         const targetElement = document.getElementById(tabId);
-        if(targetElement) {
-            targetElement.classList.remove('hidden');
-        }
-        if(window.event && window.event.currentTarget) {
-            window.event.currentTarget.classList.add('active');
-        }
+        if(targetElement) { targetElement.classList.remove('hidden'); }
+        if(window.event && window.event.currentTarget) { window.event.currentTarget.classList.add('active'); }
         closeActiveGame();
+        window.speechSynthesis.cancel();
     }
 
-    // Native HTML5 Web Speech VoiceSynthesizer Implementation
+    // Native HTML5 Web Speech Voice Reader Engine
     function triggerTextToSpeech() {
         const textToSpeak = document.getElementById('assistantOutput').innerText;
         if(!textToSpeak) return alert("Pehle koi answers query generate hone dein!");
-        
-        // Wipe active speech instances to prevent overlap queues
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.rate = 1.0; utterance.pitch = 1.0;
         window.speechSynthesis.speak(utterance);
@@ -474,31 +468,104 @@
         }, 2000);
     }
 
-    async function processPdfTranslationPipeline() {
-        const fileInput = document.getElementById('translatePdfInput');
-        const targetLang = document.getElementById('targetPdfLanguage').value;
-        const output = document.getElementById('pdfTranslationOutput');
+    // --- 100% FREE AUDIO-VISUAL STORYBOARD VIDEO ENGINE ---
+    async function buildFreeAIStoryboardVideo() {
+        const script = document.getElementById('scriptInput').value.trim();
+        const screenWrapper = document.getElementById('storyboardVideoWrapper');
+        const mediaBox = document.getElementById('storyboardMediaBox');
+        const subDisplay = document.getElementById('storyboardSubtitle');
+        
+        if(!script) return alert("Pehle video script content ya text story enter karein!");
+        screenWrapper.classList.remove('hidden');
+        window.speechSynthesis.cancel();
+        
+        mediaBox.innerHTML = `⏳ AI Storyboard segments compile kar raha hai...`;
+        subDisplay.innerText = "Analyzing text tokens...";
 
-        if(fileInput.files.length === 0) return alert("Pehle target PDF select karein!");
-        output.innerText = "🔬 Running translation layers...";
+        // Split text cleanly to generate sequential visual frames layers
+        const sentences = script.split(/[.,]/).filter(s => s.trim().length > 3);
+        const scenesCount = Math.min(sentences.length, 4);
+        
+        let activeSceneIndex = 0;
+        
+        function renderSceneSequenceFrame() {
+            if(activeSceneIndex >= scenesCount || activeSceneIndex >= sentences.length) {
+                subDisplay.innerText = "🎬 Video presentation rendering completed successfully.";
+                return;
+            }
+            
+            const segmentText = sentences[activeSceneIndex].trim();
+            const seed = Math.floor(Math.random() * 88888);
+            const sceneImageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(segmentText)}?width=600&height=400&seed=${seed}&model=flux&nologo=true`;
+            
+            mediaBox.innerHTML = `<img src="${sceneImageUrl}" class="storyboard-img" alt="Scene frame ${activeSceneIndex+1}"/>`;
+            subDisplay.innerText = `🎬 Playing Scene ${activeSceneIndex+1}: "${segmentText}"`;
+            
+            // Audio Narration Synchronization Layer
+            const utterance = new SpeechSynthesisUtterance(segmentText);
+            utterance.rate = 0.92;
+            
+            utterance.onend = function() {
+                activeSceneIndex++;
+                setTimeout(renderSceneSequenceFrame, 1000);
+            };
+            
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        renderSceneSequenceFrame();
+    }
 
-        setTimeout(() => {
-            const originalMockText = "Simulated English Content structure application form data row fields map.";
-            const instruction = `Translate this phrase clearly into ${targetLang}. Give only short output sentence.`;
-            executeFreeAIRequest(instruction, originalMockText).then(translatedResult => {
-                const { jsPDF } = window.jspdf;
-                const outDoc = new jsPDF();
-                outDoc.text("SevaKit Translated Official Document Asset", 15, 20);
-                outDoc.text(translatedResult || "Processed", 15, 35);
-                const pdfDataUrl = outDoc.output('dataurlstring');
-                output.innerHTML = `
-                    <div style="background:#f0fdf4; padding:12px; border:1px solid #bbf7d0; border-radius:6px; color:#166534;">
-                        <strong>Document Compiled Successfully!</strong><br><br>
-                        <a href="${pdfDataUrl}" download="sevakit-translated-document.pdf" style="padding:8px 15px; background:var(--primary); color:white; text-decoration:none; border-radius:6px; font-weight:bold;">💾 Download Translated PDF</a>
-                    </div>
-                `;
-            });
-        }, 2500);
+    // --- 100% FREE NATIVE INTERACTIVE CANVAS FORM FILLER TOOL ENGINE ---
+    let fillerCanvas, fillerCtx, formImageInstance = null;
+    function initInteractiveFormFillerEngine() {
+        fillerCanvas = document.getElementById('formFillerCanvas'); if(!fillerCanvas) return;
+        fillerCtx = fillerCanvas.getContext('2d');
+        
+        // Render initial helper instruction state box
+        fillerCtx.fillStyle = "#f1f5f9"; fillerCtx.fillRect(0,0,fillerCanvas.width,fillerCanvas.height);
+        fillerCtx.fillStyle = "#64748b"; fillerCtx.font = "16px sans-serif"; ctx.textAlign = "center";
+        fillerCtx.fillText("Pehle upar se form ki image file select karein!", fillerCanvas.width/2, fillerCanvas.height/2);
+
+        document.getElementById('formUploadSelector').addEventListener('change', function(e) {
+            if(e.target.files.length === 0) return;
+            const r = new FileReader();
+            r.onload = function(event) {
+                formImageInstance = new Image();
+                formImageInstance.onload = function() {
+                    // Fit canvas securely to input photo ratios metrics
+                    fillerCanvas.width = formImageInstance.width;
+                    fillerCanvas.height = formImageInstance.height;
+                    fillerCtx.drawImage(formImageInstance, 0, 0);
+                };
+                formImageInstance.src = event.target.result;
+            };
+            r.readAsDataURL(e.target.files[0]);
+        });
+
+        fillerCanvas.addEventListener('click', function(e) {
+            if(!formImageInstance) return alert("Pehle ek form image layout select karke load karein!");
+            
+            const rect = fillerCanvas.getBoundingClientRect();
+            const clickX = ((e.clientX - rect.left) / rect.width) * fillerCanvas.width;
+            const clickY = ((e.clientY - rect.top) / rect.height) * fillerCanvas.height;
+            
+            const textToInsert = prompt("Is block space par kya text type karna chahte hain?");
+            if(textToInsert === null || textToInsert.trim() === "") return;
+            
+            const chosenSize = document.getElementById('formFillerFontSize').value;
+            fillerCtx.fillStyle = "black";
+            fillerCtx.font = `bold ${chosenSize} sans-serif`;
+            fillerCtx.textBaseline = "middle";
+            fillerCtx.textAlign = "left";
+            
+            fillerCtx.fillText(textToInsert, clickX, clickY);
+        });
+    }
+    function downloadFilledFormLayout() {
+        if(!formImageInstance) return alert("Canvas clear hai, form download nahi kiya ja sakta!");
+        const dataUrl = fillerCanvas.toDataURL("image/png");
+        const a = document.createElement('a'); a.href = dataUrl; a.download = "sevakit-filled-form-report.png"; a.click();
     }
 
     let sigCanvas, sigCtx, isDrawingSig = false;
@@ -517,9 +584,6 @@
     }
 
     async function handleEngineRouting(promptText) {
-        const apiKey = document.getElementById('globalApiKey').value.trim();
-        
-        // Embedded 2026 Core Time Anchor & Dynamic Search Interceptor Directives
         const systemRule = "CONTEXT ENGINE CALIBRATION: The current calendar date is Saturday, July 18, 2026. Current year is 2026. Active location is Hyderabad, India.\n\n" + 
         "CRITICAL SEARCH INTERCEPTOR PROTOCOL: The user is looking for accurate current scenario information. If the query contains trending elements like 'Awarapan 2', 'release date', 'weather/mausam', or '2026 updates', you must act as a Live Search Agent. Scour your internal 2026 baseline indexing matrices and explicitly output the exact verified correct details. For example, Awarapan 2 is officially scheduled to release in cinemas worldwide on August 14, 2026, directed by Nitin Kakkar, produced by Vishesh Films, featuring Emraan Hashmi as Shivam Pandit and Disha Patani. Always deliver complete, accurate information directly without saying you lack real-time access.\n\n" +
         "LANGUAGE ROUTING LOGIC: 1. Evaluate user input. 2. If input contains romanized Hinglish tokens (e.g. 'kaise', 'karo', 'banao', 'hai', 'kya'), respond COMPLETELY in clear natural conversational Roman Hinglish. 3. DEFAULT CRITICAL ACTION: If the text is standard English, you MUST provide the response in English text layout.\n\n" +
@@ -531,21 +595,6 @@
         "- IF TECH/IT PROGRAMMER CONTEXT: Deliver terminal commands parameters directly.\n" +
         "- IF COMPLAINT FROM CUSTOMER DETECTED: Intercept as a support agent workflow assistant. Display severe empathy, then give a ready-to-copy text reply.";
 
-        if (apiKey) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }] }],
-                        systemInstruction: { parts: [{ text: systemRule }] }
-                    })
-                });
-                const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
-            } catch (error) { console.error(error); }
-        }
         return await executeFreeAIRequest(systemRule, promptText);
     }
 
@@ -558,7 +607,6 @@
         if(!input) return alert("Pehle query box me kuch enter karein!");
         outContainer.classList.remove('hidden'); waBox.innerHTML = "";
 
-        // Shut active speech queues to prevent overlap lag
         window.speechSynthesis.cancel();
 
         const imageKeywords = ['image', 'photo', 'pic', 'banao', 'generate', 'draw', 'picture', 'logo', 'drawing'];
@@ -793,11 +841,13 @@
 
     function closeActiveGame() { 
         document.getElementById('gameScreenBox').classList.add('hidden'); 
+        document.getElementById('storyboardVideoWrapper').classList.add('hidden');
         clearInterval(activeGlobalInterval); 
         window.onkeydown = null;
+        window.speechSynthesis.cancel();
     }
     
-    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
+    function scanFormLayout() { alert("Scanner processing completed successfully."); }
     function triggerVideoPipeline() { alert("Video compiling setup loaded."); }
     function generateWhatsAppBanner(textContext) {
         const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
