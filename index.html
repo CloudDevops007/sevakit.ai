@@ -215,14 +215,14 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">⚡ Realistic Free Engine</div>
+    <div class="badge">🧠 Dynamic Multiverse AI</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
-            <strong>✅ Free Realistic Mode:</strong><br>
-            Bina kisi key ke high-quality realistic photos aur direct text response active hai!
+            <strong>✅ Adaptive Persona Active:</strong><br>
+            AI automatically user ka level samajhkar usi language aur understanding me jawab dega!
         </div>
 
         <div class="api-box">
@@ -242,9 +242,9 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3 id="greetingHeading">🤖 AI Assistant & Real Image Generator</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, diet plans search karein. <br><strong>🎨 Real Photo banane ke liye likhein:</strong> "cat elephant ke upar baithkar aa rhi h image banao" ya "create real picture of a horse".</p>
-            <textarea id="assistantInput" placeholder="Apna sawaal likhein ya photo banane ki command dein..." style="height: 120px;"></textarea>
+            <h3 id="greetingHeading">🤖 SevaKit Intelligent Assistant</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Homework, Law, Tech, Medical ya Support Client queries enter karein. System user ka role auto-detect kar lega.</p>
+            <textarea id="assistantInput" placeholder="Apna sawaal ya customer ka message yahan paste karein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
             <div id="assistantOutput" class="response-zone hidden"></div>
@@ -276,11 +276,11 @@
     window.onload = function() {
         const hour = new Date().getHours();
         if (hour < 12) {
-            document.getElementById('greetingHeading').innerText = "🌅 Good Morning! AI Workspace";
+            document.getElementById('greetingHeading').innerText = "🌅 Good Morning! SevaKit Hub";
         } else if (hour < 17) {
-            document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! AI Workspace";
+            document.getElementById('greetingHeading').innerText = "☀️ Good Afternoon! SevaKit Hub";
         } else {
-            document.getElementById('greetingHeading').innerText = "🌆 Good Evening! AI Workspace";
+            document.getElementById('greetingHeading').innerText = "🌆 Good Evening! SevaKit Hub";
         }
     };
 
@@ -335,7 +335,16 @@
 
     async function handleEngineRouting(promptText) {
         const apiKey = document.getElementById('globalApiKey').value.trim();
-        const systemRule = "You are SevaKit.ai. 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. Reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters.";
+        
+        // MASTER SYSTEM PROMPT - Handles Persona Adaptation, Empathy Level Routing, Clean Text Outputs, and forced conversational Roman Hinglish
+        const systemRule = "You are SevaKit.ai, a multi-intelligence adaptive assistant. STRICT GENERAL RULES: 1. Absolutely NO asterisks (**), blockquotes (>), hashes (#), tables, or bullet formatting symbols. Use only plain paragraphs or numbers. 2. Always reply in clean conversational Roman Hinglish (Hindi written in English alphabet) unless requested otherwise. No Devanagari characters allowed.\n\n" +
+        "ADAPTIVE PERSONA ROUTER ACTIONS:\n" +
+        "- IF USER IS A SCHOOL CHILD (Basic topics, simple science/maths homework): Reply like a gentle primary teacher using super simple words, tiny paragraphs, and playful examples.\n" +
+        "- IF USER IS A DOCTOR/MEDICAL: Use proper professional, structured, and clinically sound terminology.\n" +
+        "- IF USER IS A LAWYER: Frame the response around precise rules, legal frameworks, act sections, and formal arguments.\n" +
+        "- IF USER IS AN IT/TECH PERSON (Code, server, linux, networking): Provide zero fluff, clean system logic, direct terminal settings parameters or variables directly.\n" +
+        "- IF USER ENTERS A ISLAMIC/RELIGIOUS QUERY: Reply with supreme respect and adab, providing authentic guidance based on verified references.\n" +
+        "- CRITICAL CUSTOMER SUPPORT AGENT DETECTOR: If the prompt looks like a text post/complaint from a customer (e.g. refund delayed, broken product, angry message), IMMEDIATELY realize that a support agent is using you to help a live customer. First, show extreme empathy, sympathy, and acknowledge the customer's pain politely (e.g., 'Aapko hui pareshani ke liye hum khed hai'). Then, generate a polished, ready-to-copy customer response that the agent can send directly.";
 
         if (apiKey) {
             try {
@@ -351,7 +360,7 @@
                 const data = await response.json();
                 return data.candidates[0].content.parts[0].text;
             } catch (error) {
-                console.error("Gemini failed, fallback to free...", error);
+                console.error("Gemini failed, fallback triggered...", error);
             }
         }
         return await executeFreeAIRequest(systemRule, promptText);
@@ -372,22 +381,18 @@
 
         if (isImageRequest) {
             outBox.innerHTML = `🎨 SevaKit Hyper-Real Engine photo generate kar raha hai... Kripya 4-5 seconds wait karein.`;
-            
-            // Background instruction builder to optimize prompts into ultra realism details
-            const translationInstruction = "Convert the user input into a highly detailed, photorealistic, cinematic prompt for image generators. Focus on hyper-real physics, correct anatomy, and natural shadows. Output only the final English prompt, no extra text.";
+            const translationInstruction = "Convert user input into a highly detailed, photorealistic prompt for image generators. Focus on hyper-real physics and correct details. Output only the final English sentence, no extras.";
             let optimizedPrompt = await executeFreeAIRequest(translationInstruction, input);
-            
             if(!optimizedPrompt) { optimizedPrompt = input; }
 
-            // Dynamic setup utilizing model=flux configuration for realistic output rendering
             const seed = Math.floor(Math.random() * 999999);
             const imageUrl = `https://image.pollinations.ai/p/${encodeURIComponent(optimizedPrompt)}?width=1024&height=1024&seed=${seed}&model=flux&nologo=true`;
 
             setTimeout(() => {
                 outBox.innerHTML = `
-                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ SevaKit Realistic Free Engine Output:</p>
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ SevaKit Flux Realism Output:</p>
                     <div class="ai-image-wrapper">
-                        <img src="${imageUrl}" alt="Flux Realistic Render Asset" />
+                        <img src="${imageUrl}" alt="Flux Realistic Render" />
                         <div class="image-action-bar">
                             <a href="${imageUrl}" target="_blank" download="sevekit-real-art.jpg" class="action-btn btn-download">💾 Download Image</a>
                             <a href="https://wa.me/919398696996?text=${encodeURIComponent('Hi, Maine SevaKit.ai par ye realistic image generate ki hai: ' + imageUrl)}" target="_blank" class="action-btn btn-wa-share">💬 WhatsApp Share</a>
@@ -397,13 +402,16 @@
             }, 3000);
 
         } else {
-            outBox.innerText = "⏳ SevaKit Processing Response...";
+            outBox.innerText = "⏳ SevaKit Engine Processing (Smart Persona Detection Mode)...";
             let aiResponse = await handleEngineRouting(input);
             
             if(aiResponse) {
+                // Formatting Sanitation Filter Layer
                 aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
                 outBox.innerText = aiResponse;
                 waBox.innerHTML = generateWhatsAppBanner(input);
+            } else {
+                outBox.innerText = "Server response error. Please try again.";
             }
         }
     }
@@ -422,7 +430,7 @@
     function triggerVideoPipeline() {
         const outBox = document.getElementById('videoOutput');
         outBox.classList.remove('hidden');
-        outBox.innerText = "🎬 Advanced Video Pipeline requires a Custom API Key to map high-fidelity servers.";
+        outBox.innerText = "🎬 Advanced Video Pipeline requires a Custom API Key.";
     }
 </script>
 
