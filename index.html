@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
+    <!-- External Library for Search PDF Download Functionality -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -175,7 +176,6 @@
 
         .ai-image-wrapper img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         
-        /* --- Offline Local Game Arena Styles --- */
         #localGameCanvasContainer { background: #0f172a; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; box-sizing: border-box; }
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 90px); gap: 8px; }
         .tictactoe-cell { background: #334155; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: bold; color: white; cursor: pointer; height: 90px; }
@@ -195,18 +195,18 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite</div>
+    <div class="badge">🚀 System Standard Reset Mode</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Intelligent Router Engine:</strong> Default language English active hai. Hinglish input daalne par Hinglish mode auto-trigger hoga.
+            <strong>🌐 Intelligent Assistant:</strong> Default core English active hai. Hinglish input daalne par Hinglish mode trigger hoga.
         </div>
 
         <div class="api-box" style="padding:15px;">
             <label style="font-weight:600; font-size:14px;">🔑 Personal Gemini Key (Optional)</label>
-            <input type="password" id="globalApiKey" placeholder="Advanced capabilities box...">
+            <input type="password" id="globalApiKey" placeholder="Paste advanced key here...">
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
@@ -219,10 +219,11 @@
     </div>
 
     <div class="workspace">
+        <!-- AI Smart Assistant View Panel -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish to auto-convert responses. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
-            <textarea id="assistantInput" placeholder="Enter query, technical questions or customer support prompts..." style="height: 120px;"></textarea>
+            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. <br><strong>🎨 Real Media Creator:</strong> type "cat elephant ke upar baithkar aa rhi h image banao".</p>
+            <textarea id="assistantInput" placeholder="Enter query or type photo build instructions..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
             <div id="assistantOutputContainer" class="hidden">
@@ -234,9 +235,10 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
+        <!-- Digital File Converter & Processing Utilities Dashboard Panel -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe, Online registrations aur file conversions ke saare tools ek jagah.</p>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">File conversions aur local file compression dashboard modules.</p>
             
             <div class="utility-box">
                 <h4>🖼️ Image Converter & Size Resizer (Target KB/MB)</h4>
@@ -269,20 +271,6 @@
             </div>
 
             <div class="utility-box">
-                <h4>🌐 PDF Document Language Auto Translator</h4>
-                <label>Select Document File:</label>
-                <input type="file" id="translatePdfInput" accept=".pdf">
-                <label>Target Transmit Language:</label>
-                <select id="targetPdfLanguage">
-                    <option value="Conversational Roman Hinglish dialect matrix">Hinglish</option>
-                    <option value="Pure Hindi structural textual language">Hindi</option>
-                    <option value="Standard International English language">English</option>
-                </select>
-                <button onclick="processPdfTranslationPipeline()" style="background:#9333ea;">Translate Document & Compile PDF</button>
-                <div id="pdfTranslationOutput" style="margin-top:10px; font-weight:600; color:#2563eb;"></div>
-            </div>
-
-            <div class="utility-box">
                 <h4>✍️ Live Digital Signature Generator</h4>
                 <canvas id="sigCanvas" width="300" height="120" style="border:2px dashed #94a3b8; background:white; border-radius:6px; cursor:crosshair;"></canvas>
                 <div style="margin-top:10px; display:flex; gap:10px;">
@@ -292,6 +280,7 @@
             </div>
         </div>
 
+        <!-- Script-to-Video Tab -->
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
             <p style="color: #64748b; font-size: 14px;">Advanced high-fidelity server script runner simulation module.</p>
@@ -300,16 +289,14 @@
             <div id="videoOutput" class="response-zone hidden"></div>
         </div>
 
+        <!-- Games Arcade Room Tab Zone -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Yeh saare games 100% local JavaScript code par chalte hain. Zero errors, zero loading lag!</p>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Yeh games 100% native local canvas code par chalte hain. Zero lag matrix!</p>
             
             <div class="games-grid">
                 <div class="game-card" onclick="startLocalTicTacToe()">⭕ Tic-Tac-Toe</div>
                 <div class="game-card" onclick="startLocalSnakeGame()">🐍 Retro Snake</div>
-                <div class="game-card" onclick="startLocalCricketGame()">🏏 Mini Cricket</div>
-                <div class="game-card" onclick="startLocalBounceGame()">🏀 Basket Bounce</div>
-                <div class="game-card" onclick="startLocalDinoGame()">🦖 Dino Runner</div>
             </div>
             
             <div id="gameScreenBox" class="game-screen-container hidden" style="width:100%;">
@@ -321,6 +308,7 @@
             </div>
         </div>
 
+        <!-- Form Tab Content Layout -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 State & Central Form Scanner</h3>
             <p style="color: #64748b; font-size: 14px;">Upload application forms layouts.</p>
@@ -387,7 +375,7 @@
                 logBox.innerHTML = `
                     <div style="background:#dcfce7; padding:12px; border:1px solid #bbf7d0; border-radius:6px; color:#166534; font-size:14px;">
                         <strong>🎉 Processed successfully!</strong> Generated weight: ${Math.round(dataUrl.length / 1024)} KB<br><br>
-                        <a href="${dataUrl}" download="sevakit-optimized-image.${targetFormat.split('/')[1]}" class="action-btn" style="display:inline-block; background:var(--primary); color:white; border-radius:6px; text-decoration:none;">💾 Download Converted File</a>
+                        <a href="${dataUrl}" download="sevakit-optimized-image.${targetFormat.split('/')[1]}" class="action-btn" style="display:inline-block; background:var(--primary); color:white; border-radius:6px; text-decoration:none; padding: 8px 15px;">💾 Download Converted File</a>
                     </div>
                 `;
             };
@@ -411,33 +399,6 @@
                 <a href="${url}" download="sevakit-extracted-text.txt" style="padding:8px 15px; background:var(--primary); color:white; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;">💾 Download Text Word File</a>
             `;
         }, 2000);
-    }
-
-    async function processPdfTranslationPipeline() {
-        const fileInput = document.getElementById('translatePdfInput');
-        const targetLang = document.getElementById('targetPdfLanguage').value;
-        const output = document.getElementById('pdfTranslationOutput');
-
-        if(fileInput.files.length === 0) return alert("Pehle target PDF select karein!");
-        output.innerText = "🔬 Running translation layers...";
-
-        setTimeout(() => {
-            const originalMockText = "Simulated English Content structure application form data row fields map.";
-            const instruction = `Translate this phrase clearly into ${targetLang}. Give only short output sentence.`;
-            executeFreeAIRequest(instruction, originalMockText).then(translatedResult => {
-                const { jsPDF } = window.jspdf;
-                const outDoc = new jsPDF();
-                outDoc.text("SevaKit Translated Official Document Asset", 15, 20);
-                outDoc.text(translatedResult || "Processed", 15, 35);
-                const pdfDataUrl = outDoc.output('dataurlstring');
-                output.innerHTML = `
-                    <div style="background:#f0fdf4; padding:12px; border:1px solid #bbf7d0; border-radius:6px; color:#166534;">
-                        <strong>Document Compiled Successfully!</strong><br><br>
-                        <a href="${pdfDataUrl}" download="sevakit-translated-document.pdf" style="padding:8px 15px; background:var(--primary); color:white; text-decoration:none; border-radius:6px; font-weight:bold;">💾 Download Translated PDF</a>
-                    </div>
-                `;
-            });
-        }, 2500);
     }
 
     let sigCanvas, sigCtx, isDrawingSig = false;
@@ -507,9 +468,9 @@
 
             setTimeout(() => {
                 outBox.innerHTML = `
-                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ Processed Image Layout:</p>
+                    <p style="margin: 0 0 10px 0; font-weight: bold; color: var(--primary);">✨ Processed Image Output:</p>
                     <div class="ai-image-wrapper">
-                        <img src="${imageUrl}" alt="Flux Render File" />
+                        <img src="${imageUrl}" alt="Flux Render File" style="max-width:100%; border-radius:8px;" />
                     </div>
                 `;
             }, 3000);
@@ -524,7 +485,7 @@
         }
     }
 
-    // --- 100% OFFLINE STABLE MULTI-GAME PLATFORM ENGINE ---
+    // --- 100% WORKING OFFLINE GAMES ENGINE ROOM ---
     let activeGlobalInterval = null;
 
     function resetArcadeCanvasBox(titleText) {
@@ -537,10 +498,9 @@
         box.classList.remove('hidden');
         localCanvas.classList.remove('hidden');
         title.innerText = titleText;
-        box.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 1. Tic Tac Toe
+    // 1. Tic Tac Toe Local Canvas Core
     let tttBoard = ["", "", "", "", "", "", "", "", ""];
     let tttCurrentPlayer = "X";
     function startLocalTicTacToe() {
@@ -565,7 +525,7 @@
         tttCurrentPlayer = tttCurrentPlayer === "X" ? "O" : "X";
     }
 
-    // 2. Retro Snake
+    // 2. Retro Snake Canvas Engine
     function startLocalSnakeGame() {
         resetArcadeCanvasBox("🐍 Retro Snake Local Grid Arena (Use Arrow Keys)");
         const localCanvas = document.getElementById('localGameCanvasContainer');
@@ -601,88 +561,25 @@
         };
     }
 
-    // 3. Mini Cricket (Timing Hit Game)
-    function startLocalCricketGame() {
-        resetArcadeCanvasBox("🏏 Mini Cricket Timing Net (Click or Press Spacebar to Hit!)");
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="crickScore">Score: 0 | Runs: -</div><canvas id="crickCanvas" width="480" height="300" style="background:#15803d; border:2px solid white; cursor:pointer;"></canvas>';
-        
-        const canvas = document.getElementById('crickCanvas'); const ctx = canvas.getContext('2d');
-        let totalScore = 0; let ball = { x: 440, y: 150, active: true, speed: 4, radius: 8 };
-        let pitchLine = 80; // The perfect hitting zone window
-        
-        function deliverBall() { ball.x = 440; ball.y = 130 + Math.random()*40; ball.speed = 4 + Math.random()*3; ball.active = true; }
-        
-        function hitShot() {
-            if(!ball.active) return;
-            ball.active = false;
-            let diff = Math.abs(ball.x - pitchLine);
-            let runText = "Out!";
-            if(diff < 15) { totalScore += 6; runText = "SIXER! (Perfect Timing)"; }
-            else if(diff < 35) { totalScore += 4; runText = "FOUR! (Good Shot)"; }
-            else if(diff < 55) { totalScore += 1; runText = "1 Run (Safe Single)"; }
-            else { runText = "OUT! (Missed Timing)"; }
-            document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: ${runText}`;
-            setTimeout(deliverBall, 1500);
+    function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
+    function scanFormLayout() { const out = document.getElementById('formOutput'); out.classList.remove('hidden'); out.innerText = "Form fields verified successfully."; }
+    function triggerVideoPipeline() { const out = document.getElementById('videoOutput'); out.classList.remove('hidden'); out.innerText = "🎬 Script received! Cloud rendering triggers active."; }
+    
+    function generateWhatsAppBanner(textContext) {
+        const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
+        const matched = triggers.some(t => textContext.toLowerCase().includes(t));
+        if (matched) {
+            const myNum = "919398696996";
+            return `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Rejection Warning!</h4><p style="margin:0; font-size:13px; opacity:0.9;">MeeSeva details mapping assistant active.</p></div><a href="https://wa.me/${myNum}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a></div>`;
         }
-        
-        canvas.onclick = hitShot;
-        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); hitShot(); } };
-
-        activeGlobalInterval = setInterval(function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Draw Pitch
-            ctx.fillStyle = "#eab308"; ctx.fillRect(40, 120, 400, 60);
-            // Draw Batsman Zone Line
-            ctx.strokeStyle = "white"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pitchLine, 120); ctx.lineTo(pitchLine, 180); ctx.stroke();
-            // Move Ball
-            if(ball.active) {
-                ball.x -= ball.speed;
-                ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-                ctx.fillStyle = "#ef4444"; ctx.fill(); ctx.closePath();
-                if(ball.x < 0) { ball.active = false; document.getElementById('crickScore').innerText = `Score: ${totalScore} | Runs: Dot Ball!`; setTimeout(deliverBall, 1000); }
-            }
-        }, 20);
+        return '';
     }
-
-    // 4. Basket Bounce (Flappy style ball bounce)
-    function startLocalBounceGame() {
-        resetArcadeCanvasBox("🏀 Basket Bounce Arena (Click or Spacebar to Jump!)");
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="bounceScore">Score: 0</div><canvas id="bounceCanvas" width="480" height="320" style="background:#1e293b; border:2px solid var(--primary); cursor:pointer;"></canvas>';
-        
-        const canvas = document.getElementById('bounceCanvas'); const ctx = canvas.getContext('2d');
-        let score = 0; let ball = { x: 100, y: 150, gravity: 0.25, velocity: 0, radius: 10, jump: -4.5 };
-        let pipe = { x: 480, width: 40, gap: 90, topHeight: 100, speed: 2.5 };
-
-        function makeJump() { ball.velocity = ball.jump; }
-        canvas.onclick = makeJump;
-        window.onkeydown = function(e) { if(e.keyCode === 32) { e.preventDefault(); makeJump(); } };
-
-        activeGlobalInterval = setInterval(function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // Ball physics update
-            ball.velocity += ball.gravity; ball.y += ball.velocity;
-            ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-            ctx.fillStyle = "#f97316"; ctx.fill(); ctx.closePath();
-
-            // Pipe rendering & movement logic
-            pipe.x -= pipe.speed;
-            if(pipe.x < -pipe.width) { pipe.x = 480; pipe.topHeight = 40 + Math.random()*150; score++; document.getElementById('bounceScore').innerText = `Score: ${score}`; }
-            ctx.fillStyle = "#22c55e";
-            ctx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
-            ctx.fillRect(pipe.x, pipe.topHeight + pipe.gap, pipe.width, canvas.height);
-
-            // Bounds & Crash Checks
-            if(ball.y > canvas.height || ball.y < 0) { alert("Game Over!"); startLocalBounceGame(); return; }
-            if(ball.x + ball.radius > pipe.x && ball.x - ball.radius < pipe.x + pipe.width) {
-                if(ball.y - ball.radius < pipe.topHeight || ball.y + ball.radius > pipe.topHeight + pipe.gap) { alert("Game Over!"); startLocalBounceGame(); return; }
-            }
-        }, 20);
+    async function executeFreeAIRequest(s, u) {
+        try {
+            const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: s }, { role: 'user', content: u }], model: 'openai', jsonMode: false }) });
+            return await r.text();
+        } catch (e) { return null; }
     }
-
-    // 5. Dino Runner Game Layout
-    function startLocalDinoGame() {
-        resetArcadeCanvasBox("🦖 Offline Dino Runner Grid (Press Spacebar or Click to Jump!)");
-        const localCanvas = document.getElementById('localGameCanvasContainer');
-        localCanvas.innerHTML = '<div style="color:white; margin-bottom:10px;" id="dinoScore">Distance: 0m</div><canvas id="dinoCanvas" width="500" height="200" style="background:#f8fafc; border:2px solid #cbd5e1;
+</script>
+</body>
+</html>
