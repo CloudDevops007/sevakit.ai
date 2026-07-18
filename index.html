@@ -177,21 +177,22 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">⚡ Direct Free Mode Active</div>
+    <div class="badge">🚀 Lightning Fast Engine</div>
 </div>
 
 <div class="main-container">
     <div class="sidebar">
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
-            <strong>✅ Unlimited Free Access:</strong><br>
-            Bina kisi key ke direct simplified response open hai!
+        <!-- Setup Guide Box -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #1e3a8a;">
+            <strong>⚡ Super Fast Performance:</strong><br>
+            Apni free key set karein aur bina kisi loading delay ke instant 1-second me answers payein.
         </div>
 
         <div class="api-box">
-            <label>🔑 Personal Gemini Key (Optional)</label>
-            <input type="password" id="globalApiKey" placeholder="Advanced features ke liye...">
-            <small style="display:block; margin-top:-8px; font-size:11px;">
-                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free Advanced Key ↗</a>
+            <label>🔑 Setup Gemini API Key</label>
+            <input type="password" id="globalApiKey" placeholder="Paste your free key here...">
+            <small style="display:block; margin-top:-8px; font-weight: bold; font-size:12px;">
+                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: underline;">👉 Yahan se Free Key generate karein ↗</a>
             </small>
         </div>
         
@@ -204,8 +205,8 @@
 
     <div class="workspace">
         <div id="assistant-tab" class="tab-content">
-            <h3>🤖 AI Assistant (Clean Chat Mode)</h3>
-            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi normal search karein. English text ko Hinglish me badalne ke liye likhein: "Translate to Hinglish: [aapka text]"</p>
+            <h3>🤖 AI Assistant (Fast Chat Mode)</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card, diet plans ya kuch bhi search karein. English text ko Hinglish me badalne ke liye likhein: "Translate to Hinglish: [aapka text]"</p>
             <textarea id="assistantInput" placeholder="Apna sawaal ya text yahan likhein..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Query</button>
             
@@ -263,25 +264,31 @@
         return '';
     }
 
-    async function executeKeylessAI(systemInstruction, userPrompt) {
-        try {
-            const url = 'https://text.pollinations.ai/';
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: [
-                        { role: 'system', content: systemInstruction },
-                        { role: 'user', content: userPrompt }
-                    ],
-                    model: 'openai',
-                    jsonMode: false
-                })
-            });
-            return await response.text();
-        } catch (err) {
-            console.error(err);
+    // Direct Lightning-Fast Official Gemini Engine 
+    async function callGeminiAPI(promptText) {
+        const apiKey = document.getElementById('globalApiKey').value.trim();
+        if (!apiKey) {
+            alert("⚠️ Speed Optimization Active: Please insert your free Gemini API Key in the sidebar box to unlock zero-delay processing!");
             return null;
+        }
+
+        // Enforcing formatting rules into the system engine directly
+        const systemRule = "You are SevaKit.ai. CRITICAL RULES: 1. Strictly AVOID using asterisks/stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number lists. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English script like 'Aapka bank website ye hai'). Do NOT write a single word in Devanagari Hindi characters (like नमस्ते). Keep it super clean.";
+        
+        const combinedPrompt = `${systemRule}\n\nUser Query: ${promptText}`;
+
+        try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: combinedPrompt }] }] })
+            });
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            console.error(error);
+            return "API connection error. Please verify your key string.";
         }
     }
 
@@ -293,21 +300,16 @@
         if(!input) return alert("Pehle kuch type karein!");
         
         outBox.classList.remove('hidden');
-        outBox.innerText = "⏳ SevaKit Engine Processing Response...";
+        outBox.innerText = "⏳ SevaKit Processing Response...";
         waBox.innerHTML = "";
 
-        // STRICT RULES: No markdown text decorations, purely clean human paragraphs, forced roman hinglish
-        const systemRule = "You are SevaKit.ai, a smart online utility assistant. CRITICAL RULES: 1. Strictly AVOID using stars like **, blockquotes like >, tables, headers (#), or dashes (-) for lists. 2. Output your answer ONLY as normal, plain, clean paragraphs or simple number text. 3. If user requests Hinglish translation or speaks in Hinglish, reply ONLY in 100% natural conversational Hinglish (Hindi written in Roman/English alphabet, like 'Aapka bank website ye hai'). Do NOT write a single word in Hindi Devanagari script (like नमस्ते or हिंदी). Keep it super clean like a WhatsApp chat conversation.";
-
-        let aiResponse = await executeKeylessAI(systemRule, input);
+        let aiResponse = await callGeminiAPI(input);
         
         if(aiResponse) {
-            // Secondary safety cleaner to wipe out any rogue asterisks or markdown artifacts
+            // Secondary clean layer for smooth visual layout
             aiResponse = aiResponse.replace(/\*\*/g, '').replace(/>/g, '').replace(/#/g, '');
             outBox.innerText = aiResponse;
             waBox.innerHTML = generateWhatsAppBanner(input);
-        } else {
-            outBox.innerText = "Processing error. Kripya ek baar fir se try karein.";
         }
     }
 
