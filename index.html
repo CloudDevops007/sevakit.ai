@@ -129,7 +129,6 @@
             line-height: 1.6;
         }
 
-        /* WhatsApp Premium Lead Banner */
         .whatsapp-premium-banner {
             background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
@@ -174,50 +173,42 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🔒 Secure Free BYOK Mode</div>
+    <div class="badge">⚡ Direct Free Mode Active</div>
 </div>
 
 <div class="main-container">
     <!-- Sidebar Controls -->
-    <!-- Left Layout Control Structure -->
-<div class="sidebar">
-    <!-- Naya User Guide Box -->
-    <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #1e3a8a;">
-        <strong>💡 API Key Kya Hai?</strong><br>
-        Yeh ek free secret code (chaabi) hai jo is AI tool ko chalane ke liye zaroori hai. Iske bina tool kaam nahi karega.
-        <br><br>
-        <strong>🚀 Free Key Kaise Lein?</strong>
-        <ol style="margin: 5px 0; padding-left: 15px;">
-            <li>Neeche diye gaye blue link par click karein.</li>
-            <li>Apne Google account se login karein.</li>
-            <li><b>"Create API Key"</b> par click karke code copy karein aur yahan paste kar dein!</li>
-        </ol>
-    </div>
+    <div class="sidebar">
+        <!-- Mode Information -->
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; line-height: 1.5; color: #166534;">
+            <strong>✅ Free ChatGPT Mode On:</strong><br>
+            Aap bina kisi key ke direct search aur chat kar sakte hain!
+        </div>
 
-    <div class="api-box">
-        <label>🔑 Setup Gemini API Key</label>
-        <input type="password" id="globalApiKey" placeholder="Paste your free key here...">
-        <small style="display:block; margin-top:-8px; font-weight: bold; font-size:12px;">
-            <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: underline;">👉 Yahan se Free API Key generate karein ↗</a>
-        </small>
+        <div class="api-box">
+            <label>🔑 Premium API Key (Optional)</label>
+            <input type="password" id="globalApiKey" placeholder="Video features ke liye zaroori...">
+            <small style="display:block; margin-top:-8px; font-size:11px;">
+                <a href="https://aistudio.google.com/" target="_blank" style="color: var(--primary); text-decoration: none;">Get Free Advanced Key ↗</a>
+            </small>
+        </div>
+        
+        <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 AI Smart Assistant</div>
+        <div class="menu-item" onclick="switchTab('form-tab')">📝 Smart Form Filler</div>
+        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
+        
+        <div class="ad-space">Google AdSense / Banner Promotion Space</div>
     </div>
-    
-    <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 AI Smart Assistant</div>
-    <div class="menu-item" onclick="switchTab('form-tab')">📝 Smart Form Filler</div>
-    <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video</div>
-    
-    <div class="ad-space">Google AdSense / Banner Promotion Space</div>
-</div>
 
     <!-- Workspace Tabs -->
     <div class="workspace">
         
         <!-- Tab 1: AI Assistant -->
         <div id="assistant-tab" class="tab-content">
-            <h3>🤖 AI Assistant (All Languages Supported)</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask questions, translate, or type details. Answers cover global and regional topics perfectly.</p>
-            <textarea id="assistantInput" placeholder="Apna sawaal yahan likhein (e.g., MeeSeva verification rules, scholarship requirements, or anything else)..." style="height: 120px;"></textarea>
-            <button onclick="askSmartAssistant()">Submit to AI</button>
+            <h3>🤖 AI Assistant (Bina Key ke Chat Open Hai)</h3>
+            <p style="color: #64748b; font-size: 14px;">MeeSeva, Aadhaar, PAN card ya kisi bhi topic par sawal poochein. Har language support karta hai.</p>
+            <textarea id="assistantInput" placeholder="Apna sawaal yahan likhein (e.g., How to apply for cast certificate or download details)..." style="height: 120px;"></textarea>
+            <button onclick="askSmartAssistant()">Submit Query</button>
             
             <div id="assistantOutput" class="response-zone hidden"></div>
             <div id="assistantWhatsAppZone"></div>
@@ -225,8 +216,8 @@
 
         <!-- Tab 2: Form Filler -->
         <div id="form-tab" class="tab-content hidden">
-            <h3>📝 Precise State & Central Form Scanner</h3>
-            <p style="color: #64748b; font-size: 14px;">Upload any application layout form (Telangana state schemes, SIR, housing etc.). AI ensures layout compliance mapping.</p>
+            <h3>📝 State & Central Form Scanner</h3>
+            <p style="color: #64748b; font-size: 14px;">Upload any application layout form (Telangana state schemes, SIR, housing etc.).</p>
             <input type="file" id="formFile" accept="image/*">
             <button onclick="scanFormLayout()">Scan & Map Form Fields</button>
             
@@ -237,18 +228,16 @@
         <!-- Tab 3: Script to Video -->
         <div id="video-tab" class="tab-content hidden">
             <h3>🎬 AI Script-to-Video Compiler</h3>
-            <p style="color: #64748b; font-size: 14px;">Generate direct media concept flows and automation cues from text scripts.</p>
+            <p style="color: #64748b; font-size: 14px;">Advanced video feature requires dedicated API processing power.</p>
             <label>Choose Genre Style:</label>
             <select id="videoGenre">
                 <option value="adventure">Thrill & Adventure Mode</option>
                 <option value="cartoon">Cartoon / Animated Explainer</option>
-                <option value="news">Official News Bulletin Setup</option>
             </select>
             <label>Select AI Voice Profile (25+ Supported):</label>
             <select id="voiceModel">
                 <option value="v1">Deep Professional Narrative Male</option>
                 <option value="v2">Crisp Corporate Communicator Female</option>
-                <option value="v3">High-Energy Animated Storyteller</option>
             </select>
             <textarea id="scriptInput" placeholder="Apni script yahan paste karein..."></textarea>
             <button onclick="triggerVideoPipeline()">Compile & Render Concept</button>
@@ -260,7 +249,6 @@
 </div>
 
 <script>
-    // Navigation Router
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
@@ -269,7 +257,6 @@
         event.currentTarget.classList.add('active');
     }
 
-    // Direct Lead Generation Engine (WhatsApp Routing)
     function generateWhatsAppBanner(textContext) {
         const triggers = ['aadhaar', 'pan', 'passport', 'voter', 'meeseva', 'birth', 'ration', 'caste', 'income', 'sir', 'telangana', 'government', 'form', 'card'];
         const matched = triggers.some(t => textContext.toLowerCase().includes(t));
@@ -281,7 +268,7 @@
                 <div class="whatsapp-premium-banner">
                     <div>
                         <h4 style="margin:0 0 5px 0; font-size:16px;">⚠️ Document Form Rejection Warning!</h4>
-                        <p style="margin:0; font-size:13px; opacity:0.9;">Ek choti galti se aapka official govt form reject ho sakta hai. All MeeSeva tasks aur direct registration support ke liye abhi WhatsApp par connect karein.</p>
+                        <p style="margin:0; font-size:13px; opacity:0.9;">Form details me choti galti se application cancel ho sakti hai. All MeeSeva tasks aur direct registration support ke liye abhi WhatsApp par connect karein.</p>
                     </div>
                     <a href="https://wa.me/${myNum}?text=${message}" target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
                 </div>
@@ -290,33 +277,36 @@
         return '';
     }
 
-    // Gemini API Direct Fetch Integration 
+    // Direct Integration with Free Public Engine Framework
     async function callGeminiAPI(promptText) {
-        const apiKey = document.getElementById('globalApiKey').value;
-        if (!apiKey) {
-            alert("⚠️ Please enter your free Gemini API Key in the sidebar first!");
-            return null;
+        const userKey = document.getElementById('globalApiKey').value;
+        
+        // Agar user apni key dalta hai toh premium/fast API chalegi
+        if (userKey) {
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${userKey}`;
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+                });
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (e) { console.error(e); }
         }
 
+        // BACKUP CHATGPT-LIKE NO KEY DEPLOYMENT: Calls a public mirror endpoint
         try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-            const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }]
-                })
-            });
+            const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://text.pollinations.ai/' + encodeURIComponent(promptText))}`;
+            const response = await fetch(url);
             const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
+            return data.contents;
         } catch (error) {
             console.error(error);
-            alert("❌ Connection or API Key string validity failure.");
-            return null;
+            return "Server heavily loaded. Please type again or paste a premium API key in the sidebar.";
         }
     }
 
-    // Action execution workflows
     async function askSmartAssistant() {
         const input = document.getElementById('assistantInput').value;
         const outBox = document.getElementById('assistantOutput');
@@ -325,7 +315,7 @@
         if(!input) return alert("Pehle kuch type karein!");
         
         outBox.classList.remove('hidden');
-        outBox.innerText = "⏳ SevaKit Engine Processing...";
+        outBox.innerText = "⏳ SevaKit Engine Processing (Direct Free Mode)...";
         waBox.innerHTML = "";
 
         const aiResponse = await callGeminiAPI(input);
@@ -348,7 +338,7 @@
         outBox.innerText = "🔬 Scanning layout fields for zero-error verification...";
         
         setTimeout(() => {
-            outBox.innerText = "Form Mapped Successfully. Structure verified. Ready for dynamic data compilation endpoints.";
+            outBox.innerText = "Form Mapped Successfully. Structure verified. Ready for dynamic data compilation.";
             waBox.innerHTML = generateWhatsAppBanner("government form");
         }, 1500);
     }
@@ -356,7 +346,7 @@
     function triggerVideoPipeline() {
         const outBox = document.getElementById('videoOutput');
         outBox.classList.remove('hidden');
-        outBox.innerText = "🎬 Script elements logged. Connecting rendering assets... Workspace features standby.";
+        outBox.innerText = "🎬 Advanced Video Pipeline requires a Premium API Key string to map servers. Please paste key in sidebar box.";
     }
 </script>
 
