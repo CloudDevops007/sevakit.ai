@@ -202,6 +202,16 @@
         .gov-feed-title { font-weight: bold; color: #0f172a; margin-bottom: 5px; font-size: 15px; }
         .gov-feed-desc { font-size: 13px; color: #475569; line-height: 1.5; }
         .gov-feed-meta { font-size: 11px; color: #94a3b8; margin-top: 8px; font-weight: 600; }
+
+        /* Passport Photo Custom Sheet Area Styles */
+        .passport-print-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; background: white; padding: 15px; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 15px; width: fit-content; }
+        .passport-photo-item { width: 3.5cm; height: 4.5cm; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.2); object-fit: cover; box-sizing: border-box; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #passportPrintRenderArea, #passportPrintRenderArea * { visibility: visible; }
+            #passportPrintRenderArea { position: absolute; left: 0; top: 0; background: white; padding: 0; margin: 0; }
+        }
     </style>
 </head>
 <body>
@@ -251,7 +261,6 @@
             <h3>📰 Government ID Rules & Live Utility Dashboard</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur common services ke liye zaroori sabhi official working websites ek hi portal par.</p>
             
-            <!-- NEW SECTION: RESUME, BIO-DATA & WHATSAPP SUPPORT GRID -->
             <div class="gov-section-title">📄 Resume & Matrimonial Bio-Data Services</div>
             <div class="gov-portal-grid">
                 <a href="https://www.google.com/search?q=free+online+resume+builder" target="_blank" class="gov-portal-card" style="border-top-color: #0284c7; background: #f0f9ff;">
@@ -411,6 +420,31 @@
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur file parameters compilers tools panel.</p>
             
+            <div class="utility-box" style="border: 2px solid #0284c7; background: #f0f9ff;">
+                <h4 style="color:#0284c7; display:flex; align-items:center; gap:8px;">🖼️ Instant Passport Size Photo Printer Grid</h4>
+                <p style="font-size: 13px; color: #475569; margin-top: 0;">Photo upload karein aur copy count choose karein. System automatic dimensions grid layer ready karke direct print dialogue box open kar dega!</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <label style="font-weight: 600; font-size: 13px;">1. Select Customer Photo:</label>
+                        <input type="file" id="passportPhotoFileInput" accept="image/*" onchange="loadPassportPhotoPreviewSrc()">
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; font-size: 13px;">2. Required Prints Copies Count:</label>
+                        <select id="passportCopiesCountSelect" onchange="renderPassportPhotosGrid()">
+                            <option value="8" selected>8 Copies (Single Compact Strip Row)</option>
+                            <option value="16">16 Copies (Double Rows Grid Page)</option>
+                            <option value="24">24 Copies (Full Bulk Passport Page)</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="triggerPassportGridPrintSystem()" style="background:#0284c7; font-size:14px; font-weight:bold;">🖨️ Generate & Print Passport Photos Grid</button>
+                
+                <div id="passportPrintRenderArea" class="hidden">
+                    <div id="passportPhotosGridDisplayBox" class="passport-print-grid"></div>
+                </div>
+            </div>
+
             <div class="utility-box">
                 <h4>🖼️ Image Converter & Size Resizer (Target KB/MB)</h4>
                 <label>Select Target File Image:</label>
@@ -497,6 +531,8 @@
 </div>
 
 <script>
+    let rawUploadedPhotoBase64Data = null;
+
     window.onload = function() {
         initSignatureCanvasLogic();
         initInteractiveFormFillerEngine();
@@ -516,6 +552,39 @@
             document.getElementById('systemLiveClockBanner').innerText = `🌐 System Time: ${dayText}, ${dateNum} ${monthText} ${yearNum} 🕒 Live Engine Tracker: ${hours}:${minutes}:${seconds} ${ampm} (Hyderabad Hub Connected)`;
         }, 1000);
     };
+
+    // PASSPORT SIZE PHOTO GRID COMPILER ACTIONS
+    function loadPassportPhotoPreviewSrc() {
+        const selector = document.getElementById('passportPhotoFileInput');
+        if(selector.files.length === 0) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            rawUploadedPhotoBase64Data = e.target.result;
+            renderPassportPhotosGrid();
+        };
+        reader.readAsDataURL(selector.files[0]);
+    }
+
+    function renderPassportPhotosGrid() {
+        const gridBox = document.getElementById('passportPhotosGridDisplayBox');
+        const count = parseInt(document.getElementById('passportCopiesCountSelect').value);
+        if(!rawUploadedPhotoBase64Data) {
+            gridBox.innerHTML = "";
+            return;
+        }
+        document.getElementById('passportPrintRenderArea').classList.remove('hidden');
+        let htmlBuffer = "";
+        for(let i=0; i<count; i++) {
+            htmlBuffer += `<img src="${rawUploadedPhotoBase64Data}" class="passport-photo-item" />`;
+        }
+        gridBox.innerHTML = htmlBuffer;
+    }
+
+    function triggerPassportGridPrintSystem() {
+        if(!rawUploadedPhotoBase64Data) return alert("Pehle customer ki photo select karke upload karein!");
+        renderPassportPhotosGrid();
+        setTimeout(() => { window.print(); }, 300);
+    }
 
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
