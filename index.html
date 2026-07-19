@@ -145,16 +145,6 @@
         
         .utility-box h4 { margin-top: 0; color: var(--primary); font-size: 16px; }
 
-        .resume-preview-box {
-            background: white;
-            border: 2px dashed #cbd5e1;
-            padding: 30px;
-            margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            min-height: 450px;
-            border-radius: 8px;
-        }
-
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -218,7 +208,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v11.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v10.5</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -228,11 +218,10 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Dashboard Router Info:</strong> FSC Ration Card, Resume Architect & Custom Local Workspace integrated.
+            <strong>🌐 Dashboard Router Info:</strong> FSC Ration Card & Duplicate SSC Application protocols injected successfully.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
-        <div class="menu-item" onclick="switchTab('resume-tab')">📄 Resume & Bio-Data Creator</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
         <div class="menu-item" onclick="switchTab('gov-updates-tab')">📰 Live Govt Rules Center</div>
         <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
@@ -242,7 +231,6 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
             <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Real-time updates for movies release data or current affairs render correct outputs.</p>
@@ -259,63 +247,27 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- NEWLY INJECTED MODULE: DYNAMIC MULTI-TEMPLATE RESUME & BIO-DATA BUILDER -->
-        <div id="resume-tab" class="tab-content hidden">
-            <h3>📄 Premium Professional Resume & Bio-Data Creator</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Sirf niche details fill kijiye aur templates switch kijiye. Dynamic formats ke sath high quality PDF instantly ready!</p>
-            
-            <div class="utility-box">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div>
-                        <label>Choose Framework Variations (5 Options):</label>
-                        <select id="resumeStyleSelect" onchange="updateLiveResumePreview()">
-                            <option value="modern">1. Modern Professional Resume (Blue Executive Grid)</option>
-                            <option value="charcoal">2. Elegant Corporate CV (Dark Slate Minimalist)</option>
-                            <option value="portfolio">3. Tech Specialist Portfolio Resume (Structured Columns)</option>
-                            <option value="marriage_red">4. Traditional Marriage Bio-Data (Saffron Crimson Aura)</option>
-                            <option value="marriage_gold">5. Premium Royal Marriage Bio-Data (Crimson & Gold Border)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Full Name / Title:</label>
-                        <input type="text" id="resNameField" value="Rahul Sharma" oninput="updateLiveResumePreview()">
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div>
-                        <label>Contact Channels (Phone & Email):</label>
-                        <input type="text" id="resContactField" value="+91 98765 43210 | rahul.sharma@email.com" oninput="updateLiveResumePreview()">
-                    </div>
-                    <div>
-                        <label>Address / Coordinates:</label>
-                        <input type="text" id="resAddressField" value="Ameerpet, Hyderabad, Telangana" oninput="updateLiveResumePreview()">
-                    </div>
-                </div>
-
-                <label>Academic Profile / Qualifications:</label>
-                <textarea id="resEducationField" rows="3" oninput="updateLiveResumePreview()">- B.Tech in Computer Science, JNTU Hyderabad (2020-2024) - 8.2 CGPA&#10;- Intermediate (12th), Narayana Junior College (2020) - 96%</textarea>
-
-                <label>Professional Experience / Family Specifications (For Bio-Data):</label>
-                <textarea id="resExperienceField" rows="3" oninput="updateLiveResumePreview()">- Software Engineer Intern at TechSolutions Corp (6 Months)&#10;- Managed frontend deployment filters and responsive utility workflows layout frameworks.</textarea>
-
-                <label>Core Technical Skills / Additional Attributes & Interests:</label>
-                <textarea id="resSkillsField" rows="2" oninput="updateLiveResumePreview()">JavaScript, HTML5, CSS3, Core Java, SQL Databases, Good Technical Communication</textarea>
-
-                <button onclick="triggerResumePDFExport()" style="background:#16a34a; font-size:16px; margin-top:10px;">💾 Download Compiled Document as PDF</button>
-            </div>
-
-            <h4 style="margin-top:20px; color:#1e293b;">👀 Real-Time Document Layout Matrix Preview:</h4>
-            <div id="resumeLiveDisplayZone" class="resume-preview-box">
-                <!-- Javascript maps render buffers dynamically -->
-            </div>
-        </div>
-
-        <!-- GOVERNMENT RULES & PORTALS HUB (ALL ORIGINAL LINES RETAINED) -->
         <div id="gov-updates-tab" class="tab-content hidden">
             <h3>📰 Government ID Rules & Live Utility Dashboard</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur common services ke liye zaroori sabhi official working websites ek hi portal par.</p>
             
+            <!-- NEW SECTION: RESUME, BIO-DATA & WHATSAPP SUPPORT GRID -->
+            <div class="gov-section-title">📄 Resume & Matrimonial Bio-Data Services</div>
+            <div class="gov-portal-grid">
+                <a href="https://www.google.com/search?q=free+online+resume+builder" target="_blank" class="gov-portal-card" style="border-top-color: #0284c7; background: #f0f9ff;">
+                    <strong>📝 Online Resume Builder Platforms</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#475569;">Click karke direct top Google automatic templates wale resume generators par jayein aur n number of professional CVs create karein.</p>
+                </a>
+                <a href="https://www.google.com/search?q=free+marriage+biodata+maker+online" target="_blank" class="gov-portal-card" style="border-top-color: #ec4899; background: #fdf2f8;">
+                    <strong>💍 Matrimonial Bio-Data Systems</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#475569;">Marriage and traditional biodatas templates instantly generate karne ke liye verified platforms portal window link.</p>
+                </a>
+                <a href="https://wa.me/919398696996?text=Hello%20Sir,%20mujhe%20ek%20professional%20Resume/Bio-Data%20banana%20hai" target="_blank" class="gov-portal-card" style="border-top-color: #22c55e; background: #f0fdf4;">
+                    <strong>🟢 Premium Professional Assistance</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#15803d; font-weight: 600;">Agar aaram se bina galti ke professional Resume ya Bio-Data banwana chahte hain, toh direct humse WhatsApp par contact karein!</p>
+                </a>
+            </div>
+
             <div class="gov-section-title">🆔 Core Identity & Personal Identification</div>
             <div class="gov-portal-grid">
                 <a href="https://uidai.gov.in/en/my-aadhaar/about-your-aadhaar/circulars.html" target="_blank" class="gov-portal-card" style="border-top-color: #f97316;">
@@ -455,7 +407,6 @@
             </div>
         </div>
 
-        <!-- DIGITAL OFFICE TOOLS UTILITIES TAB -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur file parameters compilers tools panel.</p>
@@ -500,7 +451,6 @@
             </div>
         </div>
 
-        <!-- STABLE LOCAL ARCADE ROOM TAB -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
@@ -522,7 +472,6 @@
             </div>
         </div>
 
-        <!-- INTERACTIVE FORM FILLER TOOL TAB -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 Premium Local Interactive Form Filler Tool</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Upload blank application forms. Form par jahan click karenge wahan direct text type karke poora form fill kijiye aur direct print kijiye!</p>
@@ -551,7 +500,6 @@
     window.onload = function() {
         initSignatureCanvasLogic();
         initInteractiveFormFillerEngine();
-        updateLiveResumePreview(); // Load real-time preview data immediately
         
         setInterval(() => {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -579,145 +527,6 @@
         window.speechSynthesis.cancel();
     }
 
-    // --- 5 VARIATIONS REAL-TIME RESUME BUILDER LAYOUT MATRIX ENGINE ---
-    function updateLiveResumePreview() {
-        const style = document.getElementById('resumeStyleSelect').value;
-        const name = document.getElementById('resNameField').value || 'Candidate Name';
-        const contact = document.getElementById('resContactField').value || '';
-        const address = document.getElementById('resAddressField').value || '';
-        const education = document.getElementById('resEducationField').value.replace(/\n/g, '<br>');
-        const experience = document.getElementById('resExperienceField').value.replace(/\n/g, '<br>');
-        const skills = document.getElementById('resSkillsField').value.replace(/\n/g, '<br>');
-        
-        const previewDisplay = document.getElementById('resumeLiveDisplayZone');
-        previewDisplay.style.fontFamily = "'Segoe UI', Tahoma, Arial, sans-serif";
-        let layoutHtml = "";
-
-        if(style === 'modern') {
-            layoutHtml = `
-                <div style="border-bottom: 4px solid #0284c7; padding-bottom: 12px; margin-bottom: 15px;">
-                    <h1 style="color: #0284c7; margin: 0; font-size: 26px; text-transform: uppercase;">${name}</h1>
-                    <p style="margin: 5px 0 0 0; color: #475569; font-size: 13px;">📍 ${address} | 📞 ${contact}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <h4 style="color: #0369a1; background: #f0f9ff; padding: 5px; margin: 0 0 8px 0; font-size: 14px; border-left: 4px solid #0284c7;">🎓 EDUCATION</h4>
-                    <p style="font-size: 13px; line-height: 1.5; margin: 0; color: #334155;">${education}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <h4 style="color: #0369a1; background: #f0f9ff; padding: 5px; margin: 0 0 8px 0; font-size: 14px; border-left: 4px solid #0284c7;">💼 WORK EXPERIENCE</h4>
-                    <p style="font-size: 13px; line-height: 1.5; margin: 0; color: #334155;">${experience}</p>
-                </div>
-                <div>
-                    <h4 style="color: #0369a1; background: #f0f9ff; padding: 5px; margin: 0 0 8px 0; font-size: 14px; border-left: 4px solid #0284c7;">⚡ CORE COMPETENCIES</h4>
-                    <p style="font-size: 13px; line-height: 1.5; margin: 0; color: #334155;">${skills}</p>
-                </div>`;
-        } 
-        else if(style === 'charcoal') {
-            layoutHtml = `
-                <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #334155; padding-bottom: 15px;">
-                    <h1 style="color: #1e293b; margin: 0; font-size: 28px; font-family: 'Georgia', serif;">${name}</h1>
-                    <div style="color: #64748b; font-size: 13px; margin-top: 5px;">${contact} &bull; ${address}</div>
-                </div>
-                <div>
-                    <h4 style="color: #1e293b; text-transform: uppercase; margin-bottom: 5px; font-size:14px; border-bottom:1px solid #cbd5e1;">Professional Summary</h4>
-                    <p style="font-size: 13px; color: #475569; margin: 0 0 15px 0;">${experience}</p>
-                    <h4 style="color: #1e293b; text-transform: uppercase; margin-bottom: 5px; font-size:14px; border-bottom:1px solid #cbd5e1;">Academic Qualifications</h4>
-                    <p style="font-size: 13px; color: #475569; margin: 0 0 15px 0;">${education}</p>
-                    <h4 style="color: #1e293b; text-transform: uppercase; margin-bottom: 5px; font-size:14px; border-bottom:1px solid #cbd5e1;">Key Skills</h4>
-                    <p style="font-size: 13px; color: #475569; margin: 0;">${skills}</p>
-                </div>`;
-        }
-        else if(style === 'portfolio') {
-            layoutHtml = `
-                <div style="display: flex; gap: 15px;">
-                    <div style="width: 35%; background: #f8fafc; padding: 12px; border-right: 2px solid #e2e8f0;">
-                        <h3 style="color:#0f172a; font-size: 18px; margin:0;">${name}</h3>
-                        <p style="font-size: 11px; color:#64748b; margin-top:5px; line-height:1.4;">${contact}<br>${address}</p>
-                        <h5 style="color:#0284c7; font-size:12px; margin:15px 0 5px 0; text-transform:uppercase;">Skills Matrix</h5>
-                        <p style="font-size:11px; color:#334155;">${skills}</p>
-                    </div>
-                    <div style="width: 65%;">
-                        <h4 style="color:#0f172a; border-bottom:1px solid #cbd5e1; font-size:14px; padding-bottom:3px; margin-top:0; text-transform:uppercase;">Experience Ledger</h4>
-                        <p style="font-size:12px; color:#475569; margin-bottom:15px;">${experience}</p>
-                        <h4 style="color:#0f172a; border-bottom:1px solid #cbd5e1; font-size:14px; padding-bottom:3px; margin:0; text-transform:uppercase;">Education Track</h4>
-                        <p style="font-size:12px; color:#475569; margin-top:5px;">${education}</p>
-                    </div>
-                </div>`;
-        }
-        else if(style === 'marriage_red') {
-            layoutHtml = `
-                <div style="text-align: center; color: #b91c1c; border: 2px dashed #b91c1c; padding: 15px; background: #fff7ed; border-radius:6px;">
-                    <div style="font-size: 20px; margin-bottom: 3px;">🚩 ॥ श्री गणेशाय नमः ॥ 🚩</div>
-                    <h2 style="margin: 0; font-family: 'Georgia', serif; font-size: 22px; letter-spacing:1px;">MATRIMONIAL BIO-DATA</h2>
-                </div>
-                <div style="margin-top: 15px; font-size: 13px; line-height: 1.8;">
-                    <table style="width: 100%;">
-                        <tr style="border-bottom:1px solid #f97316;"><td style="width: 30%; font-weight: bold; color: #b91c1c;">Name:</td><td>${name}</td></tr>
-                        <tr style="border-bottom:1px solid #f97316;"><td style="font-weight: bold; color: #b91c1c;">Contact:</td><td>${contact}</td></tr>
-                        <tr style="border-bottom:1px solid #f97316;"><td style="font-weight: bold; color: #b91c1c;">Address:</td><td>${address}</td></tr>
-                        <tr style="border-bottom:1px solid #f97316;"><td style="font-weight: bold; color: #b91c1c; vertical-align: top;">Education:</td><td>${education}</td></tr>
-                        <tr style="border-bottom:1px solid #f97316;"><td style="font-weight: bold; color: #b91c1c; vertical-align: top;">Family Info:</td><td>${experience}</td></tr>
-                        <tr style="border-bottom:1px solid #f97316;"><td style="font-weight: bold; color: #b91c1c; vertical-align: top;">Preferences:</td><td>${skills}</td></tr>
-                    </table>
-                </div>`;
-        }
-        else if(style === 'marriage_gold') {
-            layoutHtml = `
-                <div style="border: 3px double #d97706; padding: 20px; background: #fffaf0; color: #78350f; border-radius:8px;">
-                    <div style="text-align: center; font-size: 12px; font-weight: bold; letter-spacing: 2px; color: #b45309; margin-bottom: 5px;">शुभ विवाह</div>
-                    <h2 style="text-align: center; margin: 0 0 15px 0; font-family: 'Times New Roman', serif; font-size: 24px; border-bottom: 1px solid #f59e0b; padding-bottom: 8px; color:#9a3412;">ROYAL BIO-DATA</h2>
-                    <p style="font-size: 13px; margin: 4px 0;"><strong>Name:</strong> ${name}</p>
-                    <p style="font-size: 13px; margin: 4px 0;"><strong>Academic Background:</strong> ${education}</p>
-                    <p style="font-size: 13px; margin: 8px 0; border-top:1px dashed #f59e0b; padding-top:5px;"><strong>Family Background:</strong> ${experience}</p>
-                    <p style="font-size: 13px; margin: 4px 0;"><strong>Contact Coordinates:</strong> ${contact}</p>
-                    <p style="font-size: 13px; margin: 4px 0;"><strong>Native Location:</strong> ${address}</p>
-                    <p style="font-size: 13px; margin: 4px 0;"><strong>Astro Details & Hobbies:</strong> ${skills}</p>
-                </div>`;
-        }
-        previewDisplay.innerHTML = layoutHtml;
-    }
-
-    function triggerResumePDFExport() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const name = document.getElementById('resNameField').value;
-        const contact = document.getElementById('resContactField').value;
-        const address = document.getElementById('resAddressField').value;
-        const education = document.getElementById('resEducationField').value;
-        const experience = document.getElementById('resExperienceField').value;
-        const skills = document.getElementById('resSkillsField').value;
-        const style = document.getElementById('resumeStyleSelect').value;
-
-        doc.setFont("Helvetica", "bold"); doc.setFontSize(22);
-        doc.text(name.toUpperCase(), 20, 25);
-        
-        doc.setFont("Helvetica", "normal"); doc.setFontSize(10);
-        doc.text(`${address} | ${contact}`, 20, 32);
-        
-        doc.setLineWidth(0.5); doc.line(20, 36, 190, 36);
-
-        // Map Title Arrays Mapping
-        doc.setFont("Helvetica", "bold"); doc.setFontSize(14);
-        doc.text(style.includes('marriage') ? "EDUCATION SELECTION" : "ACADEMIC BACKGROUND PROFILE", 20, 48);
-        doc.setFont("Helvetica", "normal"); doc.setFontSize(11);
-        let splitEdu = doc.splitTextToSize(education, 170); doc.text(splitEdu, 20, 56);
-
-        let currentY = 56 + (splitEdu.length * 6) + 10;
-        doc.setFont("Helvetica", "bold"); doc.setFontSize(14);
-        doc.text(style.includes('marriage') ? "FAMILY PERSPECTIVES" : "PROFESSIONAL RECORD LEDGER", 20, currentY);
-        doc.setFont("Helvetica", "normal"); doc.setFontSize(11);
-        let splitExp = doc.splitTextToSize(experience, 170); doc.text(splitExp, 20, currentY + 8);
-
-        currentY = (currentY + 8) + (splitExp.length * 6) + 10;
-        doc.setFont("Helvetica", "bold"); doc.setFontSize(14);
-        doc.text(style.includes('marriage') ? "ADDITIONAL METRICS" : "KEY SPECIALIZED ATTRIBUTES", 20, currentY);
-        doc.setFont("Helvetica", "normal"); doc.setFontSize(11);
-        let splitSkills = doc.splitTextToSize(skills, 170); doc.text(splitSkills, 20, currentY + 8);
-
-        doc.save(`${name.replace(/\s+/g, '_')}_final_report.pdf`);
-    }
-
-    // --- CENTRAL RSS DATA EXTRACTION AGENT ROUTING ---
     async function fetchLiveGovRSSFeeds() {
         const feedBox = document.getElementById('govRssFeedOutputContainer');
         feedBox.innerHTML = `<div style="padding:20px; text-align:center; color:var(--primary); font-weight:600;">⏳ Scanning central servers & pulling taaza circulars...</div>`;
@@ -810,7 +619,6 @@
         }, 1500);
     }
 
-    // --- FORM FILLER LOCAL LAYER ---
     let fillerCanvas, fillerCtx, formImageInstance = null;
     function initInteractiveFormFillerEngine() {
         fillerCanvas = document.getElementById('formFillerCanvas'); if(!fillerCanvas) return;
@@ -839,7 +647,6 @@
     }
     function downloadFilledFormLayout() { if(fillerCanvas && formImageInstance) { const a = document.createElement('a'); a.href = fillerCanvas.toDataURL(); a.download="form.png"; a.click(); } }
 
-    // --- SIGNATURE CANVAS ENGINE ---
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
         sigCanvas = document.getElementById('sigCanvas'); if(!sigCanvas) return;
@@ -861,7 +668,6 @@
         if(response) outBox.innerText = response;
     }
 
-    // --- OFFLINE ARCADE ENGINE ---
     let activeGlobalInterval = null;
     function resetArcadeCanvasBox(t) { document.getElementById('gameScreenBox').classList.remove('hidden'); document.getElementById('localGameCanvasContainer').classList.remove('hidden'); document.getElementById('gameTitleDisplay').innerText = t; clearInterval(activeGlobalInterval); window.onkeydown = null; }
     
@@ -899,11 +705,10 @@
             });
         }, 100);
         window.onkeydown = function(e) {
-            if (e.which === 37 && sn.dx === 0) { sn.dx = -g; sn.dy = 0; } else if (e.which === 38 && sn.dy === 0) { sn.dy = -g; sn.dx = 0; }
+            if (e.which === 37 && sn.dx === 0) { sn.dx = -g; sn.dy = 0; } else if (e.which === 38 && sn.dy === 0) { sn.dy = -g; cx.dx = 0; }
             else if (e.which === 39 && sn.dx === 0) { sn.dx = g; sn.dy = 0; } else if (e.which === 40 && sn.dy === 0) { sn.dy = g; sn.dx = 0; }
         };
     }
-    // Other simple stubs mapped to keep structural balance intact
     function startLocalBricksGame() { alert("Loading Brick Breaker Engine Layer..."); }
     function startLocalBounceGame() { alert("Loading Basket Bounce Framework..."); }
     function startLocalDinoGame() { alert("Loading Dino Runner Canvas Layer..."); }
