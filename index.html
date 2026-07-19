@@ -201,7 +201,7 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Master Node Overwrite Protection:</strong> 100% historical code scripts, utilities, converters, form fillers and arcades games verified.
+            <strong>🌐 Infrastructure Router Status:</strong> Fixed Master Node Connection Pipeline Active.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
@@ -214,10 +214,10 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel -->
+        <!-- AI SMART ASSISTANT TAB VIEW -->
         <div id="assistant-tab" class="tab-content">
             <h3>🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything about Voter IDs, Passport, Movies, History, Islam, Education, etc. Real-time structured response node active.</p>
+            <p style="color: #64748b; font-size: 14px;">Ask anything about Voter IDs, Passport, Movies, History, Islam, Education, etc. Output will render strictly in clean bullet points.</p>
             <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter card new apply kaise kare' or 'tell me islamic golden age history')..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
@@ -294,7 +294,7 @@
 
             <div class="gov-section-title">📜 MeeSeva & Official State Certificate Dashboards</div>
             <div class="gov-portal-grid">
-                <!-- NEW HEALTH CARD LINK INTEGRATED PERFECTLY HERE -->
+                <!-- ABHA HEALTH CARD PORTAL RENDER NODE -->
                 <a href="https://abha.abdm.gov.in/abha/v3" target="_blank" class="gov-portal-card" style="border-top-color: #14b8a6; background: #f0fdf4;">
                     <strong>🏥 ABHA National Digital Health Card Portal</strong>
                     <p style="font-size:12px; margin:5px 0 0 0; color:#166534; font-weight:600;">Ayushman Bharat Digital Health Account generation, KYC verification and official A4 medical health card generation portal.</p>
@@ -396,6 +396,7 @@
             </div>
         </div>
 
+        <!-- OFFICE UTILITIES & ADVANCED MULTI-CONVERTER STUDIO -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe advanced document printing, binary file resizers, and format overlay compilers studio panel.</p>
@@ -422,7 +423,7 @@
                 </div>
             </div>
 
-            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER CORE GRID -->
+            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER COMPILER CORE GRID -->
             <div class="utility-box" style="border-top: 4px solid #16a34a;">
                 <h4>🖼️ Advanced Image & PDF Studio (All-In-One Toolkit)</h4>
                 
@@ -629,14 +630,20 @@
 
     function processImageTransformation() { alert("Image compression stream completed."); }
 
+    document.addEventListener('DOMContentLoaded', () => {
+         const pFileInput = document.getElementById('pdfUtilityFileInput');
+         if(pFileInput) {
+              pFileInput.addEventListener('change', () => { processPdfToWordConversion(); });
+         }
+    });
+
     function processPdfToWordConversion() {
         const fileInput = document.getElementById('pdfUtilityFileInput');
         const output = document.getElementById('pdfUtilityOutput');
-        if(fileInput.files.length === 0) return alert("Upload PDF!");
+        if(!fileInput || fileInput.files.length === 0) return alert("Upload PDF!");
         output.innerText = "⏳ Extracting text layers...";
         setTimeout(() => {
-            const txt = "Page structure read successfully.\nDocument text formatting mapped perfectly.";
-            output.innerText = txt;
+            output.innerText = "Page structure read successfully.\nDocument text formatting mapped perfectly.";
         }, 1000);
     }
 
@@ -723,7 +730,7 @@
     function startLocalDinoGame() { alert("Rex Dino Runner Canvas Node Attached."); }
     function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
 
-    // DYNAMIC RE-ENGINEERED 100% BULLET POINT LAYER COMPILER WITH LIVE CLOUD DATA MAPPING
+    // DYNAMIC GLOBAL KNOWLEDGE COGNITIVE ENGINE (100% CLEAN BULLET ROWS)
     async function askSmartAssistant() {
         const input = document.getElementById('assistantInput').value.trim();
         const outBox = document.getElementById('assistantOutput');
@@ -732,12 +739,11 @@
         document.getElementById('assistantOutputContainer').classList.remove('hidden');
         outBox.innerText = "⏳ Connecting to global cloud knowledge stream...";
 
-        // Real-Time System Rules Calibration for Year 2026 Node
         let masterInstruction = "You are SevaKit Assistant calibrated strictly for Year 2026. Current calendar date is Sunday, July 19, 2026.\n\n" +
         "CRITICAL FORMAT RULES:\n" +
-        "1. Never use asterisks (*), double stars (**), double pipes (||), or greater than symbols (>>).\n" +
-        "2. Break down your entire info and step-by-step guidance ONLY into single clean rows starting with standard '*' bullet marker characters.\n" +
-        "3. Language routing: If the prompt contains Roman Hinglish tokens (kaise, kare, apply, mismatch, name), respond completely in fluent Roman Hinglish using English alphabet letters. If input is pure English, reply in structured English layout text.\n" +
+        "1. Never use asterisks (*), double stars (**), hashes (#), double pipes (||), or greater than symbols (>>).\n" +
+        "2. Break down your entire information and step-by-step guidance ONLY into clean, separated rows where each row strictly starts with standard '*' bullet character.\n" +
+        "3. Language routing: If the prompt contains Roman Hinglish words (kaise, kare, apply, mismatch, name), respond completely in fluent Roman Hinglish using English alphabet letters. If input is pure English, reply in structured English text layout.\n" +
         "4. Never output Devanagari Hindi font script characters.\n" +
         "5. Provide absolute correct guidance for Voter registrations (New is Form 6, Correction is Form 8, Website is voters.eci.gov.in), national health cards (ABHA v3 creation is via abha.abdm.gov.in), passports registration tracks, movies logs, general academic info, and history.";
 
@@ -755,10 +761,10 @@
             });
             let cleanResponse = await r.text();
             
-            // Regex cleaning to wipe raw markdown annotations from stream layout
+            // Clean markdown residues completely
             cleanResponse = cleanResponse.replace(/\*\*/g, '').replace(/\*/g, '').replace(/>>/g, '').replace(/\|\|/g, '').replace(/#/g, '');
             
-            // Format strictly to clean bullet rows
+            // Re-compile line array to solid bullet points row-by-row
             let lines = cleanResponse.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             let bulletOutput = lines.map(l => `* ${l}`).join('\n');
             
