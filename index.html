@@ -323,6 +323,11 @@
 
             <div class="gov-section-title">📜 MeeSeva & Official State Certificate Dashboards</div>
             <div class="gov-portal-grid">
+                <!-- INJECTED LIVE OFFICIAL ABHA HEALTH CARD GATEWAY ANCHOR CARD -->
+                <a href="https://abha.abdm.gov.in/abha/v3" target="_blank" class="gov-portal-card" style="border-top-color: #14b8a6; background: #f0fdf4;">
+                    <strong>🏥 ABHA National Digital Health Card Portal</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#166534; font-weight: 600;">Ayushman Bharat Digital Health Account generation, KYC verification and official A4 medical health card generation portal link.</p>
+                </a>
                 <a href="https://epds.telangana.gov.in/" target="_blank" class="gov-portal-card" style="border-top-color: #eab308;">
                     <strong>🌾 TS FSC Ration Card Portal</strong>
                     <p style="font-size:12px; margin:5px 0 0 0; color:#64748b;">Check Food Security Card status, look up names in beneficiary lists, and track allocation allocations.</p>
@@ -613,6 +618,17 @@
 
 <script>
     let rawUploadedPhotoBase64Data = null;
+    let formImageInstance = null;
+
+    window.onload = function() {
+        initSignatureCanvasLogic();
+        initInteractiveFormFillerEngine();
+        
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('systemLiveClockBanner').innerText = `🌐 System Time: ${now.toLocaleString()} (Hyderabad Connected Hub)`;
+        }, 1000);
+    };
 
     function loadPassportPhotoPreviewSrc() {
         const selector = document.getElementById('passportPhotoFileInput');
@@ -696,7 +712,7 @@
         const status = document.getElementById('pdfMergeStatusLog');
         if(selector.files.length === 0) return alert("Upload PDFs!");
         status.innerText = "⏳ Building unified file blocks...";
-        setTimeout(() => { status.innerHTML = `<span style="color:green; font-weight:bold;">🎉 Merged compilation simulation success!</span>`; }, 1500);
+        setTimeout(() => { status.innerHTML = `<span style="color:green; font-weight:bold;">🎉 PDFs combined simulation matrix ready!</span>`; }, 1500);
     }
 
     function executePdfSplitPageExtraction() {
@@ -830,11 +846,9 @@
         }, 1500);
     }
 
-    let fillerCanvas, fillerCtx, formImageInstance = null;
     function initInteractiveFormFillerEngine() {
-        fillerCanvas = document.getElementById('formFillerCanvas'); if(!fillerCanvas) return;
-        fillerCtx = fillerCanvas.getContext('2d');
-        fillerCtx.fillStyle = "#f1f5f9"; fillerCtx.fillRect(0,0,fillerCanvas.width,fillerCanvas.height);
+        const fillerCanvas = document.getElementById('formFillerCanvas'); if(!fillerCanvas) return;
+        const fillerCtx = fillerCanvas.getContext('2d');
         document.getElementById('formUploadSelector').addEventListener('change', function(e) {
             if(e.target.files.length === 0) return;
             const r = new FileReader();
@@ -850,12 +864,13 @@
             const rect = fillerCanvas.getBoundingClientRect();
             const clickX = ((e.clientX - rect.left) / rect.width) * fillerCanvas.width;
             const clickY = ((e.clientY - rect.top) / rect.height) * fillerCanvas.height;
-            const txt = prompt("Enter field value text:"); if(!txt) return;
+            const txt = prompt("Enter text value:"); if(!txt) return;
             fillerCtx.fillStyle = "black"; fillerCtx.font = `bold ${document.getElementById('formFillerFontSize').value} sans-serif`;
             fillerCtx.fillText(txt, clickX, clickY);
         });
     }
-    function downloadFilledFormLayout() { if(fillerCanvas && formImageInstance) { const a = document.createElement('a'); a.href = fillerCanvas.toDataURL(); a.download="form.png"; a.click(); } }
+
+    function downloadFilledFormLayout() { const c = document.getElementById('formFillerCanvas'); if(c && formImageInstance) { const a = document.createElement('a'); a.href = c.toDataURL(); a.download="form.png"; a.click(); } }
 
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
@@ -881,7 +896,7 @@
     function handleTTTClick(idx) {
         if(tttBoard[idx] !== "") return; tttBoard[idx] = tttCurrentPlayer; renderTTTBoard();
         const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-        if(wins.some(c => comb=c.every(i => tttBoard[i] === tttCurrentPlayer))) { setTimeout(() => { alert(`Winner: ${tttCurrentPlayer}`); startLocalTicTacToe(); }, 80); return; }
+        if(wins.some(c => c.every(i => tttBoard[i] === tttCurrentPlayer))) { setTimeout(() => { alert(`Winner: ${tttCurrentPlayer}`); startLocalTicTacToe(); }, 80); return; }
         if(tttBoard.every(c => c !== "")) { alert("Match Draw!"); startLocalTicTacToe(); return; }
         tttCurrentPlayer = tttCurrentPlayer === "X" ? "O" : "X";
     }
@@ -905,7 +920,7 @@
             });
         }, 100);
         window.onkeydown = function(e) {
-            if (e.which === 37 && sn.dx === 0) { sn.dx = -g; sn.dy = 0; } else if (e.which === 38 && sn.dy === 0) { sn.dy = -g; cx.dx = 0; }
+            if (e.which === 37 && sn.dx === 0) { sn.dx = -g; sn.dy = 0; } else if (e.which === 38 && sn.dy === 0) { sn.dy = -g; sn.dx = 0; }
             else if (e.which === 39 && sn.dx === 0) { sn.dx = g; sn.dy = 0; } else if (e.which === 40 && sn.dy === 0) { sn.dy = g; sn.dx = 0; }
         };
     }
@@ -914,57 +929,56 @@
     function startLocalDinoGame() { alert("Rex Dino Runner Canvas Node Attached."); }
     function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
 
-    // DYNAMIC RE-ENGINEERED UNRESTRICTED INTELLIGENCE middleWARE
+    // DYNAMIC GLOBAL KNOWLEDGE COGNITIVE ENGINE (100% CLEAN BULLET ROWS)
     async function askSmartAssistant() {
         const input = document.getElementById('assistantInput').value.trim();
         const outBox = document.getElementById('assistantOutput');
         if(!input) return alert("Enter Query!");
         
         document.getElementById('assistantOutputContainer').classList.remove('hidden');
-        outBox.innerText = "⏳ Connecting to global cognitive cloud layers...";
+        outBox.innerText = "⏳ Connecting to global cloud knowledge stream...";
 
-        // Real-Time System Rules Injection (No Hardcoded Intercepts)
-        let masterInstruction = "You are SevaKit Intelligent Assistant calibrated for Year 2026. Current location is Hyderabad, India. You are an unrestricted encyclopedic knowledge system capable of handling complex queries across all domains including government forms (Voter ID, Passport, PAN), entertainment/movies, Islamic history, global education, science, and technical cafes data.\n\n" +
-        "CRITICAL LANGUAGE RULE:\n" +
-        "1. If user input contains Romanized Hinglish keywords (e.g., 'kaise', 'karo', 'mismatch', 'hai', 'kya', 'banao'), you MUST respond 100% in conversational Roman Hinglish (English alphabet words representing natural Urdu/Hindi meanings).\n" +
-        "2. If input is clean standard English, respond completely in professional structured English text.\n" +
-        "3. Absolutely DO NOT output any Devanagari Hindi font characters under any circumstances.\n" +
-        "4. Always include exact active official government links where applicable (e.g., for Voter IDs always cite voters.eci.gov.in, for new registration reference Form 6, for corrections Form 8). Keep structural presentation clean and scannable without hashes (#) or asterisks (*).";
+        // Real-Time System Rules Calibration for Year 2026 Node
+        let masterInstruction = "You are SevaKit Assistant calibrated strictly for Year 2026. Current calendar date is Sunday, July 19, 2026.\n\n" +
+        "CRITICAL FORMAT RULES:\n" +
+        "1. Never use asterisks (*), double stars (**), hashes (#), double pipes (||), or greater than symbols (>>).\n" +
+        "2. Break down your entire info and step-by-step guidance ONLY into clean, separated rows where each row strictly starts with standard '*' bullet character.\n" +
+        "3. Language routing: If the prompt contains Roman Hinglish tokens (kaise, kare, apply, mismatch, name), respond completely in fluent Roman Hinglish using English alphabet letters. If input is pure English, reply in structured English text layout.\n" +
+        "4. Never output Devanagari Hindi font script characters.\n" +
+        "5. Provide absolute correct guidance for Voter registrations (New is Form 6, Correction is Form 8, Website is voters.eci.gov.in), national health cards (ABHA v3 creation is via abha.abdm.gov.in), passports registration tracks, movies logs, general academic info, and history.";
 
-        let resultText = await executeFreeAIRequest(masterInstruction, input);
-        if(resultText) {
-            outBox.innerText = resultText;
-            
-            // Check for smart WhatsApp assistant banner contextually
-            const triggers = ['voter', 'passport', 'pan', 'meeseva', 'ration', 'ssc', 'challan'];
-            const matched = triggers.some(t => input.toLowerCase().includes(t));
-            const waBox = document.getElementById('assistantWhatsAppZone');
-            if (matched) {
-                waBox.innerHTML = `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">🟢 Digital Form Assistance Live!</h4><p style="margin:0; font-size:13px; opacity:0.9;">Agar online transaction ya application process me koi dikkat aa rahi hai, toh direct support lein.</p></div><a href="https://wa.me/919398696996" target="_blank" class="whatsapp-btn">💬 Contact on WhatsApp</a></div>`;
-            } else {
-                waBox.innerHTML = "";
-            }
-        } else {
-            outBox.innerText = "Cloud database response timed out. Please retry in a moment.";
-        }
-    }
-
-    async function executeFreeAIRequest(s, u) {
         try {
             const r = await fetch('https://text.pollinations.ai/', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({ 
                     messages: [
-                        { role: 'system', content: s }, 
-                        { role: 'user', content: u }
+                        { role: 'system', content: masterInstruction }, 
+                        { role: 'user', content: input }
                     ], 
-                    model: 'openai', 
-                    jsonMode: false 
+                    model: 'openai'
                 }) 
             });
-            return await r.text();
-        } catch (e) { return null; }
+            let cleanResponse = await r.text();
+            
+            // Regex cleaning to wipe raw markdown annotations from stream layout
+            cleanResponse = cleanResponse.replace(/\*\*/g, '').replace(/\*/g, '').replace(/>>/g, '').replace(/\|\|/g, '').replace(/#/g, '');
+            
+            // Re-compile line array to solid bullet points row-by-row
+            let lines = cleanResponse.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            let bulletOutput = lines.map(l => `* ${l}`).join('\n');
+            
+            outBox.innerText = bulletOutput;
+            
+            const triggers = ['voter', 'passport', 'pan', 'meeseva', 'ration', 'ssc', 'challan', 'health', 'abha'];
+            const matched = triggers.some(t => input.toLowerCase().includes(t));
+            const waBox = document.getElementById('assistantWhatsAppZone');
+            if (matched) {
+                waBox.innerHTML = `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">🟢 Form Assistance Portal Node Active</h4><p style="margin:0; font-size:13px; opacity:0.9;">Direct support chat parameters established.</p></div><a href="https://wa.me/919398696996" target="_blank" class="whatsapp-btn">💬 Contact on WhatsApp</a></div>`;
+            } else { waBox.innerHTML = ""; }
+        } catch (e) { 
+            outBox.innerText = "* Connection buffer reset. Please submit again."; 
+        }
     }
 </script>
 </body>
