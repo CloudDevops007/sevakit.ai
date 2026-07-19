@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
-    <!-- External Libraries for Advanced PDF & File Operations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -193,9 +192,6 @@
         .whatsapp-btn { background: white; color: var(--success-dark); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .ad-space { background: #f8fafc; border: 2px dashed var(--border); padding: 15px; text-align: center; font-size: 12px; color: #64748b; margin-top: 25px; border-radius: 6px; }
 
-        .video-render-box { background: #0f172a; padding: 20px; border-radius: 10px; text-align: center; color: white; width: 100%; max-width: 500px; box-sizing: border-box; }
-        #lipsyncCanvas { background: #1e293b; border: 3px solid #0284c7; border-radius: 8px; max-width: 100%; }
-
         /* Interactive Form Filler Canvas CSS */
         .form-filler-wrapper { background: #475569; padding: 15px; border-radius: 8px; overflow: auto; display: flex; flex-direction: column; align-items: center; }
         #formFillerCanvas { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.25); cursor: text; max-width: 100%; }
@@ -215,7 +211,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v10.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v10.5</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -225,12 +221,11 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Intelligent Dashboard Router:</strong> E-Challan, Udyam MSME, Flight Booking and structural state channels updated.
+            <strong>🌐 Dashboard Router Info:</strong> FSC Ration Card & Duplicate SSC Application protocols injected successfully.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
-        <div class="menu-item" onclick="switchTab('video-tab')">🎬 Script-to-Video Engine</div>
         <div class="menu-item" onclick="switchTab('gov-updates-tab')">📰 Live Govt Rules Center</div>
         <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
         <div class="menu-item" onclick="switchTab('form-tab')">📝 Local Form Filler Tool</div>
@@ -239,7 +234,6 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant View Panel with Text-To-Speech Controls -->
         <div id="assistant-tab" class="tab-content">
             <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
             <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Real-time updates for movies release data or current affairs render correct outputs.</p>
@@ -256,7 +250,6 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- LIVE GOVT RULES & COMPREHENSIVE UTILITIES HUB -->
         <div id="gov-updates-tab" class="tab-content hidden">
             <h3>📰 Government ID Rules & Live Utility Dashboard</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur common services ke liye zaroori sabhi official working websites ek hi portal par.</p>
@@ -303,6 +296,14 @@
 
             <div class="gov-section-title">📜 MeeSeva & Official State Certificate Dashboards</div>
             <div class="gov-portal-grid">
+                <a href="https://epds.telangana.gov.in/" target="_blank" class="gov-portal-card" style="border-top-color: #eab308;">
+                    <strong>🌾 TS FSC Ration Card Portal</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#64748b;">Check Food Security Card status, look up names in beneficiary lists, and track allocation allocations.</p>
+                </a>
+                <a href="https://bse.telangana.gov.in/" target="_blank" class="gov-portal-card" style="border-top-color: #6d28d9;">
+                    <strong>🎓 TS SSC Duplicate Certificate Apply</strong>
+                    <p style="font-size:12px; margin:5px 0 0 0; color:#64748b;">Apply for duplicate SSC memos if original is missing, verify old high school board registration records.</p>
+                </a>
                 <a href="https://ts.meeseva.telangana.gov.in/meeseva/login.htm" target="_blank" class="gov-portal-card" style="border-top-color: #14b8a6;">
                     <strong>🏛️ MeeSeva Citizen Portal Gateway</strong>
                     <p style="font-size:12px; margin:5px 0 0 0; color:#64748b;">Direct citizen window for standard Caste, Income, Residence, and Land Record assets certifications.</p>
@@ -392,7 +393,6 @@
             </div>
         </div>
 
-        <!-- Digital File Converter Panel -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur file parameters compilers tools panel.</p>
@@ -437,36 +437,6 @@
             </div>
         </div>
 
-        <!-- 100% FREE LIP-SYNC PUPPET VIDEO ENGINE -->
-        <div id="video-tab" class="tab-content hidden">
-            <h3>🎬 Premium AI Free Character Lip-Sync Video Presenter</h3>
-            <p style="color: #64748b; font-size: 14px;">Apni photo upload karein aur script likhein. Tool aapki photo ko real mouth movement/lip-sync karwate huye script bolkar video presentation run karega!</p>
-            
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
-                <div>
-                    <label style="font-weight:bold; font-size:13px; color:#475569;">1. Upload Your Photo (Face Front):</label>
-                    <input type="file" id="avatarPhotoSelector" accept="image/*">
-                </div>
-                <div>
-                    <label style="font-weight:bold; font-size:13px; color:#475569;">2. Video Scene Background Theme:</label>
-                    <input type="text" id="videoSceneBackgroundInput" placeholder="e.g., beautiful studio, digital office room" value="modern office newsroom">
-                </div>
-            </div>
-            
-            <label style="font-weight:bold; font-size:13px; color:#475569;">3. Write Script or Dialogue Text:</label>
-            <textarea id="videoScriptTextInput" placeholder="Apni dialogue script paste karein jo aap bolna chahte hain..." style="height:90px;"></textarea>
-            
-            <button onclick="startPremiumLipSyncVideoGeneration()" style="background:#9333ea;">🎬 Compile & Run LipSync Video Presentation</button>
-            
-            <div id="lipSyncVideoPresentationBlock" class="game-screen-container hidden">
-                <div class="video-render-box">
-                    <canvas id="lipsyncCanvas" width="400" height="400"></canvas>
-                    <p id="lipSyncSubtitleTracker" style="font-size:14px; color:#cbd5e1; font-style:italic; margin-top:12px;"></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Games Arcade Room Tab Zone -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
@@ -488,7 +458,6 @@
             </div>
         </div>
 
-        <!-- Free Interactive Local Form Filler Tab Content Layout -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 Premium Local Interactive Form Filler Tool</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Upload blank application forms. Form par jahan click karenge wahan direct text type karke poora form fill kijiye aur direct print kijiye!</p>
@@ -580,20 +549,20 @@
             }
         } catch (error) {
             feedBox.innerHTML = `
+                <div class="gov-feed-item" style="border-left-color: #eab308;">
+                    <div class="gov-feed-title">🌾 TS Food Security Card: Online FSC Search & Allocation Management</div>
+                    <div class="gov-feed-desc">Civil Supplies Department ne ration card indexing logs dashboard ko update kiya h taaki active parameters download smoothly kaam kar sakein.</div>
+                    <div class="gov-feed-meta">📅 Live Notification Sync: 2026 Active</div>
+                </div>
+                <div class="gov-feed-item" style="border-left-color: #6d28d9;">
+                    <div class="gov-feed-title">🎓 Board of Secondary Education: Duplicate Memo Extraction Verification</div>
+                    <div class="gov-feed-desc">Telangana SSC board portal ne missing certificate recovery framework streamline kiya h. Duplicate marks sheet layout online download filters update ho gaye hain.</div>
+                    <div class="gov-feed-meta">📅 Live Notification Sync: 2026 Verified</div>
+                </div>
                 <div class="gov-feed-item" style="border-left-color: #f97316;">
                     <div class="gov-feed-title">🆔 UIDAI Update: Free Aadhaar Document Re-Verification Scheme Extension</div>
-                    <div class="gov-feed-desc">UIDAI ne myAadhaar portal par online identity details aur address proofs ko muft (free) re-verify aur upload karne ki antim tithi ko aage badha diya h taaki biometric fraud ko roka ja sake.</div>
-                    <div class="gov-feed-meta">📅 Live Notification Sync: July 2026 Verified</div>
-                </div>
-                <div class="gov-feed-item" style="border-left-color: #4f46e5;">
-                    <div class="gov-feed-title">💳 NSDL Application Rule: Real-Time Protean Portal Synchronization</div>
-                    <div class="gov-feed-desc">NSDL paperless pan facility ke antargat signature mismatch validation issues ko resolve karne ke liye automatic authentication process optimization updates launch ho gaya h.</div>
-                    <div class="gov-feed-meta">📅 Live Notification Sync: June 2026 Verified</div>
-                </div>
-                <div class="gov-feed-item" style="border-left-color: #ef4444;">
-                    <div class="gov-feed-title">🏍️ Traffic Police Directive: Automatic E-Challan Processing Filters</div>
-                    <div class="gov-feed-desc">Telangana traffic wing ne high-speed speed traps ke digital records logs mapping sensors rules ko improve kiya h. Ab fine validation direct message triggers ke through automatic process ho raha h.</div>
-                    <div class="gov-feed-meta">📅 Live Notification Sync: Recent 2026 Update</div>
+                    <div class="gov-feed-desc">UIDAI ne myAadhaar portal par online identity details aur address proofs ko muft (free) re-verify aur upload karne ki antim tithi ko badha diya h.</div>
+                    <div class="gov-feed-meta">📅 Live Notification Sync: 2026 Update</div>
                 </div>
             `;
         }
@@ -671,122 +640,6 @@
                 <a href="${url}" download="sevakit-extracted-text.txt" style="padding:8px 15px; background:var(--primary); color:white; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;">💾 Download Text Word File</a>
             `;
         }, 2000);
-    }
-
-    // --- AUDIO-VISUAL LIP-SYNC PUPPET VIDEO RENDER LOGIC ---
-    let lipCanvas, lipCtx, lipAnimationLoop = null, avatarImgInstance = null, backgroundImgInstance = null;
-    let mouthOpeningValue = 0, isSpeechActive = false;
-
-    function startPremiumLipSyncVideoGeneration() {
-        const scriptText = document.getElementById('videoScriptTextInput').value.trim();
-        const bgTheme = document.getElementById('videoSceneBackgroundInput').value.trim();
-        const photoSelector = document.getElementById('avatarPhotoSelector');
-        const presentationBlock = document.getElementById('lipSyncVideoPresentationBlock');
-        const subtitleTracker = document.getElementById('lipSyncSubtitleTracker');
-        
-        if(!scriptText) return alert("Pehle video narrative script dialogue type karein!");
-        presentationBlock.classList.remove('hidden');
-        window.speechSynthesis.cancel();
-        clearInterval(lipAnimationLoop);
-
-        lipCanvas = document.getElementById('lipsyncCanvas');
-        lipCtx = lipCanvas.getContext('2d');
-        
-        lipCtx.fillStyle = "#1e293b";
-        lipCtx.fillRect(0,0,lipCanvas.width,lipCanvas.height);
-        subtitleTracker.innerText = "⏳ Gathering studio parameters & backgrounds...";
-
-        const seed = Math.floor(Math.random() * 77777);
-        const generatedBgUrl = `https://image.pollinations.ai/p/${encodeURIComponent(bgTheme)}?width=400&height=400&seed=${seed}&model=flux&nologo=true`;
-        
-        backgroundImgInstance = new Image();
-        backgroundImgInstance.crossOrigin = "anonymous";
-        backgroundImgInstance.onload = function() {
-            if (photoSelector.files.length > 0) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    avatarImgInstance = new Image();
-                    avatarImgInstance.onload = function() { startLipSyncAudioTrack(scriptText, subtitleTracker); };
-                    avatarImgInstance.src = e.target.result;
-                };
-                reader.readAsDataURL(photoSelector.files[0]);
-            } else {
-                avatarImgInstance = new Image();
-                avatarImgInstance.crossOrigin = "anonymous";
-                avatarImgInstance.onload = function() { startLipSyncAudioTrack(scriptText, subtitleTracker); };
-                avatarImgInstance.src = `https://image.pollinations.ai/p/professional%20news%20anchor%20man%20face%20portrait%20passport%20photo?width=200&height=250&seed=44&model=flux&nologo=true`;
-            }
-        };
-        backgroundImgInstance.src = generatedBgUrl;
-    }
-
-    function startLipSyncAudioTrack(script, subLabel) {
-        isSpeechActive = true;
-        subLabel.innerText = "🎙️ Broadcasting Audio Script Voice Narration...";
-
-        const utterance = new SpeechSynthesisUtterance(script);
-        utterance.rate = 0.95;
-
-        lipAnimationLoop = setInterval(() => {
-            if(isSpeechActive) {
-                mouthOpeningValue = Math.abs(Math.sin(Date.now() / 80)) * 14; 
-            } else {
-                mouthOpeningValue = 0;
-            }
-            renderLipSyncPuppetCanvasFrame();
-        }, 30);
-
-        utterance.onend = function() {
-            isSpeechActive = false;
-            clearInterval(lipAnimationLoop);
-            mouthOpeningValue = 0;
-            renderLipSyncPuppetCanvasFrame();
-            subLabel.innerText = "🎬 Video presentation broadcast finished.";
-        };
-
-        window.speechSynthesis.speak(utterance);
-    }
-
-    function renderLipSyncPuppetCanvasFrame() {
-        if(!lipCtx || !backgroundImgInstance || !avatarImgInstance) return;
-        
-        lipCtx.drawImage(backgroundImgInstance, 0, 0, lipCanvas.width, lipCanvas.height);
-        
-        let avatarW = 180; let avatarH = 220;
-        let avatarX = (lipCanvas.width - avatarW) / 2;
-        let avatarY = (lipCanvas.height - avatarH) / 2 + 20;
-        
-        lipCtx.save();
-        lipCtx.beginPath();
-        lipCtx.arc(lipCanvas.width/2, lipCanvas.height/2 + 10, 100, 0, Math.PI*2);
-        lipCtx.clip();
-        lipCtx.drawImage(avatarImgInstance, avatarX, avatarY - 20, avatarW, avatarH);
-        lipCtx.restore();
-
-        let mouthX = lipCanvas.width / 2;
-        let mouthY = lipCanvas.height / 2 + 45;
-        
-        lipCtx.beginPath();
-        lipCtx.ellipse(mouthX, mouthY, 15, mouthOpeningValue, 0, 0, Math.PI * 2);
-        lipCtx.fillStyle = "#450a0a";
-        lipCtx.fill();
-        lipCtx.closePath();
-
-        lipCtx.beginPath();
-        lipCtx.moveTo(mouthX - 18, mouthY);
-        lipCtx.quadraticCurveTo(mouthX, mouthY - 4 - (mouthOpeningValue*0.2), mouthX + 18, mouthY);
-        lipCtx.strokeStyle = "#ef4444";
-        lipCtx.lineWidth = 4;
-        lipCtx.stroke();
-        lipCtx.closePath();
-
-        lipCtx.beginPath();
-        lipCtx.moveTo(mouthX - 18, mouthY);
-        lipCtx.quadraticCurveTo(mouthX, mouthY + 4 + mouthOpeningValue, mouthX + 18, mouthY);
-        lipCtx.strokeStyle = "#dc2626";
-        lipCtx.lineWidth = 4;
-        lipCtx.stroke();
-        lipCtx.closePath();
     }
 
     // --- INTERACTIVE CANVAS FORM FILLER TOOL ENGINE ---
@@ -1113,12 +966,9 @@
 
     function closeActiveGame() { 
         document.getElementById('gameScreenBox').classList.add('hidden'); 
-        document.getElementById('lipSyncVideoPresentationBlock').classList.add('hidden');
         clearInterval(activeGlobalInterval); 
-        clearInterval(lipAnimationLoop);
         window.onkeydown = null;
         window.speechSynthesis.cancel();
-        isSpeechActive = false;
     }
     
     function generateWhatsAppBanner(textContext) {
