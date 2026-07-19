@@ -230,7 +230,7 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Master Node Configuration:</strong> All previous modules, active links, local arcade room, and language patches are 100% loaded.
+            <strong>🌐 Master Node Configuration:</strong> Global Cloud Intelligence Pipeline Active. Fixed Voter ID, History, Religion & All-Topic Search.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
@@ -243,11 +243,11 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant Tab View (WITH HINGLISH LINK & ROUTING FIXES) -->
+        <!-- AI Smart Assistant Tab View (FULLY RE-ENGINEERED UNRESTRICTED INTELLIGENCE NODE) -->
         <div id="assistant-tab" class="tab-content">
             <h3>🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything in English or write in Hinglish. Real-time updates for movies release data or current affairs render correct outputs.</p>
-            <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter ID me name mismatch hai kyse update karu')..." style="height: 120px;"></textarea>
+            <p style="color: #64748b; font-size: 14px;">Ask anything about Voter IDs, Passport, Movies, History, Islam, Education, etc. Real-time system pipeline active.</p>
+            <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter card new apply kaise kare' or 'tell me islamic golden age history')..." style="height: 120px;"></textarea>
             <button onclick="askSmartAssistant()">Submit Document Query</button>
             
             <div id="assistantOutputContainer" class="hidden">
@@ -420,12 +420,12 @@
             </div>
         </div>
 
-        <!-- OFFICE UTILITIES & ADVANCED MULTI-CONVERTER DASHBOARD -->
+        <!-- OFFICE UTILITIES & ADVANCED MULTI-CONVERTER STUDIO -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe advanced document printing, binary file resizers, and format overlay compilers studio panel.</p>
             
-            <!-- PASSPORT SIZE COPIES ENGINE -->
+            <!-- CUSTOM COPIES PASSPORT GRIDS ENGINE -->
             <div class="utility-box" style="border: 2px solid #0284c7; background: #f0f9ff;">
                 <h4 style="color:#0284c7;">📸 Instant Passport Size Photo Printer Grid (Custom Copies Input)</h4>
                 <p style="font-size: 13px; color: #475569; margin-top: 0;">Photo select kijiye aur exact jitni copies chahiye (e.g. 4, 6, 8, 12) input field me type kijiye. Auto matrix ready ho kar print setup run ho jayega.</p>
@@ -440,14 +440,14 @@
                         <input type="number" id="passportCustomCopiesInputField" value="8" min="1" max="100" oninput="renderPassportPhotosGrid()">
                     </div>
                 </div>
-                <button onclick="triggerPassportGridPrintSystem()" style="background:#0284c7; font-size:14px; font-weight:bold;">🖨 Immediatly Print Passport Photos Grid</button>
+                <button onclick="triggerPassportGridPrintSystem()" style="background:#0284c7; font-size:14px; font-weight:bold;">🖨️ Immediatly Print Passport Photos Grid</button>
                 
                 <div id="passportPrintRenderArea" class="hidden">
                     <div id="passportPhotosGridDisplayBox" class="passport-print-grid"></div>
                 </div>
             </div>
 
-            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER CORE GRID -->
+            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER COMPILER CORE GRID -->
             <div class="utility-box" style="border-top: 4px solid #16a34a;">
                 <h4>🖼️ Advanced Image & PDF Studio (All-In-One Toolkit)</h4>
                 
@@ -614,27 +614,6 @@
 <script>
     let rawUploadedPhotoBase64Data = null;
 
-    window.onload = function() {
-        initSignatureCanvasLogic();
-        initInteractiveFormFillerEngine();
-        
-        setInterval(() => {
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const now = new Date();
-            const dayText = days[now.getDay()];
-            const monthText = months[now.getMonth()];
-            const dateNum = now.getDate();
-            const yearNum = 2026;
-            let hours = now.getHours(); let minutes = now.getMinutes(); let seconds = now.getSeconds();
-            let ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12;
-            minutes = minutes < 10 ? '0'+minutes : minutes; seconds = seconds < 10 ? '0'+seconds : seconds;
-            
-            document.getElementById('systemLiveClockBanner').innerText = `🌐 System Time: ${dayText}, ${dateNum} ${monthText} ${yearNum} 🕒 Live Engine Tracker: ${hours}:${minutes}:${seconds} ${ampm} (Hyderabad Hub Connected)`;
-        }, 1000);
-    };
-
-    // UPGRADED CUSTOM COPIES PASSPORT GRIDS ENGINE
     function loadPassportPhotoPreviewSrc() {
         const selector = document.getElementById('passportPhotoFileInput');
         if(selector.files.length === 0) return;
@@ -670,7 +649,6 @@
         setTimeout(() => { window.print(); }, 300);
     }
 
-    // ADVANCED CONVERTERS CORE PROCESSING FUNCTIONS
     function executeSingleImageToPdfConversion() {
         const selector = document.getElementById('singleImageToPdfInput');
         if(selector.files.length === 0) return alert("Select Image!");
@@ -852,32 +830,7 @@
         }, 1500);
     }
 
-    // ASSISTANT HANDLER FOR SECURE SYSTEM INTERCEPTIONS
-    async function askSmartAssistant() {
-        const input = document.getElementById('assistantInput').value.trim();
-        const outBox = document.getElementById('assistantOutput');
-        if(!input) return alert("Enter Query!");
-        
-        document.getElementById('assistantOutputContainer').classList.remove('hidden');
-        outBox.innerText = "⏳ Running intelligence node scanning algorithms...";
-
-        // Explicit structural query match checker layer for Voter ID mismatch parameters
-        if(input.toLowerCase().includes("voter") && (input.toLowerCase().includes("name") || input.toLowerCase().includes("mismatch") || input.toLowerCase().includes("update"))) {
-            setTimeout(() => {
-                outBox.innerHTML = `<b>🗳️ VOTER ID NAME CORRECTION LIVE GUIDE (2026):</b>\n\nAgar aapke Voter ID card me naam galat (mismatch) hai, toh aapko official portal par online <b>Form 8</b> fill karna hoga. Cafe step-by-step process niche dekhie:\n\n1. <b>Official Website:</b> Direct National Voters Service Portal par jayein: <a href="https://voters.eci.gov.in/" target="_blank" style="color:#0284c7; font-weight:bold; text-decoration:underline;">voters.eci.gov.in</a>\n2. <b>Login/Register:</b> Apna mobile number use karke account register/login karein.\n3. <b>Select Form:</b> Dashboard open hotey hi <b>"Form 8" (Shift of residence/Correction of entries)</b> option par click karein.\n4. <b>Fill Details:</b> "Correction of Entries in Existing Electoral Roll" select karein aur sahi Naam (correct name) carefully type karein.\n5. <b>Upload Documents:</b> Sahi naam ka official document verification proof upload karein (Aadhaar Card, Government Proof, ya Gazetted Officer verification sheet).\n6. <b>Submit:</b> Form submit karke Reference ID Track layout download kar lein print ke liye.`;
-            }, 600);
-            return;
-        }
-
-        // Strict system rule enforcement layer matching Roman Hinglish/English structures mapping constraints
-        let promptRule = "You are SevaKit Assistant calibrated for 2026. CRITICAL LANGUAGE CONSTRAINT: Evaluate input text carefully. If user types standard English, respond completely in English. If user uses Romanized Hinglish keywords (like 'kaise', 'karo', 'hai', 'mismatch', 'kya'), you MUST reply 100% in fluent conversational Roman Hinglish (English letters using Hindi words syntax). Absolutely do NOT output any Hindi script or Devanagari characters.";
-        try {
-            const r = await fetch('https://text.pollinations.ai/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', content: promptRule }, { role: 'user', content: input }], model: 'openai', jsonMode: false }) });
-            outBox.innerText = await r.text();
-        } catch (e) { outBox.innerText = "Processing finished."; }
-    }
-
-    // STABLE OFFLINE ARCADES GAMES RENDER STRUCTS
+    let fillerCanvas, fillerCtx, formImageInstance = null;
     function initInteractiveFormFillerEngine() {
         fillerCanvas = document.getElementById('formFillerCanvas'); if(!fillerCanvas) return;
         fillerCtx = fillerCanvas.getContext('2d');
@@ -960,6 +913,59 @@
     function startLocalBounceGame() { alert("Basket Bounce Simulation Vector Connected."); }
     function startLocalDinoGame() { alert("Rex Dino Runner Canvas Node Attached."); }
     function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
+
+    // DYNAMIC RE-ENGINEERED UNRESTRICTED INTELLIGENCE middleWARE
+    async function askSmartAssistant() {
+        const input = document.getElementById('assistantInput').value.trim();
+        const outBox = document.getElementById('assistantOutput');
+        if(!input) return alert("Enter Query!");
+        
+        document.getElementById('assistantOutputContainer').classList.remove('hidden');
+        outBox.innerText = "⏳ Connecting to global cognitive cloud layers...";
+
+        // Real-Time System Rules Injection (No Hardcoded Intercepts)
+        let masterInstruction = "You are SevaKit Intelligent Assistant calibrated for Year 2026. Current location is Hyderabad, India. You are an unrestricted encyclopedic knowledge system capable of handling complex queries across all domains including government forms (Voter ID, Passport, PAN), entertainment/movies, Islamic history, global education, science, and technical cafes data.\n\n" +
+        "CRITICAL LANGUAGE RULE:\n" +
+        "1. If user input contains Romanized Hinglish keywords (e.g., 'kaise', 'karo', 'mismatch', 'hai', 'kya', 'banao'), you MUST respond 100% in conversational Roman Hinglish (English alphabet words representing natural Urdu/Hindi meanings).\n" +
+        "2. If input is clean standard English, respond completely in professional structured English text.\n" +
+        "3. Absolutely DO NOT output any Devanagari Hindi font characters under any circumstances.\n" +
+        "4. Always include exact active official government links where applicable (e.g., for Voter IDs always cite voters.eci.gov.in, for new registration reference Form 6, for corrections Form 8). Keep structural presentation clean and scannable without hashes (#) or asterisks (*).";
+
+        let resultText = await executeFreeAIRequest(masterInstruction, input);
+        if(resultText) {
+            outBox.innerText = resultText;
+            
+            // Check for smart WhatsApp assistant banner contextually
+            const triggers = ['voter', 'passport', 'pan', 'meeseva', 'ration', 'ssc', 'challan'];
+            const matched = triggers.some(t => input.toLowerCase().includes(t));
+            const waBox = document.getElementById('assistantWhatsAppZone');
+            if (matched) {
+                waBox.innerHTML = `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">🟢 Digital Form Assistance Live!</h4><p style="margin:0; font-size:13px; opacity:0.9;">Agar online transaction ya application process me koi dikkat aa rahi hai, toh direct support lein.</p></div><a href="https://wa.me/919398696996" target="_blank" class="whatsapp-btn">💬 Contact on WhatsApp</a></div>`;
+            } else {
+                waBox.innerHTML = "";
+            }
+        } else {
+            outBox.innerText = "Cloud database response timed out. Please retry in a moment.";
+        }
+    }
+
+    async function executeFreeAIRequest(s, u) {
+        try {
+            const r = await fetch('https://text.pollinations.ai/', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ 
+                    messages: [
+                        { role: 'system', content: s }, 
+                        { role: 'user', content: u }
+                    ], 
+                    model: 'openai', 
+                    jsonMode: false 
+                }) 
+            });
+            return await r.text();
+        } catch (e) { return null; }
+    }
 </script>
 </body>
 </html>
