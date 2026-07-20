@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -220,7 +220,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v12.5</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v12.6</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -233,8 +233,8 @@
             <strong>🌐 Master Node Configuration:</strong> Secure Portals & Expanded Translator Active.
         </div>
         
-        <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
-        <div class="menu-item" onclick="switchTab('chatgpt-tab')">🟢 SevaKit ChatGPT Portal</div>
+        <!-- Smart AI Assistant Tab Removed From Sidebar -->
+        <div class="menu-item active" onclick="switchTab('chatgpt-tab')">🟢 SevaKit ChatGPT Portal</div>
         <div class="menu-item" onclick="switchTab('gemini-tab')">🔵 SevaKit Gemini Portal</div>
         <div class="menu-item" onclick="switchTab('translator-tab')">🔠 Global Translator Studio</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
@@ -246,25 +246,8 @@
     </div>
 
     <div class="workspace">
-        <!-- AI Smart Assistant Tab View -->
-        <div id="assistant-tab" class="tab-content">
-            <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
-            <p style="color: #64748b; font-size: 14px;">Ask anything about Voter IDs, Passport, Movies, Education, History. Output will render strictly in clean bullet points.</p>
-            <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter card new apply kaise kare')..." style="height: 120px;"></textarea>
-            <button onclick="askSmartAssistant()">Submit Document Query</button>
-            
-            <div id="assistantOutputContainer" class="hidden">
-                <div id="assistantOutput" class="response-zone"></div>
-                <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto; margin-bottom:0;">📄 Save Search Result as PDF</button>
-                    <button onclick="triggerTextToSpeech()" style="background: #9333ea; width: auto; margin-bottom:0;">🔊 Speak Response (Voice Reader)</button>
-                </div>
-            </div>
-            <div id="assistantWhatsAppZone"></div>
-        </div>
-
-        <!-- TAB 1: CHATGPT PORTAL (SECURE LAUNCH CARD) -->
-        <div id="chatgpt-tab" class="tab-content hidden">
+        <!-- TAB 1: CHATGPT PORTAL (SECURE LAUNCH CARD - SET ACTIVE BY DEFAULT NOW) -->
+        <div id="chatgpt-tab" class="tab-content">
             <h3>🟢 SevaKit ChatGPT Portal</h3>
             <p style="color: #64748b; font-size: 14px;">OpenAI ke official ChatGPT workspace ko direct aur secure tarike se launch karein.</p>
             <div class="utility-box" style="text-align: center; padding: 50px; background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; margin-top: 20px;">
@@ -838,67 +821,6 @@
     function startLocalBounceGame() { alert("Bounce Game Connected."); }
     function startLocalDinoGame() { alert("Dino Runner Connected."); }
     function closeActiveGame() { document.getElementById('gameScreenBox').classList.add('hidden'); clearInterval(activeGlobalInterval); window.onkeydown = null; }
-
-    // DYNAMIC GLOBAL KNOWLEDGE COGNITIVE ENGINE (100% CLEAN BULLET ROWS)
-    async function askSmartAssistant() {
-        const input = document.getElementById('assistantInput').value.trim();
-        const outBox = document.getElementById('assistantOutput');
-        if(!input) return alert("Enter Query!");
-        
-        document.getElementById('assistantOutputContainer').classList.remove('hidden');
-        outBox.innerText = "⏳ Connecting to global cloud knowledge stream...";
-
-        let masterInstruction = "You are SevaKit Assistant calibrated strictly for Year 2026. Current calendar date is Sunday, July 19, 2026. Current location is Hyderabad, Telangana.\n\n" +
-        "CRITICAL INSTRUCTIONS:\n" +
-        "1. Never output raw formatting labels like asterisks (*), double stars (**), markdown hashes (#), double pipes (||), or greater than symbols (>>).\n" +
-        "2. Structure output strictly row-by-row where each line begins exclusively with standard '*' bullet marker character.\n" +
-        "3. Multilingual Translation Engine: You are an absolute multi-directional translator. Handle requests like Hinglish to Telugu, English to Telugu, English to any language, and any language to English flawlessly. Provide clean phonetic text if needed, alongside native translations.\n" +
-        "4. Never output Devanagari Hindi font script characters. If response language is Hindi/Hinglish, use the Roman English alphabet letters layout text exclusively.\n" +
-        "5. Provide absolute correct guidance for Voter registrations (New is Form 6, Correction is Form 8, Website is voters.eci.gov.in), passports, medical/educational records, global history, and religion.";
-
-        try {
-            const r = await fetch('https://text.pollinations.ai/', { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
-                    messages: [
-                        { role: 'system', content: masterInstruction }, 
-                        { role: 'user', content: input }
-                    ], 
-                    model: 'openai' 
-                }) 
-            });
-            let cleanResponse = await r.text();
-            
-            cleanResponse = cleanResponse.replace(/\*\*/g, '').replace(/\*/g, '').replace(/>>/g, '').replace(/\|\|/g, '').replace(/#/g, '');
-            
-            let lines = cleanResponse.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-            let bulletOutput = lines.map(l => `* ${l}`).join('\n');
-            
-            outBox.innerText = bulletOutput;
-            
-            const triggers = ['voter', 'passport', 'pan', 'meeseva', 'ration', 'ssc', 'challan', 'health', 'abha'];
-            const matched = triggers.some(t => input.toLowerCase().includes(t));
-            const waBox = document.getElementById('assistantWhatsAppZone');
-            if (matched) {
-                waBox.innerHTML = `<div class="whatsapp-premium-banner"><div><h4 style="margin:0 0 5px 0; font-size:16px;">🟢 Form Assistance Portal Node Active</h4><p style="margin:0; font-size:13px; opacity:0.9;">Direct support chat parameters established.</p></div><a href="https://wa.me/919398696996" target="_blank" class="whatsapp-btn">💬 Contact on WhatsApp</a></div>`;
-            } else { waBox.innerHTML = ""; }
-        } catch (e) { 
-            outBox.innerText = "* Connection buffer reset. Please submit again."; 
-        }
-    }
-
-    function convertSearchToPDF() {
-        const { jsPDF } = window.jspdf; const doc = new jsPDF();
-        const splitText = doc.splitTextToSize(document.getElementById('assistantOutput').innerText, 180);
-        doc.text(splitText, 15, 20); doc.save("sevakit-report.pdf");
-    }
-
-    function triggerTextToSpeech() {
-        const txt = document.getElementById('assistantOutput').innerText;
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance(txt));
-    }
 
     function fetchLiveGovRSSFeeds() { alert("Scanning government feed vectors..."); }
 </script>
