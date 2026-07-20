@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
+    <!-- External Libraries for Advanced PDF & File Operations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -184,7 +185,6 @@
         .gov-feed-desc { font-size: 13px; color: #475569; line-height: 1.5; }
         .gov-feed-meta { font-size: 11px; color: #94a3b8; margin-top: 8px; font-weight: 600; }
 
-        /* Passport Photo Upgraded Layout Areas */
         .passport-print-grid { display: flex; flex-wrap: wrap; gap: 12px; background: white; padding: 15px; border: 1px dashed #94a3b8; border-radius: 6px; margin-top: 15px; width: fit-content; max-width: 100%; }
         .passport-photo-item { width: 3.5cm; height: 4.5cm; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.25); object-fit: cover; box-sizing: border-box; background: white; }
 
@@ -200,7 +200,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v15.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v15.1</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -225,6 +225,7 @@
     </div>
 
     <div class="workspace">
+        <!-- TAB 1: CHATGPT PORTAL -->
         <div id="chatgpt-tab" class="tab-content">
             <h3>🟢 SevaKit ChatGPT Portal</h3>
             <p style="color: #64748b; font-size: 14px;">OpenAI ke official ChatGPT workspace ko direct aur secure tarike se launch karein.</p>
@@ -237,6 +238,7 @@
             </div>
         </div>
 
+        <!-- TAB 2: GEMINI PORTAL -->
         <div id="gemini-tab" class="tab-content hidden">
             <h3>🔵 SevaKit Gemini Portal</h3>
             <p style="color: #64748b; font-size: 14px;">Google ke official Gemini intelligence hub ko direct aur secure tarike se launch karein.</p>
@@ -249,6 +251,7 @@
             </div>
         </div>
 
+        <!-- TAB 3: GLOBAL TRANSLATOR STUDIO -->
         <div id="translator-tab" class="tab-content hidden">
             <h3>🔠 Global Language Translator Studio (Dual-Output Format)</h3>
             <p style="color: #64748b; font-size: 14px;">Type any text on the left, select target language on the right. Output shows Native script followed by Roman English phonetics.</p>
@@ -294,6 +297,7 @@
             </div>
         </div>
 
+        <!-- LIVE GOVT RULES HUB -->
         <div id="gov-updates-tab" class="tab-content hidden">
             <h3>📰 Government ID Rules & Live Utility Dashboard</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur common services ke liye zaroori sabhi official working websites ek hi portal par.</p>
@@ -441,10 +445,12 @@
             </div>
         </div>
 
+        <!-- DIGITAL OFFICE TOOLS UTILITIES TAB -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur file parameters compilers tools panel.</p>
             
+            <!-- CUSTOM COPIES PASSPORT GRIDS ENGINE -->
             <div class="utility-box" style="border: 2px solid #0284c7; background: #f0f9ff;">
                 <h4 style="color:#0284c7;">📸 Instant Passport Size Photo Printer Grid (Custom Copies Input)</h4>
                 <p style="font-size: 13px; color: #475569; margin-top: 0;">Photo select kijiye aur exact jitni copies chahiye (e.g. 4, 6, 8, 12) input field me type kijiye. Auto matrix ready ho kar print setup run ho jayega.</p>
@@ -466,9 +472,11 @@
                 </div>
             </div>
 
+            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER COMPILER CORE GRID -->
             <div class="utility-box" style="border-top: 4px solid #16a34a;">
                 <h4>🖼️ Advanced Image & PDF Studio (All-In-One Toolkit)</h4>
                 
+                <!-- Format Splitter Resizer -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">⚖️ Image Size Compressor & Strict Format Splitter (PNG / JPG / JPEG)</strong>
                     <input type="file" id="utilityImageInput" accept="image/*" style="margin-top:5px;">
@@ -485,18 +493,21 @@
                     <div id="imageUtilityOutput"></div>
                 </div>
 
+                <!-- Single Image to PDF -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📄 Single Image to A4 Document PDF Converter</strong>
                     <input type="file" id="singleImageToPdfInput" accept="image/*" style="margin-top:5px;">
                     <button onclick="executeSingleImageToPdfConversion()" style="background:#0284c7; padding:6px 12px; margin-top:8px; font-size:13px;">Convert Single Image to PDF</button>
                 </div>
 
+                <!-- Multiple Photos to PDF -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📚 Merge Multiple Photos into One Single PDF</strong>
                     <input type="file" id="multiPhotosToPdfInput" accept="image/*" multiple style="margin-top:5px;">
                     <button onclick="executeMultiPhotosToSinglePdfBook()" style="background:#4f46e5; padding:6px 12px; margin-top:8px; font-size:13px;">Compile Multiple Photos to Single PDF</button>
                 </div>
 
+                <!-- Cross Document Vice-Versa Suite Converter -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔄 Cross-Document Core Converter (PDF / Word / Excel Vice-Versa)</strong>
                     <input type="file" id="crossDocumentSuiteInput" accept=".pdf,.doc,.docx,.xls,.xlsx" style="margin-top:5px;">
@@ -513,6 +524,7 @@
                     <div id="crossDocStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Merger -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔀 PDF Files Merger Layer</strong>
                     <input type="file" id="pdfFilesMergerInput" accept=".pdf" multiple style="margin-top:5px;">
@@ -520,6 +532,7 @@
                     <div id="pdfMergeStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Splitter Extraction -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">✂️ PDF Splitter & Page Range Extractor</strong>
                     <input type="file" id="pdfSplitterFileInput" accept=".pdf" style="margin-top:5px;">
@@ -531,6 +544,7 @@
                     <div id="pdfSplitStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Weight Compressor -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📉 PDF File Weight Resizer & Compressor</strong>
                     <input type="file" id="pdfResizerFileInput" accept=".pdf" style="margin-top:5px;">
@@ -539,6 +553,7 @@
                     <div id="pdfCompressStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Extraction to Image Preview -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔓 PDF to Image JPG Extraction Board</strong>
                     <input type="file" id="pdfUtilityFileInput" accept=".pdf" style="margin-top:5px;">
@@ -546,6 +561,7 @@
                     <div id="pdfUtilityOutput" style="margin-top:5px; font-size:12px; white-space:pre-wrap;"></div>
                 </div>
 
+                <!-- PDF Password Locker -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px;">
                     <strong style="font-size:13px; color: #334155;">🛡️ Secure PDF Password Locker (Encryption)</strong>
                     <input type="file" id="pdfEncryptionFileInput" accept=".pdf" style="margin-top:5px;">
@@ -554,6 +570,7 @@
                 </div>
             </div>
 
+            <!-- SIGNATURE LAYER LOGIC WITH OVERLAY DEPLOYMENTS -->
             <div class="utility-box" style="border:2px dashed #0284c7; background:#ffffff;">
                 <h4>✍️ Live Digital Signature Pad & PDF Sign Overlay</h4>
                 <p style="font-size: 13px; color:#475569; margin-top:0;">Sign board par signature kijiye. Aap chahein toh niche PDF upload karke is signature ko direct us PDF document ke upar chipka (overlay) sakte hain!</p>
@@ -572,6 +589,7 @@
             </div>
         </div>
 
+        <!-- FULLY WORKING ARCADE ROOM TAB -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Working Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Saare games ab native canvas par fully playable hain. Neeche kisi bhi game par click karein!</p>
@@ -593,6 +611,7 @@
             </div>
         </div>
 
+        <!-- REQUEST A SERVICE / SUGGESTION HUB TAB -->
         <div id="request-service-tab" class="tab-content hidden">
             <h3>💬 Request a Service / Suggest New Website</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Aapko kaunsi naya service, portal, ya tool is website par chahiye? Apna naam aur requirement niche type karke direct mere WhatsApp par bhejiye!</p>
@@ -686,10 +705,7 @@
             return;
         }
 
-        // Yahan aap apna WhatsApp number daal sakte hain (country code ke sath, bina '+' ke, jaise '919876543210')
-        // Abhi ke liye placeholder number rakha hai jise aap apne number se replace kar sakte hain:
         const adminWhatsAppNumber = "919876543210"; 
-        
         const message = `Hello Admin! SevaKit.ai par ek new service request aayi hai:\n\n👤 Name: ${name}\n🛠️ Required Service/Website: ${details}`;
         const whatsappUrl = `https://wa.me/${adminWhatsAppNumber}?text=${encodeURIComponent(message)}`;
         
@@ -898,7 +914,7 @@
         let obstacleX = 300;
         let score = 0;
 
-        window.onkeydown = e => { if((e.code === "Space" || e.key === "ArrowUp") && !isJuminous = true) { isJumping = true; jumpPower = -12; } };
+        window.onkeydown = e => { if((e.code === "Space" || e.key === "ArrowUp") && !isJumping) { isJumping = true; jumpPower = -12; } };
 
         activeGlobalInterval = setInterval(() => {
             if(isJumping) {
