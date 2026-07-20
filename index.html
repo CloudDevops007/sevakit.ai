@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -204,11 +204,6 @@
         .gov-feed-desc { font-size: 13px; color: #475569; line-height: 1.5; }
         .gov-feed-meta { font-size: 11px; color: #94a3b8; margin-top: 8px; font-weight: 600; }
 
-        /* Split Screen Iframe Wrappers */
-        .split-view-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 500px; }
-        @media (max-width: 900px) { .split-view-container { grid-template-columns: 1fr; height: auto; } }
-        .embedded-frame { width: 100%; height: 450px; border: 2px solid #cbd5e1; border-radius: 8px; background: #fff; }
-
         /* Passport Photo Upgraded Layout Areas */
         .passport-print-grid { display: flex; flex-wrap: wrap; gap: 12px; background: white; padding: 15px; border: 1px dashed #94a3b8; border-radius: 6px; margin-top: 15px; width: fit-content; max-width: 100%; }
         .passport-photo-item { width: 3.5cm; height: 4.5cm; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.25); object-fit: cover; box-sizing: border-box; background: white; }
@@ -225,7 +220,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v12.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v12.5</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -235,7 +230,7 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Master Node Configuration:</strong> Split-Screen AI Portals & Expanded Translator Active.
+            <strong>🌐 Master Node Configuration:</strong> Secure Portals & Expanded Translator Active.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
@@ -268,45 +263,33 @@
             <div id="assistantWhatsAppZone"></div>
         </div>
 
-        <!-- NEW TAB 1: CHATGPT PORTAL (HALF-SCREEN SPLIT VIEW) -->
+        <!-- TAB 1: CHATGPT PORTAL (SECURE LAUNCH CARD) -->
         <div id="chatgpt-tab" class="tab-content hidden">
-            <h3>🟢 SevaKit ChatGPT Split-Screen Portal</h3>
-            <p style="color: #64748b; font-size: 14px;">Use ChatGPT directly on the left side while keeping SevaKit workspace open on the right side.</p>
-            <div class="split-view-container">
-                <div>
-                    <h4 style="margin:0 0 5px 0; color:#10a37f;">ChatGPT Embedded View:</h4>
-                    <iframe src="https://chatgpt.com" class="embedded-frame" title="ChatGPT Portal"></iframe>
-                </div>
-                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px dashed #cbd5e1;">
-                    <h4 style="color: #0284c7; margin-top: 0;">Notice Regarding External Framing</h4>
-                    <p style="font-size: 13px; color: #475569; text-align: center;">If the left side displays a blank screen or blocks connection due to strict OpenAI browser security policies, use the direct launch button below:</p>
-                    <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none; width: 100%;">
-                        <button style="background: #10a37f; font-size: 15px; margin-top: 10px;">🚀 Open ChatGPT in New Full Tab</button>
-                    </a>
-                </div>
+            <h3>🟢 SevaKit ChatGPT Portal</h3>
+            <p style="color: #64748b; font-size: 14px;">OpenAI ke official ChatGPT workspace ko direct aur secure tarike se launch karein.</p>
+            <div class="utility-box" style="text-align: center; padding: 50px; background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; margin-top: 20px;">
+                <h2 style="color: #166534; margin-top: 0;">OpenAI ChatGPT Live Portal</h2>
+                <p style="color: #475569; margin-bottom: 25px; font-size: 14px;">Click the button below to open official ChatGPT workspace securely in a new browser tab:</p>
+                <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none;">
+                    <button style="background: #10a37f; width: 300px; font-size: 16px; padding: 14px; border-radius: 8px;">🚀 Launch ChatGPT Official Site</button>
+                </a>
             </div>
         </div>
 
-        <!-- NEW TAB 2: GEMINI PORTAL (HALF-SCREEN SPLIT VIEW) -->
+        <!-- TAB 2: GEMINI PORTAL (SECURE LAUNCH CARD) -->
         <div id="gemini-tab" class="tab-content hidden">
-            <h3>🔵 SevaKit Gemini Split-Screen Portal</h3>
-            <p style="color: #64748b; font-size: 14px;">Use Google Gemini directly on the left side while keeping SevaKit tools active.</p>
-            <div class="split-view-container">
-                <div>
-                    <h4 style="margin:0 0 5px 0; color:#1a73e8;">Gemini Embedded View:</h4>
-                    <iframe src="https://gemini.google.com" class="embedded-frame" title="Gemini Portal"></iframe>
-                </div>
-                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px dashed #cbd5e1;">
-                    <h4 style="color: #0284c7; margin-top: 0;">Notice Regarding External Framing</h4>
-                    <p style="font-size: 13px; color: #475569; text-align: center;">If the left side displays a blank screen or blocks connection due to strict Google security policies, use the direct launch button below:</p>
-                    <a href="https://gemini.google.com/" target="_blank" style="text-decoration: none; width: 100%;">
-                        <button style="background: #1a73e8; font-size: 15px; margin-top: 10px;">🚀 Open Gemini in New Full Tab</button>
-                    </a>
-                </div>
+            <h3>🔵 SevaKit Gemini Portal</h3>
+            <p style="color: #64748b; font-size: 14px;">Google ke official Gemini intelligence hub ko direct aur secure tarike se launch karein.</p>
+            <div class="utility-box" style="text-align: center; padding: 50px; background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; margin-top: 20px;">
+                <h2 style="color: #1e40af; margin-top: 0;">Google Gemini AI Live Portal</h2>
+                <p style="color: #475569; margin-bottom: 25px; font-size: 14px;">Click the button below to open official Google Gemini workspace securely in a new browser tab:</p>
+                <a href="https://gemini.google.com/" target="_blank" style="text-decoration: none;">
+                    <button style="background: #1a73e8; width: 300px; font-size: 16px; padding: 14px; border-radius: 8px;">🚀 Launch Gemini Official Site</button>
+                </a>
             </div>
         </div>
 
-        <!-- NEW TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO -->
+        <!-- TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO WITH MALAYALAM & MORE -->
         <div id="translator-tab" class="tab-content hidden">
             <h3>🔠 Global Language Translator Studio (Expanded)</h3>
             <p style="color: #64748b; font-size: 14px;">Type any text on the left, select any regional or international target language on the right, and get accurate translations instantly.</p>
@@ -757,13 +740,6 @@
         if(window.event && window.event.currentTarget) { window.event.currentTarget.classList.add('active'); }
         closeActiveGame();
         window.speechSynthesis.cancel();
-    }
-
-    // --- AI ASSISTANT SUB-TAB SWITCHER ---
-    function switchAiSubTab(subId) {
-        document.querySelectorAll('.ai-sub-content').forEach(el => el.classList.add('hidden'));
-        const target = document.getElementById(subId);
-        if(target) target.classList.remove('hidden');
     }
 
     // --- GLOBAL TRANSLATOR FUNCTION ---
