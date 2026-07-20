@@ -122,20 +122,6 @@
         button:hover { background: var(--primary-hover); }
         .hidden { display: none !important; }
 
-        .response-zone {
-            margin-top: 25px;
-            padding: 25px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-top: 4px solid var(--primary);
-            border-radius: 8px;
-            white-space: pre-wrap;
-            line-height: 1.8;
-            font-size: 16px;
-            color: #334155;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-
         .utility-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -176,8 +162,6 @@
             width: 100%;
         }
 
-        .ai-image-wrapper img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        
         #localGameCanvasContainer { background: #0f172a; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; box-sizing: border-box; }
         .tictactoe-board { display: grid; grid-template-columns: repeat(3, 90px); gap: 8px; }
         .tictactoe-cell { background: #334155; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: bold; color: white; cursor: pointer; height: 90px; }
@@ -220,7 +204,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v12.6</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v13.0</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -233,7 +217,7 @@
             <strong>🌐 Master Node Configuration:</strong> Secure Portals & Expanded Translator Active.
         </div>
         
-        <!-- Smart AI Assistant Tab Removed From Sidebar -->
+        <!-- FIRST TAB PLACED AT THE TOP -->
         <div class="menu-item active" onclick="switchTab('chatgpt-tab')">🟢 SevaKit ChatGPT Portal</div>
         <div class="menu-item" onclick="switchTab('gemini-tab')">🔵 SevaKit Gemini Portal</div>
         <div class="menu-item" onclick="switchTab('translator-tab')">🔠 Global Translator Studio</div>
@@ -246,7 +230,7 @@
     </div>
 
     <div class="workspace">
-        <!-- TAB 1: CHATGPT PORTAL (SECURE LAUNCH CARD - SET ACTIVE BY DEFAULT NOW) -->
+        <!-- TAB 1: CHATGPT PORTAL (ACTIVE BY DEFAULT) -->
         <div id="chatgpt-tab" class="tab-content">
             <h3>🟢 SevaKit ChatGPT Portal</h3>
             <p style="color: #64748b; font-size: 14px;">OpenAI ke official ChatGPT workspace ko direct aur secure tarike se launch karein.</p>
@@ -259,7 +243,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: GEMINI PORTAL (SECURE LAUNCH CARD) -->
+        <!-- TAB 2: GEMINI PORTAL -->
         <div id="gemini-tab" class="tab-content hidden">
             <h3>🔵 SevaKit Gemini Portal</h3>
             <p style="color: #64748b; font-size: 14px;">Google ke official Gemini intelligence hub ko direct aur secure tarike se launch karein.</p>
@@ -272,7 +256,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO WITH MALAYALAM & MORE -->
+        <!-- TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO -->
         <div id="translator-tab" class="tab-content hidden">
             <h3>🔠 Global Language Translator Studio (Expanded)</h3>
             <p style="color: #64748b; font-size: 14px;">Type any text on the left, select any regional or international target language on the right, and get accurate translations instantly.</p>
@@ -738,7 +722,7 @@
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({ 
-                    messages: [{ role: 'system', content: `Translate the following text accurately into ${lang}. Provide only the translation result without any extra conversational filler.` }, { role: 'user', content: input }], 
+                    messages: [{ role: 'system', content: `Translate the following text accurately into ${lang}. Provide the result in both the native script and the Roman English alphabet (phonetic spelling/transliteration) clearly.` }, { role: 'user', content: input }], 
                     model: 'openai' 
                 }) 
             });
