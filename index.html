@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SevaKit.ai - Super Digital Workspace & Office Utilities</title>
+    <!-- External Libraries for Advanced PDF & File Operations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
@@ -203,6 +204,11 @@
         .gov-feed-desc { font-size: 13px; color: #475569; line-height: 1.5; }
         .gov-feed-meta { font-size: 11px; color: #94a3b8; margin-top: 8px; font-weight: 600; }
 
+        /* Split Screen Iframe Wrappers */
+        .split-view-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 500px; }
+        @media (max-width: 900px) { .split-view-container { grid-template-columns: 1fr; height: auto; } }
+        .embedded-frame { width: 100%; height: 450px; border: 2px solid #cbd5e1; border-radius: 8px; background: #fff; }
+
         /* Passport Photo Upgraded Layout Areas */
         .passport-print-grid { display: flex; flex-wrap: wrap; gap: 12px; background: white; padding: 15px; border: 1px dashed #94a3b8; border-radius: 6px; margin-top: 15px; width: fit-content; max-width: 100%; }
         .passport-photo-item { width: 3.5cm; height: 4.5cm; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.25); object-fit: cover; box-sizing: border-box; background: white; }
@@ -219,7 +225,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v11.5</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v12.0</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -229,10 +235,13 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Master Node Configuration:</strong> Global Multilingual Cloud Pipeline Engaged. Accurate Bullet Layout Active.
+            <strong>🌐 Master Node Configuration:</strong> Split-Screen AI Portals & Expanded Translator Active.
         </div>
         
         <div class="menu-item active" onclick="switchTab('assistant-tab')">🤖 Smart AI Assistant</div>
+        <div class="menu-item" onclick="switchTab('chatgpt-tab')">🟢 SevaKit ChatGPT Portal</div>
+        <div class="menu-item" onclick="switchTab('gemini-tab')">🔵 SevaKit Gemini Portal</div>
+        <div class="menu-item" onclick="switchTab('translator-tab')">🔠 Global Translator Studio</div>
         <div class="menu-item" onclick="switchTab('utilities-tab')">🧰 Digital Office Tools</div>
         <div class="menu-item" onclick="switchTab('gov-updates-tab')">📰 Live Govt Rules Center</div>
         <div class="menu-item" onclick="switchTab('games-tab')">🎮 SevaKit Arcade Room</div>
@@ -242,108 +251,112 @@
     </div>
 
     <div class="workspace">
+        <!-- AI Smart Assistant Tab View -->
         <div id="assistant-tab" class="tab-content">
-            <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant & AI Hub</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Ask questions below or use the AI & Translator sub-tabs built directly into this workspace.</p>
+            <h3 id="greetingHeading">🤖 SevaKit Predictive Assistant</h3>
+            <p style="color: #64748b; font-size: 14px;">Ask anything about Voter IDs, Passport, Movies, Education, History. Output will render strictly in clean bullet points.</p>
+            <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter card new apply kaise kare')..." style="height: 120px;"></textarea>
+            <button onclick="askSmartAssistant()">Submit Document Query</button>
             
-            <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; flex-wrap: wrap;">
-                <button onclick="switchAiSubTab('sub-native')" style="width: auto; background: #0284c7; margin:0; padding: 8px 15px; font-size: 13px;">💬 SevaKit Assistant</button>
-                <button onclick="switchAiSubTab('sub-chatgpt')" style="width: auto; background: #10a37f; margin:0; padding: 8px 15px; font-size: 13px;">🟢 ChatGPT Portal</button>
-                <button onclick="switchAiSubTab('sub-gemini')" style="width: auto; background: #1a73e8; margin:0; padding: 8px 15px; font-size: 13px;">🔵 Gemini Portal</button>
-                <button onclick="switchAiSubTab('sub-translator')" style="width: auto; background: #059669; margin:0; padding: 8px 15px; font-size: 13px;">🔠 Global Translator</button>
-            </div>
-
-            <div id="sub-native" class="ai-sub-content">
-                <textarea id="assistantInput" placeholder="Enter query (e.g., 'voter card new apply kaise kare')..." style="height: 120px;"></textarea>
-                <button onclick="askSmartAssistant()">Submit Document Query</button>
-                
-                <div id="assistantOutputContainer" class="hidden">
-                    <div id="assistantOutput" class="response-zone"></div>
-                    <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto; margin-bottom:0;">📄 Save Search Result as PDF</button>
-                        <button onclick="triggerTextToSpeech()" style="background: #9333ea; width: auto; margin-bottom:0;">🔊 Speak Response (Voice Reader)</button>
-                    </div>
-                </div>
-                <div id="assistantWhatsAppZone"></div>
-            </div>
-
-            <div id="sub-chatgpt" class="ai-sub-content hidden">
-                <div class="utility-box" style="text-align: center; padding: 40px; background: #f0fdf4; border: 2px solid #22c55e;">
-                    <h3 style="color: #166534; margin-top: 0;">OpenAI ChatGPT Live Workspace</h3>
-                    <p style="color: #475569; margin-bottom: 20px;">Click below to open the official ChatGPT web interface in a secure tab.</p>
-                    <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none;">
-                        <button style="background: #10a37f; width: 260px; font-size: 15px;">🚀 Launch ChatGPT Official</button>
-                    </a>
+            <div id="assistantOutputContainer" class="hidden">
+                <div id="assistantOutput" class="response-zone"></div>
+                <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="convertSearchToPDF()" style="background: #0284c7; width: auto; margin-bottom:0;">📄 Save Search Result as PDF</button>
+                    <button onclick="triggerTextToSpeech()" style="background: #9333ea; width: auto; margin-bottom:0;">🔊 Speak Response (Voice Reader)</button>
                 </div>
             </div>
-
-            <div id="sub-gemini" class="ai-sub-content hidden">
-                <div class="utility-box" style="text-align: center; padding: 40px; background: #eff6ff; border: 2px solid #3b82f6;">
-                    <h3 style="color: #1e40af; margin-top: 0;">Google Gemini AI Live Workspace</h3>
-                    <p style="color: #475569; margin-bottom: 20px;">Click below to open the official Google Gemini interface in a secure tab.</p>
-                    <a href="https://gemini.google.com/" target="_blank" style="text-decoration: none;">
-                        <button style="background: #1a73e8; width: 260px; font-size: 15px;">🚀 Launch Gemini Official</button>
-                    </a>
-                </div>
-            </div>
-
-            <div id="sub-translator" class="ai-sub-content hidden">
-                <div style="padding: 20px; background: #f8fafc; border: 2px solid #059669; border-radius: 8px;">
-                    <h4 style="margin-top: 0; color: #059669;">🔠 Global Language Translator Studio</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div>
-                            <label style="font-weight: 600; font-size: 13px;">Input Text (Any Language):</label>
-                            <textarea id="transInput" style="height: 120px;" placeholder="Yahan type ya paste karein..."></textarea>
-                        </div>
-                        <div>
-                            <label style="font-weight: 600; font-size: 13px;">Target Language Select:</label>
-                            <select id="langSelect" style="margin-bottom: 10px;">
-                                <option value="Telugu">Telugu</option>
-                                <option value="Hinglish">Hinglish</option>
-                                <option value="Hindi">Hindi (Roman)</option>
-                                <option value="English">English</option>
-                                <option value="Arabic">Arabic</option>
-                                <option value="French">French</option>
-                                <option value="Spanish">Spanish</option>
-                                <option value="Japanese">Japanese</option>
-                                <option value="Chinese">Chinese</option>
-                                <option value="German">German</option>
-                                <option value="Russian">Russian</option>
-                                <option value="Urdu">Urdu</option>
-                                <option value="Marathi">Marathi</option>
-                                <option value="Tamil">Tamil</option>
-                                <option value="Kannada">Kannada</option>
-                            </select>
-                            <button onclick="runTranslation()" style="background: #059669; height: 45px; font-weight: bold;">Translate Now</button>
-                        </div>
-                    </div>
-                    <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 10px;">Translation Result:</label>
-                    <textarea id="transOutput" readonly style="height: 90px; background: #e2e8f0;" placeholder="Translation yahan show hogi..."></textarea>
-                </div>
-            </div>
-
+            <div id="assistantWhatsAppZone"></div>
         </div>
 
+        <!-- NEW TAB 1: CHATGPT PORTAL (HALF-SCREEN SPLIT VIEW) -->
+        <div id="chatgpt-tab" class="tab-content hidden">
+            <h3>🟢 SevaKit ChatGPT Split-Screen Portal</h3>
+            <p style="color: #64748b; font-size: 14px;">Use ChatGPT directly on the left side while keeping SevaKit workspace open on the right side.</p>
+            <div class="split-view-container">
+                <div>
+                    <h4 style="margin:0 0 5px 0; color:#10a37f;">ChatGPT Embedded View:</h4>
+                    <iframe src="https://chatgpt.com" class="embedded-frame" title="ChatGPT Portal"></iframe>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                    <h4 style="color: #0284c7; margin-top: 0;">Notice Regarding External Framing</h4>
+                    <p style="font-size: 13px; color: #475569; text-align: center;">If the left side displays a blank screen or blocks connection due to strict OpenAI browser security policies, use the direct launch button below:</p>
+                    <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none; width: 100%;">
+                        <button style="background: #10a37f; font-size: 15px; margin-top: 10px;">🚀 Open ChatGPT in New Full Tab</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW TAB 2: GEMINI PORTAL (HALF-SCREEN SPLIT VIEW) -->
+        <div id="gemini-tab" class="tab-content hidden">
+            <h3>🔵 SevaKit Gemini Split-Screen Portal</h3>
+            <p style="color: #64748b; font-size: 14px;">Use Google Gemini directly on the left side while keeping SevaKit tools active.</p>
+            <div class="split-view-container">
+                <div>
+                    <h4 style="margin:0 0 5px 0; color:#1a73e8;">Gemini Embedded View:</h4>
+                    <iframe src="https://gemini.google.com" class="embedded-frame" title="Gemini Portal"></iframe>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                    <h4 style="color: #0284c7; margin-top: 0;">Notice Regarding External Framing</h4>
+                    <p style="font-size: 13px; color: #475569; text-align: center;">If the left side displays a blank screen or blocks connection due to strict Google security policies, use the direct launch button below:</p>
+                    <a href="https://gemini.google.com/" target="_blank" style="text-decoration: none; width: 100%;">
+                        <button style="background: #1a73e8; font-size: 15px; margin-top: 10px;">🚀 Open Gemini in New Full Tab</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO -->
+        <div id="translator-tab" class="tab-content hidden">
+            <h3>🔠 Global Language Translator Studio (Expanded)</h3>
+            <p style="color: #64748b; font-size: 14px;">Type any text on the left, select any regional or international target language on the right, and get accurate translations instantly.</p>
+            <div style="padding: 20px; background: #f8fafc; border: 2px solid #0284c7; border-radius: 10px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <label style="font-weight: 600; font-size: 13px;">Input Text (Any Source Language):</label>
+                        <textarea id="transInput" style="height: 150px;" placeholder="Yahan text type ya paste karein..."></textarea>
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; font-size: 13px;">Target Language Select:</label>
+                        <select id="langSelect" style="margin-bottom: 10px;">
+                            <optgroup label="Indian Languages">
+                                <option value="Malayalam">Malayalam (മലയാളം)</option>
+                                <option value="Telugu">Telugu (తెలుగు)</option>
+                                <option value="Tamil">Tamil (தமிழ்)</option>
+                                <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
+                                <option value="Hindi">Hindi (Roman Script)</option>
+                                <option value="Hinglish">Hinglish</option>
+                                <option value="Marathi">Marathi (मराठी)</option>
+                                <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+                                <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
+                                <option value="Odia">Odia (ଓଡ଼ିଆ)</option>
+                                <option value="Bengali">Bengali (বাংলা)</option>
+                                <option value="Urdu">Urdu (اردو)</option>
+                            </optgroup>
+                            <optgroup label="International Languages">
+                                <option value="English">English</option>
+                                <option value="Arabic">Arabic (العربية)</option>
+                                <option value="French">French (Français)</option>
+                                <option value="Spanish">Spanish (Español)</option>
+                                <option value="German">German (Deutsch)</option>
+                                <option value="Japanese">Japanese (日本語)</option>
+                                <option value="Chinese">Chinese (中文)</option>
+                                <option value="Russian">Russian (Русский)</option>
+                            </optgroup>
+                        </select>
+                        <button onclick="runTranslation()" style="background: #059669; height: 50px; font-weight: bold;">Translate Now</button>
+                    </div>
+                </div>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 15px;">Translation Result:</label>
+                <textarea id="transOutput" readonly style="height: 120px; background: #e2e8f0;" placeholder="Translation yahan show hogi..."></textarea>
+            </div>
+        </div>
+
+        <!-- LIVE GOVT RULES & COMPREHENSIVE PORTALS HUB -->
         <div id="gov-updates-tab" class="tab-content hidden">
             <h3>📰 Government ID Rules & Live Utility Dashboard</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur common services ke liye zaroori sabhi official working websites ek hi portal par.</p>
             
-            <div class="gov-section-title">📄 Resume & Matrimonial Bio-Data Services</div>
-            <div class="gov-portal-grid">
-                <a href="https://www.google.com/search?q=free+online+resume+builder" target="_blank" class="gov-portal-card" style="border-top-color: #0284c7; background: #f0f9ff;">
-                    <strong>📝 Online Resume Builder Platforms</strong>
-                    <p style="font-size:12px; margin:5px 0 0 0; color:#475569;">Click karke direct top Google automatic templates wale resume generators par jayein aur n number of professional CVs create karein.</p>
-                </a>
-                <a href="https://www.google.com/search?q=free+marriage+biodata+maker+online" target="_blank" class="gov-portal-card" style="border-top-color: #ec4899; background: #fdf2f8;">
-                    <strong>💍 Matrimonial Bio-Data Systems</strong>
-                    <p style="font-size:12px; margin:5px 0 0 0; color:#475569;">Marriage and traditional biodatas templates instantly generate karne ke liye verified platforms portal window link.</p>
-                </a>
-                <a href="https://wa.me/919398696996?text=Hello%20Sir,%20mujhe%20ek%20professional%20Resume/Bio-Data%20banana%20hai" target="_blank" class="gov-portal-card" style="border-top-color: #22c55e; background: #f0fdf4;">
-                    <strong>🟢 Premium Professional Assistance</strong>
-                    <p style="font-size:12px; margin:5px 0 0 0; color:#15803d; font-weight: 600;">Agar aaram se bina galti ke professional Resume ya Bio-Data banwana chahte hain, toh direct humse WhatsApp par contact karein!</p>
-                </a>
-            </div>
-
             <div class="gov-section-title">🆔 Core Identity & Personal Identification</div>
             <div class="gov-portal-grid">
                 <a href="https://uidai.gov.in/en/my-aadhaar/about-your-aadhaar/circulars.html" target="_blank" class="gov-portal-card" style="border-top-color: #f97316;">
@@ -487,10 +500,12 @@
             </div>
         </div>
 
+        <!-- DIGITAL OFFICE TOOLS UTILITIES TAB -->
         <div id="utilities-tab" class="tab-content hidden">
             <h3>🧰 Digital Seva Office & Document Utilities</h3>
-            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe advanced document printing, binary file resizers, and format overlay compilers studio panel.</p>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Cyber Cafe aur file parameters compilers tools panel.</p>
             
+            <!-- CUSTOM COPIES PASSPORT GRIDS ENGINE -->
             <div class="utility-box" style="border: 2px solid #0284c7; background: #f0f9ff;">
                 <h4 style="color:#0284c7;">📸 Instant Passport Size Photo Printer Grid (Custom Copies Input)</h4>
                 <p style="font-size: 13px; color: #475569; margin-top: 0;">Photo select kijiye aur exact jitni copies chahiye (e.g. 4, 6, 8, 12) input field me type kijiye. Auto matrix ready ho kar print setup run ho jayega.</p>
@@ -512,9 +527,11 @@
                 </div>
             </div>
 
+            <!-- COMPREHENSIVE ALL-IN-ONE IMAGE & PDF CONVERTER COMPILER CORE GRID -->
             <div class="utility-box" style="border-top: 4px solid #16a34a;">
                 <h4>🖼️ Advanced Image & PDF Studio (All-In-One Toolkit)</h4>
                 
+                <!-- Format Splitter Resizer -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">⚖️ Image Size Compressor & Strict Format Splitter (PNG / JPG / JPEG)</strong>
                     <input type="file" id="utilityImageInput" accept="image/*" style="margin-top:5px;">
@@ -531,18 +548,21 @@
                     <div id="imageUtilityOutput"></div>
                 </div>
 
+                <!-- Single Image to PDF -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📄 Single Image to A4 Document PDF Converter</strong>
                     <input type="file" id="singleImageToPdfInput" accept="image/*" style="margin-top:5px;">
                     <button onclick="executeSingleImageToPdfConversion()" style="background:#0284c7; padding:6px 12px; margin-top:8px; font-size:13px;">Convert Single Image to PDF</button>
                 </div>
 
+                <!-- Multiple Photos to PDF -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📚 Merge Multiple Photos into One Single PDF</strong>
                     <input type="file" id="multiPhotosToPdfInput" accept="image/*" multiple style="margin-top:5px;">
                     <button onclick="executeMultiPhotosToSinglePdfBook()" style="background:#4f46e5; padding:6px 12px; margin-top:8px; font-size:13px;">Compile Multiple Photos to Single PDF</button>
                 </div>
 
+                <!-- Cross Document Vice-Versa Suite Converter -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔄 Cross-Document Core Converter (PDF / Word / Excel Vice-Versa)</strong>
                     <input type="file" id="crossDocumentSuiteInput" accept=".pdf,.doc,.docx,.xls,.xlsx" style="margin-top:5px;">
@@ -559,6 +579,7 @@
                     <div id="crossDocStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Merger -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔀 PDF Files Merger Layer</strong>
                     <input type="file" id="pdfFilesMergerInput" accept=".pdf" multiple style="margin-top:5px;">
@@ -566,6 +587,7 @@
                     <div id="pdfMergeStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Splitter Extraction -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">✂️ PDF Splitter & Page Range Extractor</strong>
                     <input type="file" id="pdfSplitterFileInput" accept=".pdf" style="margin-top:5px;">
@@ -577,6 +599,7 @@
                     <div id="pdfSplitStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Weight Compressor -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">📉 PDF File Weight Resizer & Compressor</strong>
                     <input type="file" id="pdfResizerFileInput" accept=".pdf" style="margin-top:5px;">
@@ -585,6 +608,7 @@
                     <div id="pdfCompressStatusLog" style="font-size:12px; color:#475569; margin-top:4px;"></div>
                 </div>
 
+                <!-- PDF Extraction to Image Preview -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:15px;">
                     <strong style="font-size:13px; color: #334155;">🔓 PDF to Image JPG Extraction Board</strong>
                     <input type="file" id="pdfUtilityFileInput" accept=".pdf" style="margin-top:5px;">
@@ -592,6 +616,7 @@
                     <div id="pdfUtilityOutput" style="margin-top:5px; font-size:12px; white-space:pre-wrap;"></div>
                 </div>
 
+                <!-- PDF Password Locker Locker -->
                 <div style="background: #ffffff; padding:15px; border:1px solid #e2e8f0; border-radius:6px;">
                     <strong style="font-size:13px; color: #334155;">🛡️ Secure PDF Password Locker (Encryption)</strong>
                     <input type="file" id="pdfEncryptionFileInput" accept=".pdf" style="margin-top:5px;">
@@ -600,6 +625,7 @@
                 </div>
             </div>
 
+            <!-- SIGNATURE LAYER LOGIC WITH OVERLAY DEPLOYMENTS -->
             <div class="utility-box" style="border:2px dashed #0284c7; background:#ffffff;">
                 <h4>✍️ Live Digital Signature Pad & PDF Sign Overlay</h4>
                 <p style="font-size: 13px; color:#475569; margin-top:0;">Sign board par signature kijiye. Aap chahein toh niche PDF upload karke is signature ko direct us PDF document ke upar chipka (overlay) sakte hain!</p>
@@ -618,6 +644,7 @@
             </div>
         </div>
 
+        <!-- STABLE LOCAL ARCADE ROOM TAB -->
         <div id="games-tab" class="tab-content hidden">
             <h3>🎮 SevaKit 100% Stable Local Arcade Room</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Ye saare games 100% native code par chalte hain. Zero error, zero loading lag!</p>
@@ -639,6 +666,7 @@
             </div>
         </div>
 
+        <!-- FORM FILLER CANVAS LAYER INTERFACE -->
         <div id="form-tab" class="tab-content hidden">
             <h3>📝 Premium Local Interactive Form Filler Tool</h3>
             <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Upload blank application forms. Form par jahan click karenge wahan direct text type karke poora form fill kijiye aur direct print kijiye!</p>
