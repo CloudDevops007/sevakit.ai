@@ -167,13 +167,6 @@
         .tictactoe-cell { background: #334155; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: bold; color: white; cursor: pointer; height: 90px; }
         .tictactoe-cell:hover { background: #475569; }
 
-        .whatsapp-premium-banner {
-            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
-            color: white; padding: 20px; border-radius: 10px; margin-top: 25px;
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
-        }
-
-        .whatsapp-btn { background: white; color: var(--success-dark); padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; }
         .ad-space { background: #f8fafc; border: 2px dashed var(--border); padding: 15px; text-align: center; font-size: 12px; color: #64748b; margin-top: 25px; border-radius: 6px; }
 
         .gov-section-title { font-size: 16px; font-weight: bold; color: var(--primary); margin: 25px 0 12px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
@@ -200,7 +193,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v15.1</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v15.2</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -251,22 +244,22 @@
             </div>
         </div>
 
-        <!-- TAB 3: GLOBAL TRANSLATOR STUDIO -->
+        <!-- TAB 3: GLOBAL TRANSLATOR STUDIO (EXACT DUAL-OUTPUT FORMAT) -->
         <div id="translator-tab" class="tab-content hidden">
-            <h3>🔠 Global Language Translator Studio (Dual-Output Format)</h3>
-            <p style="color: #64748b; font-size: 14px;">Type any text on the left, select target language on the right. Output shows Native script followed by Roman English phonetics.</p>
+            <h3>🔠 Global Language Translator Studio</h3>
+            <p style="color: #64748b; font-size: 14px;">Type text below, select target language. Output will show native script first, followed by exactly 2 blank lines, and then the alphabetic/phonetic version.</p>
             <div style="padding: 20px; background: #f8fafc; border: 2px solid #0284c7; border-radius: 10px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
-                        <label style="font-weight: 600; font-size: 13px;">Input Text (Any Source Language):</label>
+                        <label style="font-weight: 600; font-size: 13px;">Input Text:</label>
                         <textarea id="transInput" style="height: 150px;" placeholder="Yahan text type ya paste karein..."></textarea>
                     </div>
                     <div>
                         <label style="font-weight: 600; font-size: 13px;">Target Language Select:</label>
                         <select id="langSelect" style="margin-bottom: 10px;">
                             <optgroup label="Indian Languages">
-                                <option value="Malayalam">Malayalam (മലയാളം)</option>
                                 <option value="Telugu">Telugu (తెలుగు)</option>
+                                <option value="Malayalam">Malayalam (മലയാളം)</option>
                                 <option value="Tamil">Tamil (தமிழ்)</option>
                                 <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
                                 <option value="Hindi">Hindi</option>
@@ -292,8 +285,8 @@
                         <button onclick="runTranslation()" style="background: #059669; height: 50px; font-weight: bold;">Translate Now</button>
                     </div>
                 </div>
-                <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 15px;">Translation Result:</label>
-                <textarea id="transOutput" readonly style="height: 130px; background: #e2e8f0; font-size: 15px; line-height: 1.6;" placeholder="Translation yahan show hogi..."></textarea>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 15px;">Translation Result (Native Script + 2 Line Space + Roman/Alphabetic):</label>
+                <textarea id="transOutput" readonly style="height: 150px; background: #e2e8f0; font-size: 15px; line-height: 1.6;" placeholder="Translation yahan show hogi..."></textarea>
             </div>
         </div>
 
@@ -712,21 +705,19 @@
         window.open(whatsappUrl, '_blank');
     }
 
-    // --- GLOBAL TRANSLATOR FUNCTION WITH CLEAN DUAL-OUTPUT (NO LABELS) ---
+    // --- STRICT DUAL-OUTPUT TRANSLATOR FUNCTION (NATIVE SCRIPT + 2 BLANK LINES + ROMAN/ALPHABETIC) ---
     async function runTranslation() {
         const input = document.getElementById('transInput').value.trim();
         const lang = document.getElementById('langSelect').value;
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating...";
+        out.value = "Translating with dual-output format...";
         
-        let promptText = `Translate the following text accurately into ${lang}. 
-        Provide ONLY the translation text without any introductory labels, tags, brackets, or bold headings.
-        Format requirements:
-        1. Write the translation in its native script (${lang}).
-        2. Leave exactly two empty blank lines.
-        3. Write the exact same translation in the Roman English alphabet (phonetic transliteration style so anyone can read it easily).`;
+        let promptText = `Translate the given text strictly into ${lang}. 
+        Provide the output in exactly two parts with no extra introductory titles, labels, brackets, or bold headings:
+        Part 1: The translation in its native script (${lang}).
+        Part 2: Exactly two empty blank lines (\n\n\n), followed immediately by the exact same translation written in Roman/alphabetic letters (phonetic script so anyone can read it easily).`;
 
         try {
             const r = await fetch('https://text.pollinations.ai/', { 
