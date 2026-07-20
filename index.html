@@ -204,7 +204,7 @@
 
 <div class="navbar">
     <h2>🛠️ SevaKit.ai</h2>
-    <div class="badge">🚀 Ultimate Digital Automation Suite v13.0</div>
+    <div class="badge">🚀 Ultimate Digital Automation Suite v13.5</div>
 </div>
 
 <div class="live-banner" id="systemLiveClockBanner">
@@ -214,10 +214,10 @@
 <div class="main-container">
     <div class="sidebar">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; color: #166534;">
-            <strong>🌐 Master Node Configuration:</strong> Secure Portals & Expanded Translator Active.
+            <strong>🌐 Master Node Configuration:</strong> Secure Portals & Dual-Output Translator Active.
         </div>
         
-        <!-- FIRST TAB PLACED AT THE TOP -->
+        <!-- SIDEBAR TABS (CHATGPT & GEMINI AT THE TOP) -->
         <div class="menu-item active" onclick="switchTab('chatgpt-tab')">🟢 SevaKit ChatGPT Portal</div>
         <div class="menu-item" onclick="switchTab('gemini-tab')">🔵 SevaKit Gemini Portal</div>
         <div class="menu-item" onclick="switchTab('translator-tab')">🔠 Global Translator Studio</div>
@@ -256,10 +256,10 @@
             </div>
         </div>
 
-        <!-- TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO -->
+        <!-- TAB 3: EXPANDED GLOBAL TRANSLATOR STUDIO (WITH DUAL-OUTPUT FORMAT) -->
         <div id="translator-tab" class="tab-content hidden">
-            <h3>🔠 Global Language Translator Studio (Expanded)</h3>
-            <p style="color: #64748b; font-size: 14px;">Type any text on the left, select any regional or international target language on the right, and get accurate translations instantly.</p>
+            <h3>🔠 Global Language Translator Studio (Dual-Output Format)</h3>
+            <p style="color: #64748b; font-size: 14px;">Type any text on the left, select any target language on the right. Output will show the Native script first, followed by a clean gap, and then the Roman English/phonetic spelling.</p>
             <div style="padding: 20px; background: #f8fafc; border: 2px solid #0284c7; border-radius: 10px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
@@ -274,7 +274,7 @@
                                 <option value="Telugu">Telugu (తెలుగు)</option>
                                 <option value="Tamil">Tamil (தமிழ்)</option>
                                 <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
-                                <option value="Hindi">Hindi (Roman Script)</option>
+                                <option value="Hindi">Hindi</option>
                                 <option value="Hinglish">Hinglish</option>
                                 <option value="Marathi">Marathi (मराठी)</option>
                                 <option value="Gujarati">Gujarati (ગુજરાતી)</option>
@@ -297,8 +297,8 @@
                         <button onclick="runTranslation()" style="background: #059669; height: 50px; font-weight: bold;">Translate Now</button>
                     </div>
                 </div>
-                <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 15px;">Translation Result:</label>
-                <textarea id="transOutput" readonly style="height: 120px; background: #e2e8f0;" placeholder="Translation yahan show hogi..."></textarea>
+                <label style="font-weight: 600; font-size: 13px; display: block; margin-top: 15px;">Translation Result (Native Script & Roman English Flow):</label>
+                <textarea id="transOutput" readonly style="height: 130px; background: #e2e8f0; font-size: 15px; line-height: 1.6;" placeholder="Translation yahan show hogi..."></textarea>
             </div>
         </div>
 
@@ -709,7 +709,7 @@
         window.speechSynthesis.cancel();
     }
 
-    // --- GLOBAL TRANSLATOR FUNCTION ---
+    // --- GLOBAL TRANSLATOR FUNCTION WITH DUAL-OUTPUT (NATIVE SCRIPT + ROMAN ENGLISH) ---
     async function runTranslation() {
         const input = document.getElementById('transInput').value.trim();
         const lang = document.getElementById('langSelect').value;
@@ -717,12 +717,18 @@
         if(!input) return alert("Kuch text toh likho!");
         
         out.value = "Translating...";
+        
+        let promptText = `Translate the following text accurately into ${lang}. 
+        Provide the response cleanly in two parts without any extra formatting labels or descriptive headings:
+        Part 1: The exact translation in its native script (${lang}).
+        Part 2: Leave two blank lines, then provide the exact same translation written in the Roman English alphabet (phonetic transliteration/Hinglish style so anyone can read it easily).`;
+
         try {
             const r = await fetch('https://text.pollinations.ai/', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({ 
-                    messages: [{ role: 'system', content: `Translate the following text accurately into ${lang}. Provide the result in both the native script and the Roman English alphabet (phonetic spelling/transliteration) clearly.` }, { role: 'user', content: input }], 
+                    messages: [{ role: 'system', content: promptText }, { role: 'user', content: input }], 
                     model: 'openai' 
                 }) 
             });
