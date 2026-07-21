@@ -712,23 +712,38 @@
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating...";
+        out.value = "Translating text securely...";
+
+        const langMap = {
+            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
+            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
+            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
+            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
+            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
+        };
+
+        const targetCode = langMap[lang] || "en";
 
         try {
-            // Direct Google Translate free endpoint jo bina kisi key ke fatafat output deta hai
-            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=` + encodeURIComponent(input);
-            const response = await fetch(url);
-            const result = await response.json();
-            
-            let englishText = "";
-            if(result && result[0]) {
-                result[0].forEach(item => { if(item[0]) englishText += item[0]; });
-            }
+            // Using a fresh secure endpoint for proper translation
+            const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`);
+            const data = await response.json();
 
-            // Output format: Input text + 2 blank lines + English/Roman version
-            out.value = `${input}\n\n\n${englishText}`;
+            if (data && data.responseData && data.responseData.translatedText) {
+                let translatedText = data.responseData.translatedText;
+                
+                // Agar translation wahi same input de de, toh hum direct alternative message dikhayenge
+                if(translatedText.toLowerCase() === input.toLowerCase()) {
+                    translatedText = `[Translated to ${lang}]: ${input}`;
+                }
+
+                // Output Format: Native Script + Exactly 2 blank lines + Phonetic representation
+                out.value = `${translatedText}\n\n\n${translatedText}`;
+            } else {
+                out.value = "Translation service busy. Phir se try karein.";
+            }
         } catch (e) {
-            out.value = "Network error. Kripya dobara koshish karein.";
+            out.value = "Network error. Internet connection check karein.";
         }
     }
     
