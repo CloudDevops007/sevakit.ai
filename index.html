@@ -712,46 +712,33 @@
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating...";
-
-        const langMap = {
-            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
-            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
-            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
-            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
-            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
-        };
-
-        const targetCode = langMap[lang] || "en";
+        out.value = "AI Translator is processing dual-format...";
+        
+        let promptText = `Translate the text: "${input}" into ${lang}. 
+        Give the output strictly in this exact format with no extra introductions or headings:
+        Line 1: The translation in its original native script (${lang}).
+        (Leave exactly 2 blank empty lines here)
+        Line 2: The exact same translation written in Roman English / Hinglish style letters (phonetic style, just like people type on WhatsApp, e.g., 'Aap kaise hain?').`;
 
         try {
-            // 1. Get Translation in Target Script (or English if Hinglish is selected)
-            const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            const r = await fetch('https://text.pollinations.ai/', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ 
+                    messages: [{ role: 'user', content: promptText }], 
+                    model: 'openai' 
+                }) 
+            });
+            let resultText = await r.text();
             
-            if(data && data.responseData && data.responseData.translatedText) {
-                let primaryText = data.responseData.translatedText;
-                let secondaryText = primaryText;
-
-                // Agar Hinglish select kiya hai, toh primary mein Hindi script aur secondary mein Roman Hinglish style denge
-                if(lang === "Hinglish") {
-                    const hindiApi = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|hi`;
-                    const hindiRes = await fetch(hindiApi);
-                    const hindiData = await hindiRes.json();
-                    if(hindiData && hindiData.responseData) {
-                        primaryText = hindiData.responseData.translatedText; // Hindi script
-                    }
-                    secondaryText = input; // Roman Hinglish style
-                }
-
-                // Output Format: Native Script + Exactly 2 blank lines + Hinglish/Roman alphabetic view
-                out.value = `${primaryText}\n\n\n${secondaryText}`;
+            // Agar galti se 402 error aaye toh fallback ke sath handle karega
+            if(resultText.includes("402") || resultText.includes("Payment Required")) {
+                out.value = "Server busy. Kripya 2 second baad dobara Translate Now dabayein.";
             } else {
-                out.value = "Translation failed. Dubara koshish karein.";
+                out.value = resultText;
             }
-        } catch (e) {
-            out.value = "Network error. Internet connection check karein.";
+        } catch (e) { 
+            out.value = "Network error. Kripya internet check karein."; 
         }
     }
     
