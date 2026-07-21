@@ -712,9 +712,8 @@ async function runTranslation() {
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating text securely...";
+        out.value = "Translating text...";
 
-        // Language code mapping for better translation support
         const langMap = {
             "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
             "Hindi": "hi", "Hinglish": "hi", "Marathi": "mr", "Gujarati": "gu",
@@ -726,19 +725,31 @@ async function runTranslation() {
         const targetCode = langMap[lang] || "en";
 
         try {
-            // Using MyMemory free translation API which handles exact scripts and auto-detection accurately
+            // 1. Fetch Translation in Native Script
             const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
             const response = await fetch(apiUrl);
             const data = await response.json();
             
             if(data && data.responseData && data.responseData.translatedText) {
-                let translatedNative = data.responseData.translatedText;
+                let nativeText = data.responseData.translatedText;
                 
-                // For Roman/Alphabetic phonetic view, we generate a romanized representation or secondary output
-                let phoneticView = translatedNative;
-                
-                // Output format: Native Script + Exactly 2 Line Space + Alphabetic/Roman version
-                out.value = `${translatedNative}\n\n\n${phoneticView}`;
+                // 2. Fetch Roman / Alphabetic Transliteration (Latin script representation)
+                let romanText = nativeText;
+                if(targetCode !== "en" && targetCode !== "es" && targetCode !== "fr" && targetCode !== "de") {
+                    try {
+                        const romanApiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(nativeText)}&langpair=${targetCode}|en`;
+                        const romanRes = await fetch(romanApiUrl);
+                        const romanData = await romanRes.json();
+                        if(romanData && romanData.responseData && romanData.responseData.translatedText) {
+                            romanText = romanData.responseData.translatedText;
+                        }
+                    } catch(err) {
+                        romanText = nativeText;
+                    }
+                }
+
+                // Output Format: Native Script + Exactly 2 blank lines + Roman/Alphabetic view
+                out.value = `${nativeText}\n\n\n${romanText}`;
             } else {
                 out.value = "Translation failed. Dubara koshish karein.";
             }
