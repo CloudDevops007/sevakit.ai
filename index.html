@@ -725,36 +725,34 @@
         const targetCode = langMap[lang] || "en";
 
         try {
-            // 1. Get Native Script Translation from reliable free endpoint
+            // 1. Fetch Native Script Translation
             const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
             const response = await fetch(apiUrl);
             const data = await response.json();
             
             if(data && data.responseData && data.responseData.translatedText) {
                 let nativeText = data.responseData.translatedText;
-                
-                // 2. Generate clean Roman / Alphabetic version locally to avoid API failures
-                let romanStyleText = nativeText;
-                
-                // Simple phonetic mapping fallback for roman text representation
-                if (targetCode === "te" || targetCode === "hi" || targetCode === "ta" || targetCode === "kn" || targetCode === "ml") {
-                    // We fetch romanization via a secondary reliable encoding or show simplified phonetic layout
-                    try {
-                        const fallbackUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(nativeText)}&langpair=${targetCode}|en`;
-                        const fbRes = await fetch(fallbackUrl);
-                        const fbData = await fbRes.json();
-                        if(fbData && fbData.responseData && fbData.responseData.translatedText) {
-                            let translatedBack = fbData.responseData.translatedText;
-                            // Agar wapas English aa gaya, toh hum usko proper roman format mein set kar denge
-                            romanStyleText = translatedBack.toLowerCase();
-                        }
-                    } catch(err) {
-                        romanStyleText = input;
+                let romanText = nativeText;
+
+                // 2. Fetch Roman / Alphabetic phonetic representation using latin script target parameter
+                try {
+                    const romanApiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(nativeText)}&langpair=${targetCode}|en-Latn`;
+                    const romanRes = await fetch(romanApiUrl);
+                    const romanData = await romanRes.json();
+                    if(romanData && romanData.responseData && romanData.responseData.translatedText) {
+                        romanText = romanData.responseData.translatedText;
                     }
+                } catch(err) {
+                    romanText = input;
                 }
 
-                // Output Format: Native Script + Exactly 2 blank lines + Roman/Hinglish style view
-                out.value = `${nativeText}\n\n\n${romanStyleText}`;
+                // Agar romanText me wahi native text ya error aaye, toh input ko fallback rakhhenge
+                if(romanText === nativeText || !romanText) {
+                    romanText = `[Roman/Phonetic view for: ${input}]`;
+                }
+
+                // Final Output: Native Script + Exactly 2 blank lines + Roman/Alphabetic view
+                out.value = `${nativeText}\n\n\n${romanText}`;
             } else {
                 out.value = "Translation failed. Dubara try karein.";
             }
