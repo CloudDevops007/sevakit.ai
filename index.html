@@ -712,43 +712,41 @@
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating in Native & Hinglish/Roman style...";
+        out.value = "Translating...";
 
         const langMap = {
             "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
-            "Hindi": "hi", "Hinglish": "hi", "Marathi": "mr", "Gujarati": "gu",
+            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
             "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
             "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
             "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
         };
 
-        const targetCode = langMap[lang] || "hi";
+        const targetCode = langMap[lang] || "en";
 
         try {
-            // 1. Get Native Script Translation
+            // 1. Get Translation in Target Script (or English if Hinglish is selected)
             const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
             const response = await fetch(apiUrl);
             const data = await response.json();
             
             if(data && data.responseData && data.responseData.translatedText) {
-                let nativeText = data.responseData.translatedText;
-                
-                // 2. Transliterate into Roman / Hinglish style phonetic representation using Google Transliterate API gateway
-                let hinglishText = nativeText;
-                try {
-                    const transUrl = `https://inputtools.google.com/request?text=${encodeURIComponent(nativeText)}&itc=${targetCode}-t-i0-und&num=1=cp1252`;
-                    const transRes = await fetch(transUrl);
-                    const transData = await transRes.json();
-                    if(transData && transData[0] === "SUCCESS" && transData[1][0][1][0]) {
-                        hinglishText = transData[1][0][1][0];
+                let primaryText = data.responseData.translatedText;
+                let secondaryText = primaryText;
+
+                // Agar Hinglish select kiya hai, toh primary mein Hindi script aur secondary mein Roman Hinglish style denge
+                if(lang === "Hinglish") {
+                    const hindiApi = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|hi`;
+                    const hindiRes = await fetch(hindiApi);
+                    const hindiData = await hindiRes.json();
+                    if(hindiData && hindiData.responseData) {
+                        primaryText = hindiData.responseData.translatedText; // Hindi script
                     }
-                } catch(err) {
-                    // Fallback if transliterate endpoint fails
-                    hinglishText = nativeText;
+                    secondaryText = input; // Roman Hinglish style
                 }
 
-                // Output Format: Native Script + Exactly 2 blank lines + Hinglish/Roman style typing view
-                out.value = `${nativeText}\n\n\n${hinglishText}`;
+                // Output Format: Native Script + Exactly 2 blank lines + Hinglish/Roman alphabetic view
+                out.value = `${primaryText}\n\n\n${secondaryText}`;
             } else {
                 out.value = "Translation failed. Dubara koshish karein.";
             }
