@@ -714,50 +714,21 @@
         
         out.value = "Translating...";
 
-        const langMap = {
-            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
-            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
-            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
-            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
-            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
-        };
-
-        const targetCode = langMap[lang] || "en";
-
         try {
-            // 1. Fetch Native Script Translation
-            const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            // Direct Google Translate free endpoint jo bina kisi key ke fatafat output deta hai
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=` + encodeURIComponent(input);
+            const response = await fetch(url);
+            const result = await response.json();
             
-            if(data && data.responseData && data.responseData.translatedText) {
-                let nativeText = data.responseData.translatedText;
-                let romanText = nativeText;
-
-                // 2. Fetch Roman / Alphabetic phonetic representation using latin script target parameter
-                try {
-                    const romanApiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(nativeText)}&langpair=${targetCode}|en-Latn`;
-                    const romanRes = await fetch(romanApiUrl);
-                    const romanData = await romanRes.json();
-                    if(romanData && romanData.responseData && romanData.responseData.translatedText) {
-                        romanText = romanData.responseData.translatedText;
-                    }
-                } catch(err) {
-                    romanText = input;
-                }
-
-                // Agar romanText me wahi native text ya error aaye, toh input ko fallback rakhhenge
-                if(romanText === nativeText || !romanText) {
-                    romanText = `[Roman/Phonetic view for: ${input}]`;
-                }
-
-                // Final Output: Native Script + Exactly 2 blank lines + Roman/Alphabetic view
-                out.value = `${nativeText}\n\n\n${romanText}`;
-            } else {
-                out.value = "Translation failed. Dubara try karein.";
+            let englishText = "";
+            if(result && result[0]) {
+                result[0].forEach(item => { if(item[0]) englishText += item[0]; });
             }
+
+            // Output format: Input text + 2 blank lines + English/Roman version
+            out.value = `${input}\n\n\n${englishText}`;
         } catch (e) {
-            out.value = "Network error. Internet connection check karein.";
+            out.value = "Network error. Kripya dobara koshish karein.";
         }
     }
     
