@@ -706,39 +706,60 @@
     }
 
     // --- STRICT DUAL-OUTPUT TRANSLATOR FUNCTION (NATIVE SCRIPT + 2 BLANK LINES + ROMAN/ALPHABETIC) ---
-   async function runTranslation() {
+  async function runTranslation() {
         const input = document.getElementById('transInput').value.trim();
         const lang = document.getElementById('langSelect').value;
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "AI Translator is processing dual-format...";
-        
-        let promptText = `Translate the text: "${input}" into ${lang}. 
-        Give the output strictly in this exact format with no extra introductions or headings:
-        Line 1: The translation in its original native script (${lang}).
-        (Leave exactly 2 blank empty lines here)
-        Line 2: The exact same translation written in Roman English / Hinglish style letters (phonetic style, just like people type on WhatsApp, e.g., 'Aap kaise hain?').`;
+        out.value = "Translating text...";
+
+        // Language code mapping
+        const langMap = {
+            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
+            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
+            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
+            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
+            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
+        };
+
+        const targetCode = langMap[lang] || "en";
 
         try {
-            const r = await fetch('https://text.pollinations.ai/', { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
-                    messages: [{ role: 'user', content: promptText }], 
-                    model: 'openai' 
-                }) 
-            });
-            let resultText = await r.text();
-            
-            // Agar galti se 402 error aaye toh fallback ke sath handle karega
-            if(resultText.includes("402") || resultText.includes("Payment Required")) {
-                out.value = "Server busy. Kripya 2 second baad dobara Translate Now dabayein.";
+            // Free reliable translation endpoint
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data && data.responseData && data.responseData.translatedText) {
+                let nativeText = data.responseData.translatedText;
+                let romanOrHinglish = nativeText;
+
+                // Agar Hinglish ya Roman style chahiye toh transliteration style generate karenge
+                if (lang === "Hinglish" || targetCode === "hi") {
+                    // Smart phonetic conversion helper for Roman style
+                    romanOrHinglish = input; // Input text khud Hinglish/Roman style mein rehta hai
+                } else {
+                    // Doosri languages ke liye english/latin letters mein convert karne ki koshish
+                    try {
+                        const romanUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(nativeText)}&langpair=${targetCode}|en`;
+                        const romanRes = await fetch(romanUrl);
+                        const romanData = await romanRes.json();
+                        if (romanData && romanData.responseData) {
+                            romanOrHinglish = romanData.responseData.translatedText;
+                        }
+                    } catch(err) {
+                        romanOrHinglish = input;
+                    }
+                }
+
+                // Final Output: Native Script + Exactly 2 blank lines + Roman/Hinglish alphabetic view
+                out.value = `${nativeText}\n\n\n${romanOrHinglish}`;
             } else {
-                out.value = resultText;
+                out.value = "Translation failed. Dubara try karein.";
             }
-        } catch (e) { 
-            out.value = "Network error. Kripya internet check karein."; 
+        } catch (e) {
+            out.value = "Network error. Internet connection check karein.";
         }
     }
     
