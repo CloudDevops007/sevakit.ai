@@ -712,28 +712,51 @@
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating with dual-output format...";
-        
-        let promptText = `Translate the given text strictly into ${lang}. 
-        Provide the output in exactly two parts with no extra introductory titles, labels, brackets, or bold headings:
-        Part 1: The translation in its native script (${lang}).
-        Part 2: Exactly two empty blank lines (\n\n\n), followed immediately by the exact same translation written in Roman/alphabetic letters (phonetic script so anyone can read it easily).`;
+        out.value = "Translating in Native & Hinglish/Roman style...";
+
+        const langMap = {
+            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
+            "Hindi": "hi", "Hinglish": "hi", "Marathi": "mr", "Gujarati": "gu",
+            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
+            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
+            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
+        };
+
+        const targetCode = langMap[lang] || "hi";
 
         try {
-            const r = await fetch('https://text.pollinations.ai/', { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
-                    messages: [{ role: 'system', content: promptText }, { role: 'user', content: input }], 
-                    model: 'openai' 
-                }) 
-            });
-            out.value = await r.text();
-        } catch (e) { 
-            out.value = "Error ho gaya, phir se try karein."; 
+            // 1. Get Native Script Translation
+            const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            
+            if(data && data.responseData && data.responseData.translatedText) {
+                let nativeText = data.responseData.translatedText;
+                
+                // 2. Transliterate into Roman / Hinglish style phonetic representation using Google Transliterate API gateway
+                let hinglishText = nativeText;
+                try {
+                    const transUrl = `https://inputtools.google.com/request?text=${encodeURIComponent(nativeText)}&itc=${targetCode}-t-i0-und&num=1=cp1252`;
+                    const transRes = await fetch(transUrl);
+                    const transData = await transRes.json();
+                    if(transData && transData[0] === "SUCCESS" && transData[1][0][1][0]) {
+                        hinglishText = transData[1][0][1][0];
+                    }
+                } catch(err) {
+                    // Fallback if transliterate endpoint fails
+                    hinglishText = nativeText;
+                }
+
+                // Output Format: Native Script + Exactly 2 blank lines + Hinglish/Roman style typing view
+                out.value = `${nativeText}\n\n\n${hinglishText}`;
+            } else {
+                out.value = "Translation failed. Dubara koshish karein.";
+            }
+        } catch (e) {
+            out.value = "Network error. Internet connection check karein.";
         }
     }
-
+    
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
         sigCanvas = document.getElementById('sigCanvas'); if(!sigCanvas) return;
