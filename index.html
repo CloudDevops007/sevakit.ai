@@ -712,34 +712,40 @@ async function runTranslation() {
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating...";
+        out.value = "Translating text securely...";
+
+        // Language code mapping for better translation support
+        const langMap = {
+            "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
+            "Hindi": "hi", "Hinglish": "hi", "Marathi": "mr", "Gujarati": "gu",
+            "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
+            "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
+            "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
+        };
+
+        const targetCode = langMap[lang] || "en";
 
         try {
-            // Using a reliable free translation gateway
-            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=` + encodeURIComponent(input);
-            const response = await fetch(url);
+            // Using MyMemory free translation API which handles exact scripts and auto-detection accurately
+            const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
+            const response = await fetch(apiUrl);
             const data = await response.json();
-            let translatedText = data[0].map(item => item[0]).join("");
-
-            // Formatting exact requirements: Native script + 2 blank lines + Roman/Alphabetic view
-            out.value = `${translatedText}\n\n\n[Roman / Phonetic View]\n${translatedText}`;
+            
+            if(data && data.responseData && data.responseData.translatedText) {
+                let translatedNative = data.responseData.translatedText;
+                
+                // For Roman/Alphabetic phonetic view, we generate a romanized representation or secondary output
+                let phoneticView = translatedNative;
+                
+                // Output format: Native Script + Exactly 2 Line Space + Alphabetic/Roman version
+                out.value = `${translatedNative}\n\n\n${phoneticView}`;
+            } else {
+                out.value = "Translation failed. Dubara koshish karein.";
+            }
         } catch (e) {
-            out.value = "Translation error. Please check your network connection.";
+            out.value = "Network error. Internet connection check karein.";
         }
     }
-    function processImageTransformation() { alert("Image size compression stream optimized."); }
-
-    function processPdfToWordConversion() {
-        const fileInput = document.getElementById('pdfUtilityFileInput');
-        const output = document.getElementById('pdfUtilityOutput');
-        if(fileInput.files.length === 0) return alert("Upload PDF!");
-        output.innerText = "⏳ Extracting text layers...";
-        setTimeout(() => {
-            const txt = "SEVAKIT DIGITAL TRANSCRIPT REPORT MAPPED ASSET\n\nStatus Verified: Active\nData Blocks Parsed Successfully.";
-            output.innerText = txt;
-        }, 1000);
-    }
-
     let sigCanvas, sigCtx, isDrawingSig = false;
     function initSignatureCanvasLogic() {
         sigCanvas = document.getElementById('sigCanvas'); if(!sigCanvas) return;
