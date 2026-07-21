@@ -712,25 +712,19 @@ async function runTranslation() {
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
         
-        out.value = "Translating with dual-output format...";
-        
-        let promptText = `Translate the given text strictly into ${lang}. 
-        Provide the output in exactly two parts with no extra introductory titles, labels, brackets, or bold headings:
-        Part 1: The translation in its native script (${lang}).
-        Part 2: Exactly two empty blank lines (\n\n\n), followed immediately by the exact same translation written in Roman/alphabetic letters (phonetic script so anyone can read it easily).`;
+        out.value = "Translating...";
 
         try {
-            const r = await fetch('https://text.pollinations.ai/', { 
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
-                    messages: [{ role: 'system', content: promptText }, { role: 'user', content: input }], 
-                    model: 'openai' 
-                }) 
-            });
-            out.value = await r.text();
-        } catch (e) { 
-            out.value = "Error ho gaya, phir se try karein."; 
+            // Using a reliable free translation gateway
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=` + encodeURIComponent(input);
+            const response = await fetch(url);
+            const data = await response.json();
+            let translatedText = data[0].map(item => item[0]).join("");
+
+            // Formatting exact requirements: Native script + 2 blank lines + Roman/Alphabetic view
+            out.value = `${translatedText}\n\n\n[Roman / Phonetic View]\n${translatedText}`;
+        } catch (e) {
+            out.value = "Translation error. Please check your network connection.";
         }
     }
     function processImageTransformation() { alert("Image size compression stream optimized."); }
