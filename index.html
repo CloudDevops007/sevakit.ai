@@ -711,12 +711,18 @@ async function runTranslation() {
         const lang = document.getElementById('langSelect').value;
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
+
+        // Agar Hinglish select kiya hai, toh API call ki zaroorat hi nahi hai, seedha input show kar do
+        if (lang === "Hinglish") {
+            out.value = input;
+            return;
+        }
         
         out.value = "Translating...";
 
         const langMap = {
             "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
-            "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
+            "Hindi": "hi", "Marathi": "mr", "Gujarati": "gu",
             "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
             "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
             "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
@@ -730,7 +736,6 @@ async function runTranslation() {
             const data = await response.json();
 
             if (data && data.responseData && data.responseData.translatedText) {
-                // Sirf ek baar translated text output mein set kiya
                 out.value = data.responseData.translatedText;
             } else {
                 out.value = input;
