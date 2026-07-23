@@ -714,7 +714,6 @@ async function runTranslation() {
         
         out.value = "Translating...";
 
-        // Language code mapping
         const langMap = {
             "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
             "Hindi": "hi", "Hinglish": "en", "Marathi": "mr", "Gujarati": "gu",
@@ -726,22 +725,18 @@ async function runTranslation() {
         const targetCode = langMap[lang] || "en";
 
         try {
-            // Using a direct fetch with standard encoding
-            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=en|${targetCode}`;
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
             const response = await fetch(url);
             const data = await response.json();
 
             if (data && data.responseData && data.responseData.translatedText) {
-                let transText = data.responseData.translatedText;
-                
-                // Format: Native script + 2 blank lines + Alphabetic/Roman script view
-                out.value = `${transText}\n\n\n${transText}`;
+                // Sirf ek baar translated text output mein set kiya
+                out.value = data.responseData.translatedText;
             } else {
-                out.value = `[Translation Output for ${lang}]:\n${input}\n\n\n${input}`;
+                out.value = input;
             }
         } catch (e) {
-            // Fallback so output never stays empty or broken
-            out.value = `Translated (${lang}):\n${input}\n\n\n${input}`;
+            out.value = input;
         }
     }
     
