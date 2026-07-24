@@ -711,49 +711,18 @@ async function runTranslation() {
         const lang = document.getElementById('langSelect').value;
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
-
-        // Agar Hinglish select kiya hai, toh hum ise Hindi mein translate karke Roman/Hinglish style mein dikha sakte hain
-        if (lang === "Hinglish") {
-            out.value = "Translating to Hinglish...";
-            try {
-                // Pehle Hindi mein translate karenge
-                const hiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|hi`;
-                const hiRes = await fetch(hiUrl);
-                const hiData = await hiRes.json();
-                
-                if (hiData && hiData.responseData && hiData.responseData.translatedText) {
-                    let hindiText = hiData.responseData.translatedText;
-                    
-                    // Roman/Hinglish representation ke liye google transliterate endpoint ya clean input use karenge
-                    const transUrl = `https://inputtools.google.com/request?text=${encodeURIComponent(hindiText)}&itc=hi-t-i0-und&num=1=cp1252`;
-                    const transRes = await fetch(transUrl);
-                    const transData = await transRes.json();
-                    
-                    if (transData && transData[0] === "SUCCESS" && transData[1][0][1][0]) {
-                        out.value = transData[1][0][1][0]; // Yeh proper Hinglish/Roman style dega
-                    } else {
-                        out.value = input; // Fallback
-                    }
-                } else {
-                    out.value = input;
-                }
-            } catch (err) {
-                out.value = input;
-            }
-            return;
-        }
         
         out.value = "Translating...";
 
         const langMap = {
             "Telugu": "te", "Malayalam": "ml", "Tamil": "ta", "Kannada": "kn",
-            "Hindi": "hi", "Marathi": "mr", "Gujarati": "gu",
+            "Hindi": "hi", "Hinglish": "hi", "Marathi": "mr", "Gujarati": "gu",
             "Punjabi": "pa", "Odia": "or", "Bengali": "bn", "Urdu": "ur",
             "English": "en", "Arabic": "ar", "French": "fr", "Spanish": "es",
             "German": "de", "Japanese": "ja", "Chinese": "zh", "Russian": "ru"
         };
 
-        const targetCode = langMap[lang] || "en";
+        const targetCode = langMap[lang] || "hi";
 
         try {
             const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|${targetCode}`;
@@ -761,7 +730,20 @@ async function runTranslation() {
             const data = await response.json();
 
             if (data && data.responseData && data.responseData.translatedText) {
-                out.value = data.responseData.translatedText;
+                let translatedText = data.responseData.translatedText;
+                
+                if (lang === "Hinglish") {
+                    try {
+                        const romanUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(translatedText)}&langpair=hi|en`;
+                        const romanRes = await fetch(romanUrl);
+                        const romanData = await romanRes.json();
+                        if (romanData && romanData.responseData && romanData.responseData.translatedText) {
+                            translatedText = romanData.responseData.translatedText;
+                        }
+                    } catch(e) {}
+                }
+
+                out.value = translatedText;
             } else {
                 out.value = input;
             }
