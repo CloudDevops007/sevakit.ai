@@ -712,9 +712,34 @@ async function runTranslation() {
         const out = document.getElementById('transOutput');
         if(!input) return alert("Kuch text toh likho!");
 
-        // Agar Hinglish select kiya hai, toh API call ki zaroorat hi nahi hai, seedha input show kar do
+        // Agar Hinglish select kiya hai, toh hum ise Hindi mein translate karke Roman/Hinglish style mein dikha sakte hain
         if (lang === "Hinglish") {
-            out.value = input;
+            out.value = "Translating to Hinglish...";
+            try {
+                // Pehle Hindi mein translate karenge
+                const hiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(input)}&langpair=autodetect|hi`;
+                const hiRes = await fetch(hiUrl);
+                const hiData = await hiRes.json();
+                
+                if (hiData && hiData.responseData && hiData.responseData.translatedText) {
+                    let hindiText = hiData.responseData.translatedText;
+                    
+                    // Roman/Hinglish representation ke liye google transliterate endpoint ya clean input use karenge
+                    const transUrl = `https://inputtools.google.com/request?text=${encodeURIComponent(hindiText)}&itc=hi-t-i0-und&num=1=cp1252`;
+                    const transRes = await fetch(transUrl);
+                    const transData = await transRes.json();
+                    
+                    if (transData && transData[0] === "SUCCESS" && transData[1][0][1][0]) {
+                        out.value = transData[1][0][1][0]; // Yeh proper Hinglish/Roman style dega
+                    } else {
+                        out.value = input; // Fallback
+                    }
+                } else {
+                    out.value = input;
+                }
+            } catch (err) {
+                out.value = input;
+            }
             return;
         }
         
